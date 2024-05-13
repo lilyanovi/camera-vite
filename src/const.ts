@@ -34,3 +34,48 @@ export const Socials = [
     label: 'Переход на страницу reddit'
   },
 ];
+
+export const Links = {
+  Navigation: [
+    {
+      name: 'Каталог',
+      link: '#'
+    },
+    {
+      name: 'Гарантии',
+      link: '#'
+    },
+    {
+      name: 'Доставка',
+      link: '#'
+    },
+    {
+      name: 'О компании',
+      link: '#'
+    },
+  ],
+  Resources: [
+    {
+      name: 'Курсы операторов',
+      link: '#'
+    },
+    {
+      name: 'Блог',
+      link: '#'
+    },
+    {
+      name: 'Сообщество',
+      link: '#'
+    },
+  ],
+  Support: [
+    {
+      name: 'FAQ',
+      link: '#'
+    },
+    {
+      name: 'Задать вопрос',
+      link: '#'
+    },
+  ]
+};

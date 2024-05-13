@@ -1,4 +1,6 @@
+import { Links } from '../../const';
 import Logo from '../logo/logo';
+import Navigation from '../navigation/navigation';
 
 function Header(): JSX.Element {
 
@@ -7,16 +9,7 @@ function Header(): JSX.Element {
       <div className="container">
         <Logo />
         <nav className="main-nav header__main-nav">
-          <ul className="main-nav__list">
-            <li className="main-nav__item"><a className="main-nav__link" href="catalog.html">Каталог</a>
-            </li>
-            <li className="main-nav__item"><a className="main-nav__link" href="#">Гарантии</a>
-            </li>
-            <li className="main-nav__item"><a className="main-nav__link" href="#">Доставка</a>
-            </li>
-            <li className="main-nav__item"><a className="main-nav__link" href="#">О компании</a>
-            </li>
-          </ul>
+          <Navigation links={Links.Navigation}/>
         </nav>
       </div>
     </header>

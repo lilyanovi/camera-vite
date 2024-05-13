@@ -1,4 +1,6 @@
+import { Links } from '../../const';
 import Logo from '../logo/logo';
+import Navigation from '../navigation/navigation';
 import Social from '../social/social';
 
 function Footer(): JSX.Element {
@@ -14,54 +16,15 @@ function Footer(): JSX.Element {
         <ul className="footer__nav">
           <li className="footer__nav-item">
             <p className="footer__title">Навигация</p>
-            <ul className="footer__list">
-              <li className="footer__item">
-                <a className="link" href="#">Каталог
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">Гарантии
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">Доставка
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">О компании
-                </a>
-              </li>
-            </ul>
+            <Navigation isFooter links={Links.Navigation}/>
           </li>
           <li className="footer__nav-item">
             <p className="footer__title">Ресурсы</p>
-            <ul className="footer__list">
-              <li className="footer__item">
-                <a className="link" href="#">Курсы операторов
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">Блог
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">Сообщество
-                </a>
-              </li>
-            </ul>
+            <Navigation isFooter links={Links.Resources}/>
           </li>
           <li className="footer__nav-item">
             <p className="footer__title">Поддержка</p>
-            <ul className="footer__list">
-              <li className="footer__item">
-                <a className="link" href="#">FAQ
-                </a>
-              </li>
-              <li className="footer__item">
-                <a className="link" href="#">Задать вопрос
-                </a>
-              </li>
-            </ul>
+            <Navigation isFooter links={Links.Support}/>
           </li>
         </ul>
       </div>
