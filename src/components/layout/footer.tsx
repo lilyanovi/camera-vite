@@ -1,3 +1,5 @@
+import Social from '../social/social';
+
 function Footer(): JSX.Element {
 
   return (
@@ -10,29 +12,7 @@ function Footer(): JSX.Element {
             </svg>
           </a>
           <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
-          <ul className="social">
-            <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу вконтатке">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-vk"></use>
-                </svg>
-              </a>
-            </li>
-            <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу pinterest">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-pinterest"></use>
-                </svg>
-              </a>
-            </li>
-            <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу reddit">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-reddit"></use>
-                </svg>
-              </a>
-            </li>
-          </ul>
+          <Social />
         </div>
         <ul className="footer__nav">
           <li className="footer__nav-item">
