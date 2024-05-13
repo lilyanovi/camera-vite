@@ -1,5 +1,6 @@
 export enum AppRoute {
   Main = '/',
+  Product = '/product'
 }
 
 export enum StatusLoading {
