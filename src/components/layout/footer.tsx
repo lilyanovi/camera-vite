@@ -1,3 +1,4 @@
+import Logo from '../logo/logo';
 import Social from '../social/social';
 
 function Footer(): JSX.Element {
@@ -6,11 +7,7 @@ function Footer(): JSX.Element {
     <footer className="footer">
       <div className="container">
         <div className="footer__info">
-          <a className="footer__logo" href="index.html" aria-label="Переход на главную">
-            <svg width="100" height="36" aria-hidden="true">
-              <use xlinkHref="#icon-logo-mono"></use>
-            </svg>
-          </a>
+          <Logo isFooter />
           <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
           <Social />
         </div>

@@ -6,10 +6,8 @@ type SocialItemProps = {
 }
 
 function SocialItem ({social}: SocialItemProps): JSX.Element {
-
   const {name, label} = social;
 
-  console.log(social)
   return (
     <li className="social__item">
       <a className="link" href="#" aria-label={label}>
