@@ -12,7 +12,7 @@ export enum StatusLoading {
 
 export enum NameSpace {
   Cameras = 'CAMERAS',
-  Camera = 'CAMERA',
+  Product = 'PRODUCT',
 }
 
 export enum APIRoute {

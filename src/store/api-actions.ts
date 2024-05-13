@@ -16,3 +16,16 @@ export const fetchCamerasListAction = createAsyncThunk<TCamera[], undefined, {
     return response.data;
   }
 );
+
+export const fetchProductByIdAction = createAsyncThunk<TCamera, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(
+  'data/fetchCamera/id',
+  async (id, {extra: api}) => {
+    const response = await api.get<TCamera>(`${APIRoute.Camera}/${id}`);
+    return response.data;
+  }
+);
