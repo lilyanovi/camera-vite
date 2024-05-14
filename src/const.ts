@@ -15,6 +15,11 @@ export enum NameSpace {
   Product = 'PRODUCT',
 }
 
+export enum ActiveTabs {
+  Characteristics = 'characteristics',
+  Description = 'description',
+}
+
 export enum APIRoute {
   Camera = '/cameras',
 }

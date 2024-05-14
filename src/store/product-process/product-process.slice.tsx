@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
-import { fetchQuestByIdAction } from '../api-actions';
+import { fetchProductByIdAction } from '../api-actions';
 import { ProductProcess } from '../../types/product-process';
 
 const initialState: ProductProcess = {
@@ -14,14 +14,14 @@ export const productProcess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchQuestByIdAction.pending, (state) => {
+      .addCase(fetchProductByIdAction.pending, (state) => {
         state.statusLoading = StatusLoading.Loading;
       })
-      .addCase(fetchQuestByIdAction.fulfilled, (state, action) => {
+      .addCase(fetchProductByIdAction.fulfilled, (state, action) => {
         state.statusLoading = StatusLoading.Success;
-        state.currentQuest = action.payload;
+        state.currentProduct = action.payload;
       })
-      .addCase(fetchQuestByIdAction.rejected, (state) => {
+      .addCase(fetchProductByIdAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
       });
   }
