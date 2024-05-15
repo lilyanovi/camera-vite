@@ -13,6 +13,7 @@ export enum StatusLoading {
 export enum NameSpace {
   Cameras = 'CAMERAS',
   Product = 'PRODUCT',
+  Reviews = 'REVIEWS',
 }
 
 export enum ActiveTabs {
