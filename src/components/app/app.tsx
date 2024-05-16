@@ -4,6 +4,7 @@ import { AppRoute } from '../../const';
 import Layout from '../layout/layout';
 import CatalogPage from '../../pages/catalog-page';
 import ProductPage from '../../pages/product-page';
+import NotFoundPage from '../../pages/not-found-page';
 
 function App(): JSX.Element {
 
@@ -22,6 +23,10 @@ function App(): JSX.Element {
                 element={<ProductPage/>}
               />
             </Route>
+            <Route
+              path='*'
+              element={<NotFoundPage/>}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

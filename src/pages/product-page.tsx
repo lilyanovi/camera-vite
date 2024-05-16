@@ -1,20 +1,22 @@
 import { Helmet } from 'react-helmet-async';
-import { Link, useParams } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { AppRoute, StatusLoading } from '../const';
 import Rating from '../components/rating/rating';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectCurrentProduct } from '../store/product-process/product-process.selectors';
+import { selectCurrentProduct, selectStatusLoading } from '../store/product-process/product-process.selectors';
 import { useEffect } from 'react';
 import { fetchProductByIdAction, fetchReviewsListAction } from '../store/api-actions';
 import Tabs from '../components/tabs/tabs';
 import Reviews from '../components/reviews/reviews';
 import Arrow from '../components/arrow/arrow';
+import Loader from '../components/loader/loader';
 
 function ProductPage () {
 
   const {id} = useParams();
 
   const currentProduct = useAppSelector(selectCurrentProduct);
+  const statusLoading = useAppSelector(selectStatusLoading);
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +33,14 @@ function ProductPage () {
       isMounted = false;
     };
   }, [dispatch, id, currentProduct]);
+
+  if(statusLoading === StatusLoading.Loading) {
+    return (
+      <Loader />
+    );
+  } else if(!currentProduct) {
+    return <Navigate to='404'/>;
+  }
 
   if(currentProduct){
     const {name, vendorCode, level, category, description, type, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, rating, reviewCount} = currentProduct;
