@@ -86,3 +86,5 @@ export const Links = {
     },
   ]
 };
+
+export const STEP_REVIEWS_SHOWN = 3;
