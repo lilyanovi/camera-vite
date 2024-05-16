@@ -13,7 +13,6 @@ export const getSortByDateReviews = (reviews: TReviews) => Array.from(reviews).s
 
 export const getCurrentReviews = (sortReviews: TReviews, currentReviews?: TReviews) => {
   if(!currentReviews){
-    console.log('work')
     return sortReviews.slice(0, STEP_REVIEWS_SHOWN);
   }
   return sortReviews.slice(0, currentReviews.length + STEP_REVIEWS_SHOWN);

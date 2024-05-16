@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { fetchProductByIdAction, fetchReviewsListAction } from '../store/api-actions';
 import Tabs from '../components/tabs/tabs';
 import Reviews from '../components/reviews/reviews';
+import Arrow from '../components/arrow/arrow';
 
 function ProductPage () {
 
@@ -100,11 +101,7 @@ function ProductPage () {
             </div>
           </div>
         </main>
-        <a className="up-btn" href="#header">
-          <svg width="12" height="18" aria-hidden="true">
-            <use xlinkHref="#icon-arrow2"></use>
-          </svg>
-        </a>
+        <Arrow />
       </>
     );
   }
