@@ -1,5 +1,6 @@
 export enum AppRoute {
   Main = '/',
+  Product = '/product'
 }
 
 export enum StatusLoading {
@@ -11,7 +12,13 @@ export enum StatusLoading {
 
 export enum NameSpace {
   Cameras = 'CAMERAS',
-  Camera = 'CAMERA',
+  Product = 'PRODUCT',
+  Reviews = 'REVIEWS',
+}
+
+export enum ActiveTabs {
+  Characteristics = 'characteristics',
+  Description = 'description',
 }
 
 export enum APIRoute {
@@ -79,3 +86,5 @@ export const Links = {
     },
   ]
 };
+
+export const STEP_REVIEWS_SHOWN = 3;

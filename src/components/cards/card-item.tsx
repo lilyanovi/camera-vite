@@ -1,12 +1,14 @@
+import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/camera';
 import Rating from '../rating/rating';
+import { AppRoute } from '../../const';
 
 type CardItemProps = {
   camera: TCamera;
 }
 
 function CardItem ({camera}: CardItemProps): JSX.Element {
-  const {name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, rating, reviewCount} = camera;
+  const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, rating, reviewCount} = camera;
 
   return (
     <div className="product-card">
@@ -28,8 +30,8 @@ function CardItem ({camera}: CardItemProps): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <a className="btn btn--transparent" href="#">Подробнее
-        </a>
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее
+        </Link>
       </div>
     </div>
   );
