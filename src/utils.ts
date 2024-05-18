@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { TReview, TReviews } from './types/review';
-import { STEP_REVIEWS_SHOWN } from './const';
+import { STEP_REVIEWS_SHOWN, Types } from './const';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
 
@@ -16,4 +16,15 @@ export const getCurrentReviews = (sortReviews: TReviews, currentReviews?: TRevie
     return sortReviews.slice(0, STEP_REVIEWS_SHOWN);
   }
   return sortReviews.slice(0, currentReviews.length + STEP_REVIEWS_SHOWN);
+};
+
+export const getTypeForPhoto = (type: Types) => {
+  switch(type){
+    case Types.Collectible:
+    case Types.Film:
+    case Types.Instant:
+      return `${type.slice(0, -2)}ый`;
+    case Types.Digital:
+      return `${type.slice(0, -2)}ой`;
+  }
 };

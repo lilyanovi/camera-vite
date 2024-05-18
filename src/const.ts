@@ -88,3 +88,21 @@ export const Links = {
 };
 
 export const STEP_REVIEWS_SHOWN = 3;
+
+export enum Levels {
+  Start = 'Нулевой',
+  Amateur = 'Любительский',
+  Professional = 'Профессиональный',
+}
+
+export enum Categories {
+  Video = 'Видеокамера',
+  Photo = 'Фотоаппарат',
+}
+
+export enum Types {
+  Collectible = 'Коллекционная',
+  Instant = 'Моментальная',
+  Digital = 'Цифровая',
+  Film = 'Плёночная',
+}
