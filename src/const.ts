@@ -23,6 +23,7 @@ export enum ActiveTabs {
 
 export enum APIRoute {
   Camera = '/cameras',
+  Order = '/order'
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
@@ -88,3 +89,32 @@ export const Links = {
 };
 
 export const STEP_REVIEWS_SHOWN = 3;
+
+export enum Levels {
+  Start = 'Нулевой',
+  Amateur = 'Любительский',
+  Professional = 'Профессиональный',
+}
+
+export enum Categories {
+  Video = 'Видеокамера',
+  Photo = 'Фотоаппарат',
+}
+
+export enum Types {
+  Collectible = 'Коллекционная',
+  Instant = 'Моментальная',
+  Digital = 'Цифровая',
+  Film = 'Плёночная',
+}
+
+export const ErrorMessages = {
+  PHONE: {
+    Required: 'Нужно указать номер',
+    Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
+  },
+};
+
+export const PatternsForCheck = {
+  PHONE: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
+};
