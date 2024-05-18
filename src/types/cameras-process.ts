@@ -1,7 +1,8 @@
 import { StatusLoading } from '../const';
-import { TCamera } from './camera';
+import { TCamera, TPromoProduct } from './camera';
 
 export type CamerasProcess = {
   cameras: TCamera[];
+  promoProducts: TPromoProduct[];
   statusLoading: StatusLoading;
 };

@@ -23,7 +23,8 @@ export enum ActiveTabs {
 
 export enum APIRoute {
   Camera = '/cameras',
-  Order = '/order'
+  Order = '/order',
+  Promo = '/promo',
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
@@ -118,3 +119,5 @@ export const ErrorMessages = {
 export const PatternsForCheck = {
   PHONE: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
 };
+
+export const BANNER_CHANGE_TIME = 3000;

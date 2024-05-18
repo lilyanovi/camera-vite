@@ -4,9 +4,10 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { store } from './store';
-import { fetchCamerasListAction } from './store/api-actions';
+import { fetchCamerasListAction, fetchPromoProductsListAction } from './store/api-actions';
 
 store.dispatch(fetchCamerasListAction());
+store.dispatch(fetchPromoProductsListAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

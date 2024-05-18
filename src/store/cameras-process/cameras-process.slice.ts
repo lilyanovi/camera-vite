@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
 import { CamerasProcess } from '../../types/cameras-process';
-import { fetchCamerasListAction } from '../api-actions';
+import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
 
 const initialState: CamerasProcess = {
   cameras: [],
+  promoProducts: [],
   statusLoading: StatusLoading.Loading,
 
 };
@@ -24,6 +25,9 @@ export const camerasProcess = createSlice({
       })
       .addCase(fetchCamerasListAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
+      })
+      .addCase(fetchPromoProductsListAction.fulfilled, (state, action) => {
+        state.promoProducts = action.payload;
       });
   }
 });
