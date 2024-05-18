@@ -1,9 +1,9 @@
-import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Categories, ErrorMessages, PatternsForCheck } from '../../const';
 import { TCamera } from '../../types/camera';
-import { getTypeForPhoto } from '../../utils';
-import { toast } from 'react-toastify';
-import { formToJSON } from 'axios';
+import { getPhoneByPost, getTypeForPhoto } from '../../utils';
+import { useAppDispatch } from '../../hooks';
+import { postOrderPhoneAction } from '../../store/api-actions';
 
 type CallModalProps = {
   camera: TCamera;
@@ -18,17 +18,11 @@ function CallModal ({camera}: CallModalProps): JSX.Element {
 
   const {register, handleSubmit, formState: { errors }} = useForm<TFormInput>();
 
-  const onSubmit: SubmitHandler<TFormInput> = (data) => {
-    console.log(data);
-  };
+  const dispatch = useAppDispatch();
 
-  const onErrorSubmit: SubmitErrorHandler<TFormInput> | undefined = (data) => {
-    console.log(data);
-    if(data.phone){
-      toast.warn(data.phone.message, {
-        position: 'bottom-right'
-      });
-    }
+  const onSubmit: SubmitHandler<TFormInput> = (data) => {
+    const phoneByPost = getPhoneByPost(data.phone);
+    dispatch(postOrderPhoneAction(phoneByPost));
   };
 
   return (
@@ -78,7 +72,7 @@ function CallModal ({camera}: CallModalProps): JSX.Element {
         <button
           className="btn btn--purple modal__btn modal__btn--fit-width"
           type="button"
-          onClick={(event) => void handleSubmit(onSubmit, onErrorSubmit)(event)}
+          onClick={(event) => void handleSubmit(onSubmit)(event)}
         >
           <svg width="24" height="16" aria-hidden="true">
             <use xlinkHref="#icon-add-basket"></use>

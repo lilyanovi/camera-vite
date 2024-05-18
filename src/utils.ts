@@ -28,3 +28,5 @@ export const getTypeForPhoto = (type: Types) => {
       return `${type.slice(0, -2)}ой`;
   }
 };
+
+export const getPhoneByPost = (phone: string) => phone.replace(/[^0-9]/ig, ''). replace(/^[78]/, '+7');

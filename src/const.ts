@@ -23,6 +23,7 @@ export enum ActiveTabs {
 
 export enum APIRoute {
   Camera = '/cameras',
+  Order = '/order'
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
