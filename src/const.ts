@@ -106,3 +106,14 @@ export enum Types {
   Digital = 'Цифровая',
   Film = 'Плёночная',
 }
+
+export const ErrorMessages = {
+  PHONE: {
+    Required: 'Нужно указать номер',
+    Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
+  },
+};
+
+export const PatternsForCheck = {
+  PHONE: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
+};
