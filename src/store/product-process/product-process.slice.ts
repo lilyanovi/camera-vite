@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
-import { fetchProductByIdAction } from '../api-actions';
+import { fetchProductByIdAction, fetchSimilarProductsByIdAction } from '../api-actions';
 import { ProductProcess } from '../../types/product-process';
 
 const initialState: ProductProcess = {
   currentProduct: null,
   statusLoading: StatusLoading.Loading,
+  similarProducts: []
 };
 
 export const productProcess = createSlice({
@@ -23,6 +24,9 @@ export const productProcess = createSlice({
       })
       .addCase(fetchProductByIdAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
+      })
+      .addCase(fetchSimilarProductsByIdAction.fulfilled, (state, action) => {
+        state.similarProducts = action.payload;
       });
   }
 });

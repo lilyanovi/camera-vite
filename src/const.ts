@@ -121,3 +121,5 @@ export const PatternsForCheck = {
 };
 
 export const BANNER_CHANGE_TIME = 3000;
+
+export const SLIDER_PRODUCTS_COUNT = 3;

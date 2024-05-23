@@ -8,9 +8,10 @@ import { useEffect, useState } from 'react';
 
 type CardItemProps = {
   camera: TCamera;
+  isActive?: boolean;
 }
 
-function CardItem ({camera}: CardItemProps): JSX.Element {
+function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
   const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, rating, reviewCount} = camera;
   const [isModalActive, setIsModalActive] = useState(false);
 
@@ -27,10 +28,10 @@ function CardItem ({camera}: CardItemProps): JSX.Element {
   }, [isModalActive]);
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${isActive ? 'is-active' : ''}`}>
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}/><img src={previewImg} srcSet={`${previewImg2x} 2x`} width="280" height="240" alt={name}/>
+          <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`}/><img src={`/${previewImg}`} srcSet={`/${previewImg2x} 2x`} width="280" height="240" alt={name}/>
         </picture>
       </div>
       <div className="product-card__info">

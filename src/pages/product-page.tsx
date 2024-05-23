@@ -3,13 +3,14 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { AppRoute, StatusLoading } from '../const';
 import Rating from '../components/rating/rating';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectCurrentProduct, selectStatusLoading } from '../store/product-process/product-process.selectors';
+import { selectCurrentProduct, selectSimilarProducts, selectStatusLoading } from '../store/product-process/product-process.selectors';
 import { useEffect } from 'react';
-import { fetchProductByIdAction, fetchReviewsListAction } from '../store/api-actions';
+import { fetchProductByIdAction, fetchReviewsListAction, fetchSimilarProductsByIdAction } from '../store/api-actions';
 import Tabs from '../components/tabs/tabs';
 import Reviews from '../components/reviews/reviews';
 import Arrow from '../components/arrow/arrow';
 import Loader from '../components/loader/loader';
+import ProductSimilar from '../components/product-similar/product-similar';
 
 function ProductPage () {
 
@@ -17,6 +18,7 @@ function ProductPage () {
 
   const currentProduct = useAppSelector(selectCurrentProduct);
   const statusLoading = useAppSelector(selectStatusLoading);
+  const similarProducts = useAppSelector(selectSimilarProducts);
 
   const dispatch = useAppDispatch();
 
@@ -26,6 +28,7 @@ function ProductPage () {
       if((!currentProduct && id) || (id && currentProduct && Number(id) !== currentProduct?.id)) {
         dispatch(fetchProductByIdAction(id));
         dispatch(fetchReviewsListAction(id));
+        dispatch(fetchSimilarProductsByIdAction(id));
       }
     }
 
@@ -106,6 +109,7 @@ function ProductPage () {
                 </div>
               </section>
             </div>
+            {similarProducts.length !== 0 ? <ProductSimilar /> : ''}
             <div className="page-content__section">
               <Reviews />
             </div>
