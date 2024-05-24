@@ -71,7 +71,7 @@ export const fetchSimilarProductsByIdAction = createAsyncThunk<TCamera[], string
   }
 );
 
-export const postOrderPhoneAction = createAsyncThunk<TCamera, TOrder, {
+export const postOrderPhoneAction = createAsyncThunk<unknown, TOrder, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -79,7 +79,7 @@ export const postOrderPhoneAction = createAsyncThunk<TCamera, TOrder, {
 >(
   'data/postOrder/phone',
   async (order, {extra: api}) => {
-    const response = await api.post<TCamera>(APIRoute.Order, order);
+    const response = await api.post(APIRoute.Order, order);
     return response.data;
   }
 );

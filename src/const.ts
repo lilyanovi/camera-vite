@@ -14,6 +14,7 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Product = 'PRODUCT',
   Reviews = 'REVIEWS',
+  Order = 'ORDER'
 }
 
 export enum ActiveTabs {
@@ -114,6 +115,7 @@ export const ErrorMessages = {
     Required: 'Нужно указать номер',
     Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
   },
+  POST: 'Failed to send data',
 };
 
 export const PatternsForCheck = {

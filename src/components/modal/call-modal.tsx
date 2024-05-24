@@ -1,9 +1,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Categories, ErrorMessages, PatternsForCheck } from '../../const';
+import { Categories, ErrorMessages, PatternsForCheck, StatusLoading } from '../../const';
 import { TCamera } from '../../types/camera';
 import { getPhoneByPost, getTypeForPhoto } from '../../utils';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postOrderPhoneAction } from '../../store/api-actions';
+import { StatusCodes } from 'http-status-codes';
+import { selectStatusLoading } from '../../store/order-process/order-process.selectors';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 type CallModalProps = {
   camera: TCamera;
@@ -21,6 +25,8 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
+  const statusLoading = useAppSelector(selectStatusLoading);
+
   const onSubmit: SubmitHandler<TFormInput> = (data) => {
     const phoneByPost = getPhoneByPost(data.phone);
     dispatch(postOrderPhoneAction({
@@ -29,8 +35,22 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
       ],
       coupon: null,
       tel: phoneByPost
-    })).then(() => handleButtonClick());
+    })).then((response) => {
+      if (response.payload === StatusCodes.CREATED){
+        handleButtonClick();
+      }
+    });
   };
+
+  useEffect(() => {
+    if (statusLoading === StatusLoading.Failed) {
+      console.log('отклонено yoast')
+      toast.warn('Отклонено', {
+        position: 'bottom-right'
+      });
+      console.log('отклонено')
+    }
+  }, [statusLoading]);
 
   return (
     <>
