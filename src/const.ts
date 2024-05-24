@@ -23,7 +23,7 @@ export enum ActiveTabs {
 
 export enum APIRoute {
   Camera = '/cameras',
-  Order = '/order',
+  Order = '/orders',
   Promo = '/promo',
 }
 
@@ -123,3 +123,9 @@ export const PatternsForCheck = {
 export const BANNER_CHANGE_TIME = 3000;
 
 export const SLIDER_PRODUCTS_COUNT = 3;
+
+export enum CouponTypes {
+  Camera333 = 'camera-333',
+  Camera444 = 'camera-444',
+  Camera555 = 'camera-555',
+}

@@ -56,7 +56,7 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
       </div>
       {isModalActive ?
         <Modal
-          content={<CallModal camera={camera}/>}
+          content={<CallModal camera={camera} handleButtonClick={handleButtonClick}/>}
           handleButtonClick={handleButtonClick}
         /> : ''}
     </div>

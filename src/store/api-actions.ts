@@ -4,6 +4,7 @@ import { APIRoute } from '../const';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { TReviews } from '../types/review';
+import { TOrder } from '../types/order';
 
 export const fetchCamerasListAction = createAsyncThunk<TCamera[], undefined, {
   dispatch: AppDispatch;
@@ -70,15 +71,15 @@ export const fetchSimilarProductsByIdAction = createAsyncThunk<TCamera[], string
   }
 );
 
-export const postOrderPhoneAction = createAsyncThunk<TCamera, string, {
+export const postOrderPhoneAction = createAsyncThunk<TCamera, TOrder, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
 >(
   'data/postOrder/phone',
-  async (phone, {extra: api}) => {
-    const response = await api.post<TCamera>(APIRoute.Order, phone);
+  async (order, {extra: api}) => {
+    const response = await api.post<TCamera>(APIRoute.Order, order);
     return response.data;
   }
 );

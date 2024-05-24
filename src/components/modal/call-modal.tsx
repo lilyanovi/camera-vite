@@ -7,14 +7,15 @@ import { postOrderPhoneAction } from '../../store/api-actions';
 
 type CallModalProps = {
   camera: TCamera;
+  handleButtonClick: () => void;
 };
 
 type TFormInput = {
   phone: string;
 }
 
-function CallModal ({camera}: CallModalProps): JSX.Element {
-  const {name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, level, type, category} = camera;
+function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
+  const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, level, type, category} = camera;
 
   const {register, handleSubmit, formState: { errors }} = useForm<TFormInput>();
 
@@ -22,7 +23,13 @@ function CallModal ({camera}: CallModalProps): JSX.Element {
 
   const onSubmit: SubmitHandler<TFormInput> = (data) => {
     const phoneByPost = getPhoneByPost(data.phone);
-    dispatch(postOrderPhoneAction(phoneByPost));
+    dispatch(postOrderPhoneAction({
+      camerasIds: [
+        id
+      ],
+      coupon: null,
+      tel: phoneByPost
+    })).then(() => handleButtonClick());
   };
 
   return (
@@ -53,7 +60,7 @@ function CallModal ({camera}: CallModalProps): JSX.Element {
             </svg>
           </span>
           <input
-
+            autoFocus
             placeholder="Введите ваш номер"
             {...register('phone',
               {
