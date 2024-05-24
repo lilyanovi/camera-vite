@@ -14,6 +14,7 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Product = 'PRODUCT',
   Reviews = 'REVIEWS',
+  Order = 'ORDER'
 }
 
 export enum ActiveTabs {
@@ -23,7 +24,8 @@ export enum ActiveTabs {
 
 export enum APIRoute {
   Camera = '/cameras',
-  Order = '/order'
+  Order = '/orders',
+  Promo = '/promo',
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
@@ -113,8 +115,19 @@ export const ErrorMessages = {
     Required: 'Нужно указать номер',
     Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
   },
+  POST: 'Failed to send data',
 };
 
 export const PatternsForCheck = {
   PHONE: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
 };
+
+export const BANNER_CHANGE_TIME = 3000;
+
+export const SLIDER_PRODUCTS_COUNT = 3;
+
+export enum CouponTypes {
+  Camera333 = 'camera-333',
+  Camera444 = 'camera-444',
+  Camera555 = 'camera-555',
+}

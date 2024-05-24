@@ -1,29 +1,54 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Categories, ErrorMessages, PatternsForCheck } from '../../const';
+import { Categories, ErrorMessages, PatternsForCheck, StatusLoading } from '../../const';
 import { TCamera } from '../../types/camera';
 import { getPhoneByPost, getTypeForPhoto } from '../../utils';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postOrderPhoneAction } from '../../store/api-actions';
+import { StatusCodes } from 'http-status-codes';
+import { selectStatusLoading } from '../../store/order-process/order-process.selectors';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 type CallModalProps = {
   camera: TCamera;
+  handleButtonClick: () => void;
 };
 
 type TFormInput = {
   phone: string;
 }
 
-function CallModal ({camera}: CallModalProps): JSX.Element {
-  const {name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, level, type, category} = camera;
+function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
+  const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, level, type, category} = camera;
 
   const {register, handleSubmit, formState: { errors }} = useForm<TFormInput>();
 
   const dispatch = useAppDispatch();
 
+  const statusLoading = useAppSelector(selectStatusLoading);
+
   const onSubmit: SubmitHandler<TFormInput> = (data) => {
     const phoneByPost = getPhoneByPost(data.phone);
-    dispatch(postOrderPhoneAction(phoneByPost));
+    dispatch(postOrderPhoneAction({
+      camerasIds: [
+        id
+      ],
+      coupon: null,
+      tel: phoneByPost
+    })).then((response) => {
+      if (response.payload === StatusCodes.CREATED){
+        handleButtonClick();
+      }
+    });
   };
+
+  useEffect(() => {
+    if (statusLoading === StatusLoading.Failed) {
+      toast.warn(ErrorMessages.POST, {
+        position: 'bottom-right'
+      });
+    }
+  }, [statusLoading]);
 
   return (
     <>
@@ -53,7 +78,7 @@ function CallModal ({camera}: CallModalProps): JSX.Element {
             </svg>
           </span>
           <input
-
+            autoFocus
             placeholder="Введите ваш номер"
             {...register('phone',
               {
