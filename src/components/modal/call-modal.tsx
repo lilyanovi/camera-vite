@@ -44,11 +44,9 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
 
   useEffect(() => {
     if (statusLoading === StatusLoading.Failed) {
-      console.log('отклонено yoast')
-      toast.warn('Отклонено', {
+      toast.warn(ErrorMessages.POST, {
         position: 'bottom-right'
       });
-      console.log('отклонено')
     }
   }, [statusLoading]);
 
