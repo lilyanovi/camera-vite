@@ -2,7 +2,7 @@ import { NameSpace, StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import { selectCameras, selectPromoProducts, selectStatusLoading } from './cameras-process.selectors';
 
-describe('CameraProcess selectors', () => {
+describe('CamerasProcess selectors', () => {
   const state = {
     [NameSpace.Cameras]: {
       cameras: new Array(8).fill(null).map(() => makeFakeCamera()),

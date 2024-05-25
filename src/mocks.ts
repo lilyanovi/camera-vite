@@ -44,4 +44,6 @@ export const makeFakeReview = (): TReview => ({
   rating: datatype.number(5),
 }) as TReview;
 
+export const makeFakeId = (): string => String(datatype.number());
+
 
