@@ -1,10 +1,11 @@
-import { NameSpace } from '../../const';
+import { NameSpace, StatusLoading } from '../../const';
+import { TCamera } from '../../types/camera';
 import type { State } from '../../types/state';
 
-const selectCurrentProduct = (state: State) => state[NameSpace.Product].currentProduct;
+const selectCurrentProduct = (state: Pick<State, NameSpace.Product>): TCamera | null => state[NameSpace.Product].currentProduct;
 
-const selectSimilarProducts = (state: State) => state[NameSpace.Product].similarProducts;
+const selectSimilarProducts = (state: Pick<State, NameSpace.Product>): TCamera[] => state[NameSpace.Product].similarProducts;
 
-const selectStatusLoading = (state: State) => state[NameSpace.Product].statusLoading;
+const selectStatusLoading = (state: Pick<State, NameSpace.Product>): StatusLoading => state[NameSpace.Product].statusLoading;
 
 export {selectCurrentProduct, selectSimilarProducts, selectStatusLoading};

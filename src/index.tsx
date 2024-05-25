@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { store } from './store';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from './store/api-actions';
-
+import './mocks';
 store.dispatch(fetchCamerasListAction());
 store.dispatch(fetchPromoProductsListAction());
 
