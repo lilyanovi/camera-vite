@@ -1,7 +1,11 @@
-import faker, {name, date, image, lorem, datatype, commerce, random} from 'faker';
+import faker, {name, date, image, lorem, datatype, commerce, random, phone} from 'faker';
 import { TCamera, TPromoProduct } from './types/camera';
-import { Categories, Levels, Types } from './const';
+import { Categories, CouponTypes, Levels, Types } from './const';
 import { TReview } from './types/review';
+import { createAPI } from './services/api';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { Action } from 'redux';
+import { TOrder } from './types/order';
 
 faker.locale = 'ru';
 
@@ -46,4 +50,13 @@ export const makeFakeReview = (): TReview => ({
 
 export const makeFakeId = (): string => String(datatype.number());
 
+export type AppThunkDispatch = ThunkDispatch<StaticRange, ReturnType<typeof createAPI>, Action>
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
+
+export const makeFakeOrder = (): TOrder => ({
+  camerasIds: [datatype.number()],
+  coupon: random.objectElement(CouponTypes) as CouponTypes,
+  tel: `+7${phone.phoneNumber()}`,
+}) as TOrder;
 

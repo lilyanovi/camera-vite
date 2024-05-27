@@ -1,6 +1,6 @@
 import { StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
-import { fetchCamerasListAction } from '../api-actions';
+import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
 import { camerasProcess } from './cameras-process.slice';
 
 describe('CamerasProcess Slice', () => {
@@ -52,6 +52,18 @@ describe('CamerasProcess Slice', () => {
       statusLoading: StatusLoading.Failed,
     };
     const result = camerasProcess.reducer(undefined, fetchCamerasListAction.rejected);
+    expect(result).toEqual(expectedState);
+  });
+  it('should set "promoProducts" to array with "fetchPromoProductsListAction.fulfilled"', () => {
+    const mockPromoProducts = makeFakePromoProduct();
+    const expectedState = {
+      cameras: [],
+      promoProducts: [mockPromoProducts],
+      statusLoading: StatusLoading.Loading,
+    };
+    const result = camerasProcess.reducer(undefined, fetchPromoProductsListAction.fulfilled(
+      [mockPromoProducts], '', undefined
+    ));
     expect(result).toEqual(expectedState);
   });
 });
