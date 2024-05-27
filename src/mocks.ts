@@ -3,9 +3,10 @@ import { TCamera, TPromoProduct } from './types/camera';
 import { Categories, CouponTypes, Levels, Types } from './const';
 import { TReview } from './types/review';
 import { createAPI } from './services/api';
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import { TOrder } from './types/order';
+import { State } from './types/state';
 
 faker.locale = 'ru';
 
@@ -50,7 +51,7 @@ export const makeFakeReview = (): TReview => ({
 
 export const makeFakeId = (): string => String(datatype.number());
 
-export type AppThunkDispatch = ThunkDispatch<StaticRange, ReturnType<typeof createAPI>, Action>
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
 
