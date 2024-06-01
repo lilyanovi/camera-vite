@@ -8,7 +8,7 @@ import { fetchCamerasListAction, fetchPromoProductsListAction } from './store/ap
 import './mocks';
 import HistoryRouter from './components/history-route/history-route';
 import browserHistory from './browser-history';
-
+import 'react-toastify/ReactToastify.css';
 
 store.dispatch(fetchCamerasListAction());
 store.dispatch(fetchPromoProductsListAction());
