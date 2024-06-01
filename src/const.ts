@@ -111,15 +111,15 @@ export enum Types {
 }
 
 export const ErrorMessages = {
-  PHONE: {
+  Phone: {
     Required: 'Нужно указать номер',
     Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
   },
-  POST: 'Failed to send data',
+  Post: 'Failed to send data',
 };
 
 export const PatternsForCheck = {
-  PHONE: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
+  Phone: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
 };
 
 export const BANNER_CHANGE_TIME = 3000;

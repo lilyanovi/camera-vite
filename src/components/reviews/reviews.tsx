@@ -12,9 +12,17 @@ function Reviews (): JSX.Element {
   const [currentReviews, setCurrentReviews] = useState<TReviews>([]);
 
   useEffect(() => {
-    if(sortReviews.length > 0){
-      setCurrentReviews(getCurrentReviews(sortReviews));
+    let isMounted = true;
+
+    if (isMounted) {
+      if(sortReviews.length > 0){
+        setCurrentReviews(getCurrentReviews(sortReviews));
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [sortReviews]);
 
   const handleButtonClick = useCallback(() => {

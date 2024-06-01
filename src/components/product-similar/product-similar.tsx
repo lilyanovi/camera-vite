@@ -10,9 +10,17 @@ function ProductSimilar (): JSX.Element {
   const [isActiveProducts, setIsActiveProducts] = useState<number[]>([]);
 
   useEffect(() => {
-    if(similarProducts.length > 0){
-      setIsActiveProducts(getIsActiveProducts(similarProducts));
+    let isMounted = true;
+
+    if (isMounted) {
+      if(similarProducts.length > 0){
+        setIsActiveProducts(getIsActiveProducts(similarProducts));
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [similarProducts]);
 
   const handleShowNextProducts = (evt: MouseEvent<HTMLButtonElement>) => {
