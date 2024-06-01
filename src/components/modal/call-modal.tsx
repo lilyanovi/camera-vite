@@ -44,7 +44,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
 
   useEffect(() => {
     if (statusLoading === StatusLoading.Failed) {
-      toast.warn(ErrorMessages.POST, {
+      toast.warn(ErrorMessages.Post, {
         position: 'bottom-right'
       });
     }
@@ -80,12 +80,13 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
           <input
             autoFocus
             placeholder="Введите ваш номер"
+            data-testid="phoneElement"
             {...register('phone',
               {
-                required: ErrorMessages.PHONE.Required,
+                required: ErrorMessages.Phone.Required,
                 pattern: {
-                  value: PatternsForCheck.PHONE,
-                  message: ErrorMessages.PHONE.Pattern
+                  value: PatternsForCheck.Phone,
+                  message: ErrorMessages.Phone.Pattern
                 }
               })}
           />

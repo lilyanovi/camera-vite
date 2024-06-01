@@ -28,7 +28,7 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
   }, [isModalActive]);
 
   return (
-    <div className={`product-card ${isActive ? 'is-active' : ''}`}>
+    <div className={`product-card ${isActive ? 'is-active' : ''}`} data-testid="product-card-container">
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`}/><img src={`/${previewImg}`} srcSet={`/${previewImg2x} 2x`} width="280" height="240" alt={name}/>

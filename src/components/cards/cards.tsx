@@ -7,7 +7,7 @@ function Cards (): JSX.Element {
   const cameras = useAppSelector(selectCameras);
 
   return (
-    <div className="cards catalog__cards">
+    <div className="cards catalog__cards" data-testid="cards-container">
       {cameras.length !== 0 ? cameras.map((camera) => <CardItem key={camera.id} camera={camera}/>) : <EmptyCards />}
     </div>
   );

@@ -27,7 +27,7 @@ function Banner (): JSX.Element {
 
 
   return (
-    <div className="banner">
+    <div className="banner" data-testid="banner-container">
       <picture>
         <source type="image/webp" srcSet={`${promoProducts[currentPromo].previewImgWebp}, ${promoProducts[currentPromo].previewImgWebp2x} 2x`}/><img src={promoProducts[currentPromo].previewImg} srcSet={`${promoProducts[currentPromo].previewImg2x} 2x`} width="1280" height="280" alt="баннер"/>
       </picture>

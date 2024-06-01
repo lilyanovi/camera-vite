@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { selectSortReviews } from '../../store/review-process/review-process.selectors';
 import { getCurrentReviews } from '../../utils';
@@ -12,16 +12,34 @@ function Reviews (): JSX.Element {
   const [currentReviews, setCurrentReviews] = useState<TReviews>([]);
 
   useEffect(() => {
-    if(sortReviews.length > 0){
-      setCurrentReviews(getCurrentReviews(sortReviews));
+    let isMounted = true;
+
+    if (isMounted) {
+      if(sortReviews.length > 0){
+        setCurrentReviews(getCurrentReviews(sortReviews));
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [sortReviews]);
 
-  const handleButtonClick = () => {
-    if(sortReviews > currentReviews){
-      setCurrentReviews(getCurrentReviews(sortReviews, currentReviews));
+  const handleButtonClick = useCallback(() => {
+    if(window.scrollY >= document.documentElement.scrollHeight - window.innerHeight) {
+      if(sortReviews > currentReviews){
+        setCurrentReviews(getCurrentReviews(sortReviews, currentReviews));
+      }
     }
-  };
+  }, [currentReviews, sortReviews]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleButtonClick);
+
+    return function () {
+      document.removeEventListener('scroll', handleButtonClick);
+    };
+  }, [handleButtonClick]);
 
   return (
     <section className="review-block">

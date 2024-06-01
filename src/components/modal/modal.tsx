@@ -21,7 +21,7 @@ function Modal ({content, handleButtonClick}: ModalProps): JSX.Element {
 
   return (
     <ReactFocusLock>
-      <div className="modal is-active">
+      <div className="modal is-active" data-testid="modal-container">
         <div className="modal__wrapper">
           <div
             className="modal__overlay"

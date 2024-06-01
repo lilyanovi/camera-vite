@@ -4,7 +4,7 @@ import Header from './header';
 
 function Layout () : JSX.Element {
   return (
-    <div className='wrapper'>
+    <div className='wrapper' data-testid="layout-container">
       <Header />
       <Outlet />
       <Footer/>
