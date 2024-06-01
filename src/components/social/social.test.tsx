@@ -10,7 +10,7 @@ describe('Component: Social', () => {
     render(<Social />);
 
     expect(screen.getByTestId(expectedSocialContainerTestId)).toBeInTheDocument();
-    expect(screen.getAllByTestId(expectedItemContainerTestId)).toHaveLength(Socials.length)
+    expect(screen.getAllByTestId(expectedItemContainerTestId)).toHaveLength(Socials.length);
   });
 });
 

@@ -8,15 +8,17 @@ describe('Component: Tabs', () => {
     const fakeCategory = Categories.Photo;
     const fakeLevel = Levels.Amateur;
     const fakeDescription = 'description';
-    const fakeType = Types.Instant
+    const fakeType = Types.Instant;
 
-    render(<Tabs
-      vendorCode={fakeVendorCode}
-      category={fakeCategory}
-      level={fakeLevel}
-      description={fakeDescription}
-      type={fakeType}
-    />);
+    render(
+      <Tabs
+        vendorCode={fakeVendorCode}
+        category={fakeCategory}
+        level={fakeLevel}
+        description={fakeDescription}
+        type={fakeType}
+      />
+    );
 
     expect(screen.getByText(fakeCategory)).toBeInTheDocument();
     expect(screen.getByText(fakeVendorCode)).toBeInTheDocument();

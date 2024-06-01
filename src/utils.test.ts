@@ -4,9 +4,9 @@ import { getCurrentReviews, getFormatDate, getIsActiveProducts, getPhoneByPost, 
 
 describe('Function: getFormatDate', () => {
   it('should return result in format DD MMMM', ()=> {
-    const mockDate = "2022-07-09T13:24:57.980Z";
+    const mockDate = '2022-07-09T13:24:57.980Z';
     const result = getFormatDate(mockDate);
-    expect(result).toBe('09 июля')
+    expect(result).toBe('09 июля');
   });
 });
 
@@ -14,66 +14,66 @@ describe('Function: getSortByDateReviews', () => {
   it('should return array reviews sorting by date', ()=> {
     const mockReviews = [
       {
-      "id": "1",
-      "createAt": "2021-01-09T13:24:57.980Z",
-      "cameraId": 1,
-      "userName": "Кирилл",
-      "advantage": "Легкая в плане веса, удобная в интерфейсе",
-      "disadvantage": "Быстро садиться зарядка",
-      "review": "Это моя первая камера. Я в восторге, нареканий нет",
-      "rating": 5
+        'id': '1',
+        'createAt': '2021-01-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Кирилл',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 5
       },
       {
-        "id": "2",
-        "createAt": "2022-07-09T13:24:57.980Z",
-        "cameraId": 1,
-        "userName": "Frank",
-        "advantage": "Легкая в плане веса, удобная в интерфейсе",
-        "disadvantage": "Быстро садиться зарядка",
-        "review": "Это моя первая камера. Я в восторге, нареканий нет",
-        "rating": 4
-        },
+        'id': '2',
+        'createAt': '2022-07-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Frank',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 4
+      },
       {
-        "id": "3",
-        "createAt": "2023-07-09T13:24:57.980Z",
-        "cameraId": 1,
-        "userName": "Anna",
-        "advantage": "Легкая в плане веса, удобная в интерфейсе",
-        "disadvantage": "Быстро садиться зарядка",
-        "review": "Это моя первая камера. Я в восторге, нареканий нет",
-        "rating": 3
-        }
+        'id': '3',
+        'createAt': '2023-07-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Anna',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 3
+      }
     ];
     const expectedResult = [
       {
-        "id": "3",
-        "createAt": "2023-07-09T13:24:57.980Z",
-        "cameraId": 1,
-        "userName": "Anna",
-        "advantage": "Легкая в плане веса, удобная в интерфейсе",
-        "disadvantage": "Быстро садиться зарядка",
-        "review": "Это моя первая камера. Я в восторге, нареканий нет",
-        "rating": 3
-        },
+        'id': '3',
+        'createAt': '2023-07-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Anna',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 3
+      },
       {
-        "id": "2",
-        "createAt": "2022-07-09T13:24:57.980Z",
-        "cameraId": 1,
-        "userName": "Frank",
-        "advantage": "Легкая в плане веса, удобная в интерфейсе",
-        "disadvantage": "Быстро садиться зарядка",
-        "review": "Это моя первая камера. Я в восторге, нареканий нет",
-        "rating": 4
-        },
+        'id': '2',
+        'createAt': '2022-07-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Frank',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 4
+      },
       {
-      "id": "1",
-      "createAt": "2021-01-09T13:24:57.980Z",
-      "cameraId": 1,
-      "userName": "Кирилл",
-      "advantage": "Легкая в плане веса, удобная в интерфейсе",
-      "disadvantage": "Быстро садиться зарядка",
-      "review": "Это моя первая камера. Я в восторге, нареканий нет",
-      "rating": 5
+        'id': '1',
+        'createAt': '2021-01-09T13:24:57.980Z',
+        'cameraId': 1,
+        'userName': 'Кирилл',
+        'advantage': 'Легкая в плане веса, удобная в интерфейсе',
+        'disadvantage': 'Быстро садиться зарядка',
+        'review': 'Это моя первая камера. Я в восторге, нареканий нет',
+        'rating': 5
       }
     ];
     const result = getSortByDateReviews(mockReviews);
@@ -92,7 +92,7 @@ describe('Function: getCurrentReviews', () => {
 
   it('should return correctly result when currentReview.length > 0', ()=> {
     const mockReviews = new Array(7).fill(null).map(() => makeFakeReview());
-    const mockCurrentReviews = [mockReviews[0], mockReviews[1], mockReviews[2]]
+    const mockCurrentReviews = [mockReviews[0], mockReviews[1], mockReviews[2]];
     const result = getCurrentReviews(mockReviews, mockCurrentReviews);
 
     expect(result.length).toBe(6);
@@ -102,21 +102,21 @@ describe('Function: getCurrentReviews', () => {
 
 describe('Function: getTypeForPhoto', () => {
   it('should return "Цифровой" when type="Types.Digital"', ()=> {
-    const expectedResult = "Цифровой";
+    const expectedResult = 'Цифровой';
     const result = getTypeForPhoto(Types.Digital);
     expect(result).toBe(expectedResult);
     expect(result).not.toBe(Types.Digital);
   });
 
   it('should return "Коллекционный" when type="Types.Collectible"', ()=> {
-    const expectedResult = "Коллекционный";
+    const expectedResult = 'Коллекционный';
     const result = getTypeForPhoto(Types.Collectible);
     expect(result).toBe(expectedResult);
     expect(result).not.toBe(Types.Collectible);
   });
 
   it('should return "Моментальный" when type="Types.Instant"', ()=> {
-    const expectedResult = "Моментальный";
+    const expectedResult = 'Моментальный';
     const result = getTypeForPhoto(Types.Instant);
     expect(result).toBe(expectedResult);
     expect(result).not.toBe(Types.Instant);
