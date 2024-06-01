@@ -54,7 +54,7 @@ function ProductPage () {
           <Helmet>
             <title>{name} - Фотошоп</title>
           </Helmet>
-          <div className="page-content">
+          <div className="page-content" data-testid="product-page-container">
             <div className="breadcrumbs">
               <div className="container">
                 <ul className="breadcrumbs__list">

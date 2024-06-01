@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 type NavigationItemProps = {
   navigationItem: {
     link: string;
@@ -9,9 +11,12 @@ type NavigationItemProps = {
 function NavigationItem({navigationItem, isFooter}: NavigationItemProps): JSX.Element {
   const {link, name} = navigationItem;
   return (
-    <li className={`${isFooter ? 'footer' : 'main-nav'}__item`}>
-      <a className={`${isFooter ? '' : 'main-nav__'}link`} href={link}>{name}
-      </a>
+    <li
+      className={`${isFooter ? 'footer' : 'main-nav'}__item`}
+      data-testid="navigation-item-container"
+    >
+      <Link className={`${isFooter ? '' : 'main-nav__'}link`} to={link}>{name}
+      </Link>
     </li>
   );
 }

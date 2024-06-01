@@ -2,7 +2,7 @@ import './loader.css';
 
 function Loader () {
   return (
-    <div className="loader_wrp">
+    <div className="loader_wrp" data-testid="loader-container">
       <span className="loader"></span>
     </div>
 

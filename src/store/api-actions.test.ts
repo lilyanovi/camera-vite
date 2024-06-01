@@ -197,7 +197,7 @@ describe('Async actions', () => {
 
     it('should dispatch "postOrderPhoneAction.pending" and "postOrderPhoneAction.fulfilled" when server response 201', async() => {
       const mockOrder = makeFakeOrder();
-      mockAxiosAdapter.onPost(APIRoute.Order).reply(201, mockOrder);
+      mockAxiosAdapter.onPost(APIRoute.Order).reply(201);
 
       await store.dispatch(postOrderPhoneAction(mockOrder));
 

@@ -80,6 +80,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
           <input
             autoFocus
             placeholder="Введите ваш номер"
+            data-testid="phoneElement"
             {...register('phone',
               {
                 required: ErrorMessages.PHONE.Required,

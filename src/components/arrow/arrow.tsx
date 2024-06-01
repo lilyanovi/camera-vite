@@ -12,6 +12,7 @@ function Arrow (): JSX.Element {
       className="up-btn"
       href="#header"
       onClick={handleArrowClick}
+      data-testid="arrow-container"
     >
       <svg width="12" height="18" aria-hidden="true">
         <use xlinkHref="#icon-arrow2"></use>

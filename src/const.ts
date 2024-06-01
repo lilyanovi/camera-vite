@@ -49,7 +49,7 @@ export const Links = {
   Navigation: [
     {
       name: 'Каталог',
-      link: '#'
+      link: AppRoute.Main
     },
     {
       name: 'Гарантии',

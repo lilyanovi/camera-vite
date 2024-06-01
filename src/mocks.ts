@@ -1,6 +1,6 @@
 import faker, {name, date, image, lorem, datatype, commerce, random, phone} from 'faker';
 import { TCamera, TPromoProduct } from './types/camera';
-import { Categories, CouponTypes, Levels, Types } from './const';
+import { Categories, CouponTypes, Levels, StatusLoading, Types } from './const';
 import { TReview } from './types/review';
 import { createAPI } from './services/api';
 import { ThunkDispatch } from 'redux-thunk';
@@ -61,3 +61,11 @@ export const makeFakeOrder = (): TOrder => ({
   tel: `+7${phone.phoneNumber()}`,
 }) as TOrder;
 
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  CAMERAS: { cameras: [], promoProducts: [], statusLoading: StatusLoading.Loading},
+  PRODUCT: { currentProduct: null, similarProducts: [], statusLoading: StatusLoading.Loading },
+  REVIEWS: { sortReviews: [], statusLoading: StatusLoading.Loading },
+  ORDER: { statusLoading: StatusLoading.Success },
+  ...initialState ?? {},
+});

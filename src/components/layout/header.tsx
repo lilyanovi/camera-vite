@@ -5,7 +5,7 @@ import Navigation from '../navigation/navigation';
 function Header(): JSX.Element {
 
   return (
-    <header className="header" id="header">
+    <header className="header" id="header" data-testid="header-container">
       <div className="container">
         <Logo />
         <nav className="main-nav header__main-nav">

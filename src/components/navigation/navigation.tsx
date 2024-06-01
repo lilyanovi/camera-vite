@@ -10,7 +10,10 @@ type NavigationProps = {
 
 function Navigation({isFooter, links}: NavigationProps): JSX.Element {
   return (
-    <ul className={`${isFooter ? 'footer' : 'main-nav'}__list`}>
+    <ul
+      className={`${isFooter ? 'footer' : 'main-nav'}__list`}
+      data-testid="navigate-container"
+    >
       {links.map((link) => <NavigationItem isFooter={isFooter} navigationItem={link} key={link.name}/>)}
     </ul>
   );
