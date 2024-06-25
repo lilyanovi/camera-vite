@@ -1,6 +1,7 @@
 import { Links } from '../../const';
 import Logo from '../logo/logo';
 import Navigation from '../navigation/navigation';
+import Search from '../search/search';
 
 function Header(): JSX.Element {
 
@@ -11,6 +12,7 @@ function Header(): JSX.Element {
         <nav className="main-nav header__main-nav">
           <Navigation links={Links.Navigation}/>
         </nav>
+        <Search />
       </div>
     </header>
   );

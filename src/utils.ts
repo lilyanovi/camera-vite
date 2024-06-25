@@ -47,3 +47,5 @@ export const getIsActiveProducts = (products: TCamera[], isActiveProducts?: numb
   const lastIndex = products.findIndex((product) => product.id === isActiveProducts.at(-1));
   return products.slice(lastIndex + 1, lastIndex + 1 + SLIDER_PRODUCTS_COUNT).map((product) => product.id);
 };
+
+export const getFilteredCameras = (cameras: TCamera[], value: string) => cameras.filter((camera) => camera.name.toLowerCase().includes(value.toLowerCase()));
