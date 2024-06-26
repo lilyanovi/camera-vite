@@ -131,3 +131,13 @@ export enum CouponTypes {
   Camera444 = 'camera-444',
   Camera555 = 'camera-555',
 }
+
+export enum SortOption {
+  sortPrice = 'по цене',
+  sortPopular = 'по популярности',
+}
+
+export enum SortDirections {
+  up = 'По возрастанию',
+  down = 'По убыванию',
+}

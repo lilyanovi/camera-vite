@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { TReview, TReviews } from './types/review';
-import { SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, Types } from './const';
+import { SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirections, SortOption, Types } from './const';
 import { TCamera } from './types/camera';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
@@ -49,3 +49,20 @@ export const getIsActiveProducts = (products: TCamera[], isActiveProducts?: numb
 };
 
 export const getFilteredCameras = (cameras: TCamera[], value: string) => cameras.filter((camera) => camera.name.toLowerCase().includes(value.toLowerCase()));
+
+export const getSortCamerasList = (sort: SortOption, cameras: TCamera[], direction: SortDirections) => {
+  switch(sort) {
+    case SortOption.sortPrice:
+      if(direction === SortDirections.up){
+        return cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price);
+      }
+      return cameras.slice().sort((cameraA, cameraB) => cameraB.price - cameraA.price);
+    case SortOption.sortPopular:
+      if(direction === SortDirections.up){
+        return cameras.slice().sort((cameraA, cameraB) => cameraA.rating - cameraB.rating);
+      }
+      return cameras.slice().sort((cameraA, cameraB) => cameraB.rating - cameraA.rating);
+    default:
+      return cameras;
+  }
+};

@@ -3,6 +3,7 @@ import Cards from '../components/cards/cards';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import Banner from '../components/banner/banner';
+import Sort from '../components/sort/sort';
 
 function CatalogPage () {
   return (
@@ -35,6 +36,7 @@ function CatalogPage () {
                 <img src="img/banner.png"/>
               </div>
               <div className="catalog__content">
+                <Sort />
                 <Cards />
               </div>
             </div>
