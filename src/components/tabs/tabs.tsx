@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TCamera } from '../../types/camera';
 import { ActiveTabs } from '../../const';
+import { useSearchParams } from 'react-router-dom';
 
 type TabsProps = Pick<TCamera, 'vendorCode' | 'category' | 'type' | 'level' | 'description'>;
 
 function Tabs ({vendorCode, category, type, level, description}: TabsProps): JSX.Element {
   const [isActive, setIsActive] = useState<ActiveTabs>(ActiveTabs.Description);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const isCharacteristics = isActive === ActiveTabs.Characteristics;
 
@@ -16,6 +18,19 @@ function Tabs ({vendorCode, category, type, level, description}: TabsProps): JSX
   const handleDescriptionClick = () => {
     setIsActive(ActiveTabs.Description);
   };
+
+  useEffect(() => {
+    const settings = {
+      tab: isActive,
+    };
+    setSearchParams(settings);
+  }, [setSearchParams, isActive]);
+
+  useEffect(() => {
+    if(searchParams.has('tab')){
+      setIsActive(searchParams.get('tab') as ActiveTabs);
+    }
+  }, [searchParams]);
 
   return (
     <div className="tabs product__tabs">
