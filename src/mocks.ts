@@ -63,7 +63,7 @@ export const makeFakeOrder = (): TOrder => ({
 
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
-  CAMERAS: { cameras: [], promoProducts: [], statusLoading: StatusLoading.Loading},
+  CAMERAS: { cameras: [], promoProducts: [], statusLoading: StatusLoading.Loading, sortedCameras: []},
   PRODUCT: { currentProduct: null, similarProducts: [], statusLoading: StatusLoading.Loading },
   REVIEWS: { sortReviews: [], statusLoading: StatusLoading.Loading },
   ORDER: { statusLoading: StatusLoading.Success },

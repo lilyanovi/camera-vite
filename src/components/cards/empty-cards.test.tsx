@@ -3,7 +3,7 @@ import EmptyCards from './empty-cards';
 
 describe('Component: EmptyCards', () => {
   it('should render correctly', () => {
-    const expectedText = 'Нет товаров для покупки';
+    const expectedText = 'Нет товаров для покупки. Попробуйте изменить фильтры';
 
     render(<EmptyCards />);
 

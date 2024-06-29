@@ -1,26 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SortDirections, SortOption } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { sortCameras } from '../../store/cameras-process/cameras-process.slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeSortDirection, changeSortOption, sortCameras } from '../../store/cameras-process/cameras-process.slice';
+import { selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
 
 function Sort (): JSX.Element {
 
-  const [checkedSort, setCheckedSort] = useState<SortOption>(SortOption.sortPrice);
-  const [checkedDirection, setCheckedDirection] = useState<SortDirections>(SortDirections.up);
-
   const dispatch = useAppDispatch();
+  const checkedSort = useAppSelector(selectSortOption);
+  const checkedDirection = useAppSelector(selectSortDirection);
 
   const handleSortChange = (option: SortOption) => {
-    setCheckedSort(option);
+    dispatch(changeSortOption({sort: option}));
+    dispatch(sortCameras());
   };
 
-  const handleDirectionChange = (direction: SortDirections) => {
-    setCheckedDirection(direction);
+  const handleDirectionChange = (sortDirection: SortDirections) => {
+    dispatch(changeSortDirection({direction: sortDirection}));
+    dispatch(sortCameras());
   };
 
   useEffect(() => {
-    dispatch(sortCameras({sort: checkedSort, direction: checkedDirection}));
-  }, [checkedDirection, checkedSort, dispatch]);
+    dispatch(sortCameras());
+  }, [dispatch]);
 
   return (
     <div className="catalog-sort">

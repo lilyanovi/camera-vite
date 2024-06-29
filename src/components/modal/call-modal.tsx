@@ -64,7 +64,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
           <ul className="basket-item__list">
             <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
             </li>
-            <li className="basket-item__list-item">{category === Categories.Video ? type : getTypeForPhoto(type)} {category.toLowerCase()}</li>
+            <li className="basket-item__list-item">{category === Categories.Videocamera ? type : getTypeForPhoto(type)} {category.toLowerCase()}</li>
             <li className="basket-item__list-item">{level} уровень</li>
           </ul>
           <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>

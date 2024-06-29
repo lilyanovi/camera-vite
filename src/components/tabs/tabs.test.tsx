@@ -5,10 +5,10 @@ import { Categories, Levels, Types } from '../../const';
 describe('Component: Tabs', () => {
   it('should render correctly', () => {
     const fakeVendorCode = 'vendor';
-    const fakeCategory = Categories.Photo;
-    const fakeLevel = Levels.Amateur;
+    const fakeCategory = Categories.Photocamera;
+    const fakeLevel = Levels.NonProfessional;
     const fakeDescription = 'description';
-    const fakeType = Types.Instant;
+    const fakeType = Types.Snapshot;
 
     render(
       <Tabs

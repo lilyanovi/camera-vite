@@ -1,9 +1,11 @@
-import { StatusLoading } from '../const';
+import { SortDirections, SortOption, StatusLoading } from '../const';
 import { TCamera, TPromoProduct } from './camera';
 
 export type CamerasProcess = {
   cameras: TCamera[];
-  sortedCameras: TCamera[];
+  filteredCameras: TCamera[];
   promoProducts: TPromoProduct[];
   statusLoading: StatusLoading;
+  sort: SortOption;
+  direction: SortDirections;
 };
