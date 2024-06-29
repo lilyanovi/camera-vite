@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import Banner from '../components/banner/banner';
 import Sort from '../components/sort/sort';
+import Filters from '../components/filters/filters';
 
 function CatalogPage () {
   return (
@@ -34,6 +35,7 @@ function CatalogPage () {
             <div className="page-content__columns">
               <div className="catalog__aside">
                 <img src="img/banner.png"/>
+                <Filters />
               </div>
               <div className="catalog__content">
                 <Sort />

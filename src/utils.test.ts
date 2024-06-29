@@ -110,16 +110,16 @@ describe('Function: getTypeForPhoto', () => {
 
   it('should return "Коллекционный" when type="Types.Collectible"', ()=> {
     const expectedResult = 'Коллекционный';
-    const result = getTypeForPhoto(Types.Collectible);
+    const result = getTypeForPhoto(Types.Collection);
     expect(result).toBe(expectedResult);
-    expect(result).not.toBe(Types.Collectible);
+    expect(result).not.toBe(Types.Collection);
   });
 
-  it('should return "Моментальный" when type="Types.Instant"', ()=> {
+  it('should return "Моментальный" when type="Types.Snapshot"', ()=> {
     const expectedResult = 'Моментальный';
-    const result = getTypeForPhoto(Types.Instant);
+    const result = getTypeForPhoto(Types.Snapshot);
     expect(result).toBe(expectedResult);
-    expect(result).not.toBe(Types.Instant);
+    expect(result).not.toBe(Types.Snapshot);
   });
 });
 

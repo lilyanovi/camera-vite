@@ -1,23 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, SortDirections, SortOption, StatusLoading } from '../../const';
+import { Categories, Levels, NameSpace, SortDirections, SortOption, StatusLoading, Types } from '../../const';
 import { CamerasProcess } from '../../types/cameras-process';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
-import { getSortCamerasList } from '../../utils';
+import { getFilteredCamerasList, getSortCamerasList } from '../../utils';
 
 const initialState: CamerasProcess = {
   cameras: [],
   promoProducts: [],
   statusLoading: StatusLoading.Loading,
-  sortedCameras: [],
+  filteredCameras: [],
+  sort: SortOption.sortPrice,
+  direction: SortDirections.up
 };
 
 export const camerasProcess = createSlice({
   name: NameSpace.Cameras,
   initialState,
   reducers: {
-    sortCameras: (state, action: PayloadAction<{sort: SortOption; direction: SortDirections}>) => {
-      state.sortedCameras = getSortCamerasList(action.payload.sort, state.cameras, action.payload.direction);
-    }
+    changeSortOption: (state, action: PayloadAction<{sort: SortOption}>) => {
+      state.sort = action.payload.sort;
+    },
+    changeSortDirection: (state, action: PayloadAction<{direction: SortDirections}>) => {
+      state.direction = action.payload.direction;
+    },
+    sortCameras: (state) => {
+      state.filteredCameras = getSortCamerasList(state.sort, state.filteredCameras, state.direction);
+    },
+    filterCameras: (state, action: PayloadAction<{price: number | null; priceUp: number | null; level: Levels[]; category: Categories | null; type: Types[]}>) => {
+      state.filteredCameras = getFilteredCamerasList(state.cameras, action.payload.price, action.payload.priceUp, action.payload.category, action.payload.type, action.payload.level);
+    },
   },
   extraReducers(builder) {
     builder
@@ -37,4 +48,4 @@ export const camerasProcess = createSlice({
   }
 });
 
-export const {sortCameras} = camerasProcess.actions;
+export const {sortCameras, filterCameras, changeSortDirection, changeSortOption} = camerasProcess.actions;

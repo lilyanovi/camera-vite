@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { TReview, TReviews } from './types/review';
-import { SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirections, SortOption, Types } from './const';
+import { Categories, Levels, SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirections, SortOption, Types } from './const';
 import { TCamera } from './types/camera';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
@@ -21,9 +21,9 @@ export const getCurrentReviews = (sortReviews: TReviews, currentReviews?: TRevie
 
 export const getTypeForPhoto = (type: Types) => {
   switch(type){
-    case Types.Collectible:
+    case Types.Collection:
     case Types.Film:
-    case Types.Instant:
+    case Types.Snapshot:
       return `${type.slice(0, -2)}ый`;
     case Types.Digital:
       return `${type.slice(0, -2)}ой`;
@@ -65,4 +65,69 @@ export const getSortCamerasList = (sort: SortOption, cameras: TCamera[], directi
     default:
       return cameras;
   }
+};
+
+const getFilteredCamerasListByPrice = (cameras: TCamera[], price: number) => cameras.filter((camera) => camera.price >= price);
+
+const getFilteredCamerasListByPriceUp = (cameras: TCamera[], priceUp: number) => cameras.filter((camera) => camera.price <= priceUp);
+
+const getFilteredCamerasListByLevel = (cameras: TCamera[], levels: Levels[]) => cameras.filter((camera) => levels.includes(camera.level));
+
+const getFilteredCamerasListByType = (cameras: TCamera[], types: Types[]) => cameras.filter((camera) => types.includes(camera.type));
+
+const getFilteredCamerasListByCategory = (cameras: TCamera[], category: Categories) => cameras.filter((camera) => camera.category === category);
+
+
+export const getFilteredCamerasList = (cameras: TCamera[], price: number | null, priceUp: number | null, category: Categories | null, type: Types[], level: Levels[]) => {
+  let result = cameras.slice();
+  if(price){
+    result = getFilteredCamerasListByPrice(result, price);
+  }
+  if(priceUp){
+    result = getFilteredCamerasListByPriceUp(result, priceUp);
+  }
+  if(category){
+    result = getFilteredCamerasListByCategory(result, category);
+  }
+  if(type.length !== 0){
+    result = getFilteredCamerasListByType(result, type);
+  }
+  if(level.length !== 0){
+    result = getFilteredCamerasListByLevel(result, level);
+  }
+  return result;
+};
+
+type settingsType = {
+  price?: number | null;
+  priceUp?: number | null;
+  category?: Categories | null;
+  type?: Types[];
+  level?: Levels[];
+};
+
+export const getQueryObject = (settings: settingsType) => {
+  const result: {
+    price?: string;
+    priceUp?: string;
+    category?: Categories;
+    type?: string;
+    level?: string;
+  } = {};
+  if(settings.price){
+    result.price = String(settings.price);
+  }
+  if(settings.priceUp){
+    result.priceUp = String(settings.priceUp);
+  }
+  if(settings.category){
+    result.category = settings.category;
+  }
+  if(settings.type && settings.type.length !== 0){
+    result.type = settings.type?.join('+');
+  }
+  if(settings.level && settings.level.length !== 0){
+    result.level = settings.level?.join('+');
+  }
+  return result;
 };

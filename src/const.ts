@@ -93,21 +93,21 @@ export const Links = {
 export const STEP_REVIEWS_SHOWN = 3;
 
 export enum Levels {
-  Start = 'Нулевой',
-  Amateur = 'Любительский',
+  Zero = 'Нулевой',
+  NonProfessional = 'Любительский',
   Professional = 'Профессиональный',
 }
 
 export enum Categories {
-  Video = 'Видеокамера',
-  Photo = 'Фотоаппарат',
+  Photocamera = 'Фотоаппарат',
+  Videocamera = 'Видеокамера',
 }
 
 export enum Types {
-  Collectible = 'Коллекционная',
-  Instant = 'Моментальная',
   Digital = 'Цифровая',
   Film = 'Плёночная',
+  Snapshot = 'Моментальная',
+  Collection = 'Коллекционная',
 }
 
 export const ErrorMessages = {
