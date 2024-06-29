@@ -106,13 +106,15 @@ type settingsType = {
   level?: Levels[];
 };
 
-export const getQueryObject = (settings: settingsType) => {
+export const getQueryObject = (settings: settingsType, sort: SortOption, direction: SortDirections) => {
   const result: {
     price?: string;
     priceUp?: string;
     category?: Categories;
     type?: string;
     level?: string;
+    sort?: string;
+    direction?: string;
   } = {};
   if(settings.price){
     result.price = String(settings.price);
@@ -128,6 +130,12 @@ export const getQueryObject = (settings: settingsType) => {
   }
   if(settings.level && settings.level.length !== 0){
     result.level = settings.level?.join('+');
+  }
+  if(sort){
+    result.sort = sort;
+  }
+  if(direction){
+    result.direction = direction;
   }
   return result;
 };
