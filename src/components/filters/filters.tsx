@@ -1,9 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Categories, Levels, Types } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { filterCameras, sortCameras } from '../../store/cameras-process/cameras-process.slice';
+import { Categories, Levels, SortDirections, SortOption, Types } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeSortDirection, changeSortOption, filterCameras, sortCameras } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
-import { getQueryObject } from '../../utils';
+import { getMinMaxPrice, getQueryObject } from '../../utils';
+import { selectFilteredCameras, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
 
 function Filters (): JSX.Element {
   const [checkedTypes, setCheckedTypes] = useState<Types[]>([]);
@@ -14,13 +15,33 @@ function Filters (): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useAppDispatch();
+  const sort = useAppSelector(selectSortOption);
+  const direction = useAppSelector(selectSortDirection);
+  const filteredCameras = useAppSelector(selectFilteredCameras);
+
+  const minMaxPrice = getMinMaxPrice(filteredCameras);
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPrice(Number(evt.target.value));
   };
 
+  const handlePriceBlur = () => {
+    if(checkedPrice && checkedPrice < Number(minMaxPrice.min)) {
+      setCheckedPrice(Number(minMaxPrice.min));
+    }
+  };
+
   const handlePriceUpChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPriceUp(Number(evt.target.value));
+  };
+
+  const handlePriceUpBlur = () => {
+    if(checkedPriceUp && checkedPriceUp > Number(minMaxPrice.max)) {
+      setCheckedPriceUp(Number(minMaxPrice.max));
+    }
+    if(checkedPrice && checkedPriceUp && checkedPrice > checkedPriceUp){
+      setCheckedPriceUp(checkedPrice);
+    }
   };
 
   const handleCategoryChange = (category: Categories) => {
@@ -52,14 +73,14 @@ function Filters (): JSX.Element {
       priceUp: checkedPriceUp,
       category: checkedCategory,
       type: checkedTypes,
-      level: checkedLevels
+      level: checkedLevels,
     };
     dispatch(filterCameras(settings));
     dispatch(sortCameras());
 
-    const queryObject = getQueryObject(settings);
+    const queryObject = getQueryObject(settings, sort, direction);
     setSearchParams(queryObject);
-  }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes]);
+  }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes, sort, direction]);
 
   useEffect(() => {
     if(searchParams.has('price')){
@@ -77,7 +98,15 @@ function Filters (): JSX.Element {
     if(searchParams.has('level')){
       setCheckedLevels(searchParams.get('level')?.split('+') as Levels[]);
     }
-  }, [searchParams]);
+    if(searchParams.has('sort')){
+      dispatch(changeSortOption({sort: searchParams.get('sort') as SortOption}));
+      dispatch(sortCameras());
+    }
+    if(searchParams.has('direction')){
+      dispatch(changeSortDirection({direction: searchParams.get('direction') as SortDirections}));
+      dispatch(sortCameras());
+    }
+  }, [dispatch, searchParams]);
 
   const handleButtonClick = () => {
     setCheckedLevels([]);
@@ -99,9 +128,10 @@ function Filters (): JSX.Element {
                 <input
                   type="number"
                   name="price"
-                  placeholder="от"
+                  placeholder={minMaxPrice.min}
                   value={checkedPrice ? checkedPrice : ''}
                   onChange={handlePriceChange}
+                  onBlur={handlePriceBlur}
                 />
               </label>
             </div>
@@ -110,9 +140,10 @@ function Filters (): JSX.Element {
                 <input
                   type="number"
                   name="priceUp"
-                  placeholder="до"
+                  placeholder={minMaxPrice.max}
                   value={checkedPriceUp ? checkedPriceUp : ''}
                   onChange={handlePriceUpChange}
+                  onBlur={handlePriceUpBlur}
                 />
               </label>
             </div>
