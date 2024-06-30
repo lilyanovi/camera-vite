@@ -3,8 +3,8 @@ import { Categories, Levels, SortDirections, SortOption, Types } from '../../con
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSortDirection, changeSortOption, filterCameras, sortCameras } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
-import { getQueryObject } from '../../utils';
-import { selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
+import { getMinMaxPrice, getQueryObject } from '../../utils';
+import { selectFilteredCameras, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
 
 function Filters (): JSX.Element {
   const [checkedTypes, setCheckedTypes] = useState<Types[]>([]);
@@ -17,13 +17,31 @@ function Filters (): JSX.Element {
   const dispatch = useAppDispatch();
   const sort = useAppSelector(selectSortOption);
   const direction = useAppSelector(selectSortDirection);
+  const filteredCameras = useAppSelector(selectFilteredCameras);
+
+  const minMaxPrice = getMinMaxPrice(filteredCameras);
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPrice(Number(evt.target.value));
   };
 
+  const handlePriceBlur = () => {
+    if(checkedPrice && checkedPrice < Number(minMaxPrice.min)) {
+      setCheckedPrice(Number(minMaxPrice.min));
+    }
+  };
+
   const handlePriceUpChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPriceUp(Number(evt.target.value));
+  };
+
+  const handlePriceUpBlur = () => {
+    if(checkedPriceUp && checkedPriceUp > Number(minMaxPrice.max)) {
+      setCheckedPriceUp(Number(minMaxPrice.max));
+    }
+    if(checkedPrice && checkedPriceUp && checkedPrice > checkedPriceUp){
+      setCheckedPriceUp(checkedPrice);
+    }
   };
 
   const handleCategoryChange = (category: Categories) => {
@@ -110,9 +128,10 @@ function Filters (): JSX.Element {
                 <input
                   type="number"
                   name="price"
-                  placeholder="от"
+                  placeholder={minMaxPrice.min}
                   value={checkedPrice ? checkedPrice : ''}
                   onChange={handlePriceChange}
+                  onBlur={handlePriceBlur}
                 />
               </label>
             </div>
@@ -121,9 +140,10 @@ function Filters (): JSX.Element {
                 <input
                   type="number"
                   name="priceUp"
-                  placeholder="до"
+                  placeholder={minMaxPrice.max}
                   value={checkedPriceUp ? checkedPriceUp : ''}
                   onChange={handlePriceUpChange}
+                  onBlur={handlePriceUpBlur}
                 />
               </label>
             </div>

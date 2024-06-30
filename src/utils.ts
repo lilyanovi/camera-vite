@@ -139,3 +139,18 @@ export const getQueryObject = (settings: settingsType, sort: SortOption, directi
   }
   return result;
 };
+
+export const getMinMaxPrice = (cameras: TCamera[]) => {
+  if(cameras.length !== 0) {
+    const sortCameras = getSortCamerasList(SortOption.sortPrice, cameras, SortDirections.up);
+    const lastIndex = sortCameras.length - 1;
+    return {
+      min: String(sortCameras[0].price),
+      max: String(sortCameras[lastIndex].price)
+    };
+  }
+  return {
+    min: 'от',
+    max: 'до'
+  };
+};
