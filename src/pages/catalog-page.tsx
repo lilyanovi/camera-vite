@@ -5,6 +5,7 @@ import { AppRoute } from '../const';
 import Banner from '../components/banner/banner';
 import Sort from '../components/sort/sort';
 import Filters from '../components/filters/filters';
+import Pagination from '../components/pagination/pagination';
 
 function CatalogPage () {
   return (
@@ -40,6 +41,7 @@ function CatalogPage () {
               <div className="catalog__content">
                 <Sort />
                 <Cards />
+                <Pagination/>
               </div>
             </div>
           </div>
