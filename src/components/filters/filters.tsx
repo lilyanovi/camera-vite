@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Categories, Levels, SortDirections, SortOption, Types } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSortDirection, changeSortOption, filterCameras, sortCameras } from '../../store/cameras-process/cameras-process.slice';
+import { changeCurrentPage, changeSortDirection, changeSortOption, filterCameras, getCurrentCamerasList, sortCameras } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
 import { getMinMaxPrice, getQueryObject } from '../../utils';
-import { selectFilteredCameras, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
+import { selectCurrentPage, selectFilteredCameras, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
 
 function Filters (): JSX.Element {
   const [checkedTypes, setCheckedTypes] = useState<Types[]>([]);
@@ -12,14 +12,16 @@ function Filters (): JSX.Element {
   const [checkedCategory, setCheckedCategory] = useState<Categories | null>(null);
   const [checkedPrice, setCheckedPrice] = useState<number | null>(null);
   const [checkedPriceUp, setCheckedPriceUp] = useState<number | null>(null);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useAppDispatch();
   const sort = useAppSelector(selectSortOption);
   const direction = useAppSelector(selectSortDirection);
   const filteredCameras = useAppSelector(selectFilteredCameras);
+  const page = useAppSelector(selectCurrentPage);
 
-  const minMaxPrice = getMinMaxPrice(filteredCameras);
+  const [minMaxPrice, setMinMaxPrice] = useState(getMinMaxPrice(filteredCameras));
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPrice(Number(evt.target.value));
@@ -49,6 +51,7 @@ function Filters (): JSX.Element {
     if(category === Categories.Videocamera){
       setCheckedTypes(checkedTypes.filter((type) => type !== Types.Snapshot && type !== Types.Film));
     }
+    setMinMaxPrice(getMinMaxPrice(filteredCameras));
   };
 
   const handleTypeChange = (type: Types) => {
@@ -57,6 +60,7 @@ function Filters (): JSX.Element {
     } else {
       setCheckedTypes([...checkedTypes, type]);
     }
+    setMinMaxPrice(getMinMaxPrice(filteredCameras));
   };
 
   const handleLevelChange = (level: Levels) => {
@@ -65,6 +69,7 @@ function Filters (): JSX.Element {
     } else {
       setCheckedLevels([...checkedLevels, level]);
     }
+    setMinMaxPrice(getMinMaxPrice(filteredCameras));
   };
 
   useEffect(() => {
@@ -77,10 +82,11 @@ function Filters (): JSX.Element {
     };
     dispatch(filterCameras(settings));
     dispatch(sortCameras());
+    dispatch(getCurrentCamerasList());
 
-    const queryObject = getQueryObject(settings, sort, direction);
+    const queryObject = getQueryObject(settings, sort, direction, page);
     setSearchParams(queryObject);
-  }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes, sort, direction]);
+  }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes, sort, direction, page]);
 
   useEffect(() => {
     if(searchParams.has('price')){
@@ -104,6 +110,10 @@ function Filters (): JSX.Element {
     }
     if(searchParams.has('direction')){
       dispatch(changeSortDirection({direction: searchParams.get('direction') as SortDirections}));
+      dispatch(sortCameras());
+    }
+    if(searchParams.has('page')){
+      dispatch(changeCurrentPage({currentPage: Number(searchParams.get('page'))}));
       dispatch(sortCameras());
     }
   }, [dispatch, searchParams]);
@@ -132,6 +142,7 @@ function Filters (): JSX.Element {
                   value={checkedPrice ? checkedPrice : ''}
                   onChange={handlePriceChange}
                   onBlur={handlePriceBlur}
+                  tabIndex={0}
                 />
               </label>
             </div>
@@ -144,6 +155,7 @@ function Filters (): JSX.Element {
                   value={checkedPriceUp ? checkedPriceUp : ''}
                   onChange={handlePriceUpChange}
                   onBlur={handlePriceUpBlur}
+                  tabIndex={0}
                 />
               </label>
             </div>
@@ -160,6 +172,7 @@ function Filters (): JSX.Element {
                   value={category.toLowerCase()}
                   checked={checkedCategory === Categories[category]}
                   onChange={() => handleCategoryChange(Categories[category])}
+                  tabIndex={0}
                 /><span className="custom-radio__icon"></span><span className="custom-radio__label">{Categories[category]}</span>
               </label>
             </div>
@@ -176,6 +189,7 @@ function Filters (): JSX.Element {
                   checked={checkedTypes.includes(Types[type])}
                   onChange={() => handleTypeChange(Types[type])}
                   disabled={checkedCategory === Categories.Videocamera && (Types[type] === Types.Snapshot || Types[type] === Types.Film)}
+                  tabIndex={0}
                 /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Types[type]}</span>
               </label>
             </div>
@@ -191,6 +205,7 @@ function Filters (): JSX.Element {
                   checked={checkedLevels.includes(Levels[level])}
                   onChange={() => handleLevelChange(Levels[level])}
                   name={`${level === 'NonProfessional' ? 'non-professional' : level}`}
+                  tabIndex={0}
                 /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Levels[level]}</span>
               </label>
             </div>
@@ -200,6 +215,7 @@ function Filters (): JSX.Element {
           className="btn catalog-filter__reset-btn"
           type="reset"
           onClick={handleButtonClick}
+          tabIndex={0}
         >Сбросить фильтры
         </button>
       </form>

@@ -8,4 +8,7 @@ export type CamerasProcess = {
   statusLoading: StatusLoading;
   sort: SortOption;
   direction: SortDirections;
+  currentCamerasList: TCamera[];
+  currentPage: number;
+  visiblePages: number[];
 };

@@ -106,7 +106,7 @@ type settingsType = {
   level?: Levels[];
 };
 
-export const getQueryObject = (settings: settingsType, sort: SortOption, direction: SortDirections) => {
+export const getQueryObject = (settings: settingsType, sort: SortOption, direction: SortDirections, page: number) => {
   const result: {
     price?: string;
     priceUp?: string;
@@ -115,6 +115,7 @@ export const getQueryObject = (settings: settingsType, sort: SortOption, directi
     level?: string;
     sort?: string;
     direction?: string;
+    page?: string;
   } = {};
   if(settings.price){
     result.price = String(settings.price);
@@ -136,6 +137,9 @@ export const getQueryObject = (settings: settingsType, sort: SortOption, directi
   }
   if(direction){
     result.direction = direction;
+  }
+  if(page){
+    result.page = String(page);
   }
   return result;
 };

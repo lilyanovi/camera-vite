@@ -30,7 +30,7 @@ function Tabs ({vendorCode, category, type, level, description}: TabsProps): JSX
     if(searchParams.has('tab')){
       setIsActive(searchParams.get('tab') as ActiveTabs);
     }
-  }, [searchParams]);
+  }, []);
 
   return (
     <div className="tabs product__tabs">

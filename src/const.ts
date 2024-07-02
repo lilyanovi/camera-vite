@@ -141,3 +141,9 @@ export enum SortDirections {
   up = 'По возрастанию',
   down = 'По убыванию',
 }
+
+export const PER_PAGE_CAMERAS_COUNT = 9;
+
+export const PAGINATION_PAGE_COUNT = 3;
+
+export const START_PAGE = 1;
