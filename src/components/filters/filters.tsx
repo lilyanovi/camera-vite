@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Categories, Levels, SortDirections, SortOption, Types } from '../../const';
+import { Categories, Levels, START_PAGE, SortDirections, SortOption, Types } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCurrentPage, changeSortDirection, changeSortOption, filterCameras, getCurrentCamerasList, sortCameras } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
@@ -25,6 +25,7 @@ function Filters (): JSX.Element {
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPrice(Number(evt.target.value));
+    dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handlePriceBlur = () => {
@@ -35,6 +36,7 @@ function Filters (): JSX.Element {
 
   const handlePriceUpChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setCheckedPriceUp(Number(evt.target.value));
+    dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handlePriceUpBlur = () => {
@@ -52,6 +54,7 @@ function Filters (): JSX.Element {
       setCheckedTypes(checkedTypes.filter((type) => type !== Types.Snapshot && type !== Types.Film));
     }
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
+    dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handleTypeChange = (type: Types) => {
@@ -61,6 +64,7 @@ function Filters (): JSX.Element {
       setCheckedTypes([...checkedTypes, type]);
     }
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
+    dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handleLevelChange = (level: Levels) => {
@@ -70,6 +74,7 @@ function Filters (): JSX.Element {
       setCheckedLevels([...checkedLevels, level]);
     }
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
+    dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   useEffect(() => {
@@ -106,15 +111,13 @@ function Filters (): JSX.Element {
     }
     if(searchParams.has('sort')){
       dispatch(changeSortOption({sort: searchParams.get('sort') as SortOption}));
-      dispatch(sortCameras());
     }
     if(searchParams.has('direction')){
       dispatch(changeSortDirection({direction: searchParams.get('direction') as SortDirections}));
-      dispatch(sortCameras());
     }
     if(searchParams.has('page')){
       dispatch(changeCurrentPage({currentPage: Number(searchParams.get('page'))}));
-      dispatch(sortCameras());
+
     }
   }, [dispatch, searchParams]);
 

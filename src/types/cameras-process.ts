@@ -10,5 +10,4 @@ export type CamerasProcess = {
   direction: SortDirections;
   currentCamerasList: TCamera[];
   currentPage: number;
-  visiblePages: number[];
 };

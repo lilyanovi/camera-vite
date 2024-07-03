@@ -13,7 +13,6 @@ const initialState: CamerasProcess = {
   direction: SortDirections.up,
   currentCamerasList: [],
   currentPage: START_PAGE,
-  visiblePages: [],
 };
 
 export const camerasProcess = createSlice({
@@ -33,9 +32,6 @@ export const camerasProcess = createSlice({
     changeCurrentPage: (state, action: PayloadAction<{currentPage: number}>) => {
       state.currentPage = action.payload.currentPage;
       camerasProcess.actions.getCurrentCamerasList();
-    },
-    changeVisiblePages: (state, action: PayloadAction<{visiblePages: number[]}>) => {
-      state.visiblePages = action.payload.visiblePages;
     },
     sortCameras: (state) => {
       state.filteredCameras = getSortCamerasList(state.sort, state.filteredCameras, state.direction);
@@ -67,4 +63,4 @@ export const camerasProcess = createSlice({
   }
 });
 
-export const {sortCameras, filterCameras, changeSortDirection, changeSortOption, getCurrentCamerasList, changeCurrentPage, changeVisiblePages} = camerasProcess.actions;
+export const {sortCameras, filterCameras, changeSortDirection, changeSortOption, getCurrentCamerasList, changeCurrentPage} = camerasProcess.actions;

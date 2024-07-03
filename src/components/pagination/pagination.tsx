@@ -1,26 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PAGINATION_PAGE_COUNT, PER_PAGE_CAMERAS_COUNT } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectCurrentPage, selectFilteredCameras, selectVisiblePages } from '../../store/cameras-process/cameras-process.selectors';
-import { changeCurrentPage, changeVisiblePages } from '../../store/cameras-process/cameras-process.slice';
+import { selectCurrentPage, selectFilteredCameras } from '../../store/cameras-process/cameras-process.selectors';
+import { changeCurrentPage } from '../../store/cameras-process/cameras-process.slice';
 import PaginationItem from './pagination-item';
 
 function Pagination (): JSX.Element {
+  const [visiblePages, setVisiblePages] = useState<number[]>([]);
   const filteredCameras = useAppSelector(selectFilteredCameras);
   const currentPage = useAppSelector(selectCurrentPage);
-  const visiblePages = useAppSelector(selectVisiblePages);
+
   const pageCount = Math.ceil(filteredCameras.length / PER_PAGE_CAMERAS_COUNT);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if(filteredCameras){
-      if(pageCount >= PAGINATION_PAGE_COUNT){
-        dispatch(changeVisiblePages({visiblePages: Array.from({length: PAGINATION_PAGE_COUNT }, (_, i) => i + 1)}));
-      } else {
-        dispatch(changeVisiblePages({visiblePages: Array.from({length: pageCount }, (_, i) => i + 1)}));
-      }
+    if(pageCount >= PAGINATION_PAGE_COUNT){
+      setVisiblePages(Array.from({length: PAGINATION_PAGE_COUNT }, (_, i) => i + 1));
+    } else {
+      setVisiblePages(Array.from({length: pageCount }, (_, i) => i + 1));
     }
-  }, [pageCount, filteredCameras, dispatch]);
+
+  }, [pageCount, dispatch]);
 
   const handleNextPageClick = () => {
     const firstIndex = visiblePages[visiblePages.length - 1] + 1;
@@ -31,7 +31,7 @@ function Pagination (): JSX.Element {
         newPages.push(i);
       }
     }
-    dispatch(changeVisiblePages({visiblePages: newPages}));
+    setVisiblePages(newPages);
   };
 
   const handlePrevPageClick = () => {
@@ -43,7 +43,7 @@ function Pagination (): JSX.Element {
         newPages.unshift(i);
       }
     }
-    dispatch(changeVisiblePages({visiblePages: newPages}));
+    setVisiblePages(newPages);
   };
 
   const handleCurrentPageChange = (newPage: number) => {
@@ -63,8 +63,8 @@ function Pagination (): JSX.Element {
             >Назад
             </a>
           </li> : ''}
-        {visiblePages?.map((page) => <PaginationItem key={page} page={page} currentPage={currentPage} onChangePage={handleCurrentPageChange}/>)}
-        {!visiblePages?.includes(pageCount) ?
+        {visiblePages.map((page) => <PaginationItem key={page} page={page} currentPage={currentPage} onChangePage={handleCurrentPageChange}/>)}
+        {!visiblePages.includes(pageCount) ?
           <li className="pagination__item">
             <a
               className="pagination__link pagination__link&#45;&#45;text"
