@@ -1,21 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Categories, Levels, START_PAGE, SortDirections, SortOption, Types } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCurrentPage, changeSortDirection, changeSortOption, filterCameras, getCurrentCamerasList, sortCameras } from '../../store/cameras-process/cameras-process.slice';
+import { changeCurrentPage, changeFilteredSettings, changeSortDirection, changeSortOption } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
 import { getMinMaxPrice, getQueryObject } from '../../utils';
-import { selectCurrentPage, selectFilteredCameras, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
+import { selectCurrentPage, selectFilteredCameras, selectFilteredSettings, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
 
 function Filters (): JSX.Element {
-  const [checkedTypes, setCheckedTypes] = useState<Types[]>([]);
-  const [checkedLevels, setCheckedLevels] = useState<Levels[]>([]);
-  const [checkedCategory, setCheckedCategory] = useState<Categories | null>(null);
-  const [checkedPrice, setCheckedPrice] = useState<number | null>(null);
-  const [checkedPriceUp, setCheckedPriceUp] = useState<number | null>(null);
-
   const [searchParams, setSearchParams] = useSearchParams();
-
   const dispatch = useAppDispatch();
+
+  const filteredSettings = useAppSelector(selectFilteredSettings);
+  const {price: checkedPrice, priceUp: checkedPriceUp, category: checkedCategory, type: checkedTypes, level: checkedLevels} = filteredSettings;
+
   const sort = useAppSelector(selectSortOption);
   const direction = useAppSelector(selectSortDirection);
   const filteredCameras = useAppSelector(selectFilteredCameras);
@@ -24,55 +21,92 @@ function Filters (): JSX.Element {
   const [minMaxPrice, setMinMaxPrice] = useState(getMinMaxPrice(filteredCameras));
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setCheckedPrice(Number(evt.target.value));
+    dispatch(changeFilteredSettings({
+      price: Number(evt.target.value),
+      priceUp: checkedPriceUp,
+      category: checkedCategory,
+      type: checkedTypes,
+      level: checkedLevels,
+    }));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handlePriceBlur = () => {
     if(checkedPrice && checkedPrice < Number(minMaxPrice.min)) {
-      setCheckedPrice(Number(minMaxPrice.min));
+      dispatch(changeFilteredSettings({
+        price: Number(minMaxPrice.min),
+        priceUp: checkedPriceUp,
+        category: checkedCategory,
+        type: checkedTypes,
+        level: checkedLevels,
+      }));
     }
   };
 
   const handlePriceUpChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setCheckedPriceUp(Number(evt.target.value));
+    dispatch(changeFilteredSettings({
+      price: checkedPrice,
+      priceUp: Number(evt.target.value),
+      category: checkedCategory,
+      type: checkedTypes,
+      level: checkedLevels,
+    }));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handlePriceUpBlur = () => {
     if(checkedPriceUp && checkedPriceUp > Number(minMaxPrice.max)) {
-      setCheckedPriceUp(Number(minMaxPrice.max));
+      dispatch(changeFilteredSettings({
+        price: checkedPrice,
+        priceUp: Number(minMaxPrice.max),
+        category: checkedCategory,
+        type: checkedTypes,
+        level: checkedLevels,
+      }));
     }
     if(checkedPrice && checkedPriceUp && checkedPrice > checkedPriceUp){
-      setCheckedPriceUp(checkedPrice);
+      dispatch(changeFilteredSettings({
+        price: checkedPrice,
+        priceUp: checkedPrice,
+        category: checkedCategory,
+        type: checkedTypes,
+        level: checkedLevels,
+      }));
     }
   };
 
   const handleCategoryChange = (category: Categories) => {
-    setCheckedCategory(category);
-    if(category === Categories.Videocamera){
-      setCheckedTypes(checkedTypes.filter((type) => type !== Types.Snapshot && type !== Types.Film));
-    }
+    dispatch(changeFilteredSettings({
+      price: checkedPrice,
+      priceUp: checkedPriceUp,
+      category: category,
+      type: category === Categories.Videocamera ? checkedTypes.filter((type) => type !== Types.Snapshot && type !== Types.Film) : checkedTypes,
+      level: checkedLevels,
+    }));
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handleTypeChange = (type: Types) => {
-    if(checkedTypes.includes(type)){
-      setCheckedTypes(checkedTypes.filter((checkedType) => type !== checkedType));
-    } else {
-      setCheckedTypes([...checkedTypes, type]);
-    }
+    dispatch(changeFilteredSettings({
+      price: checkedPrice,
+      priceUp: checkedPriceUp,
+      category: checkedCategory,
+      type: checkedTypes.includes(type) ? checkedTypes.filter((checkedType) => type !== checkedType) : [...checkedTypes, type],
+      level: checkedLevels,
+    }));
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
   const handleLevelChange = (level: Levels) => {
-    if(checkedLevels.includes(level)){
-      setCheckedLevels(checkedLevels.filter((checkedLevel) => level !== checkedLevel));
-    } else {
-      setCheckedLevels([...checkedLevels, level]);
-    }
+    dispatch(changeFilteredSettings({
+      price: checkedPrice,
+      priceUp: checkedPriceUp,
+      category: checkedCategory,
+      type: checkedTypes,
+      level: checkedLevels.includes(level) ? checkedLevels.filter((checkedLevel) => level !== checkedLevel) : [...checkedLevels, level],
+    }));
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
@@ -85,30 +119,20 @@ function Filters (): JSX.Element {
       type: checkedTypes,
       level: checkedLevels,
     };
-    dispatch(filterCameras(settings));
-    dispatch(sortCameras());
-    dispatch(getCurrentCamerasList());
 
     const queryObject = getQueryObject(settings, sort, direction, page);
     setSearchParams(queryObject);
   }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes, sort, direction, page]);
 
   useEffect(() => {
-    if(searchParams.has('price')){
-      setCheckedPrice(Number(searchParams.get('price')));
-    }
-    if(searchParams.has('priceUp')){
-      setCheckedPriceUp(Number(searchParams.get('priceUp')));
-    }
-    if(searchParams.has('category')){
-      setCheckedCategory(searchParams.get('category') as Categories);
-    }
-    if(searchParams.has('type')){
-      setCheckedTypes(searchParams.get('type')?.split('+') as Types[]);
-    }
-    if(searchParams.has('level')){
-      setCheckedLevels(searchParams.get('level')?.split('+') as Levels[]);
-    }
+    dispatch(changeFilteredSettings({
+      price: searchParams.has('price') ? Number(searchParams.get('price')) : checkedPrice,
+      priceUp: searchParams.has('priceUp') ? Number(searchParams.get('priceUp')) : checkedPriceUp,
+      category: searchParams.has('category') ? searchParams.get('category') as Categories : checkedCategory,
+      type: searchParams.has('type') ? searchParams.get('type')?.split('+') as Types[] : checkedTypes,
+      level: searchParams.has('level') ? searchParams.get('level')?.split('+') as Levels[] : checkedLevels,
+    }));
+
     if(searchParams.has('sort')){
       dispatch(changeSortOption({sort: searchParams.get('sort') as SortOption}));
     }
@@ -119,14 +143,16 @@ function Filters (): JSX.Element {
       dispatch(changeCurrentPage({currentPage: Number(searchParams.get('page'))}));
 
     }
-  }, [dispatch, searchParams]);
+  }, []);
 
   const handleButtonClick = () => {
-    setCheckedLevels([]);
-    setCheckedCategory(null);
-    setCheckedTypes([]);
-    setCheckedPrice(null);
-    setCheckedPriceUp(null);
+    dispatch(changeFilteredSettings({
+      price: null,
+      priceUp: null,
+      category: null,
+      type: [],
+      level: [],
+    }));
   };
 
   return (

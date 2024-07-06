@@ -1,12 +1,11 @@
-import { NameSpace, SortDirections, SortOption, StatusLoading } from '../../const';
+import { createSelector } from 'reselect';
+import { NameSpace, PER_PAGE_CAMERAS_COUNT, SortDirections, SortOption, StatusLoading } from '../../const';
 import { TCamera, TPromoProduct } from '../../types/camera';
 import type { State } from '../../types/state';
+import { getFilteredCamerasList, getSortCamerasList } from '../../utils';
+import { FilteredSettingsType } from '../../types/cameras-process';
 
 const selectCameras = (state: Pick<State, NameSpace.Cameras>): TCamera[] => state[NameSpace.Cameras].cameras;
-
-const selectFilteredCameras = (state: Pick<State, NameSpace.Cameras>): TCamera[] => state[NameSpace.Cameras].filteredCameras;
-
-const selectCurrentCamerasList = (state: Pick<State, NameSpace.Cameras>): TCamera[] => state[NameSpace.Cameras].currentCamerasList;
 
 const selectSortOption = (state: Pick<State, NameSpace.Cameras>): SortOption => state[NameSpace.Cameras].sort;
 
@@ -18,6 +17,23 @@ const selectStatusLoading = (state: Pick<State, NameSpace.Cameras>): StatusLoadi
 
 const selectCurrentPage = (state: Pick<State, NameSpace.Cameras>): number => state[NameSpace.Cameras].currentPage;
 
-const selectVisiblePages = (state: Pick<State, NameSpace.Cameras>): number[] => state[NameSpace.Cameras].visiblePages;
+const selectFilteredSettings = (state: Pick<State, NameSpace.Cameras>): FilteredSettingsType => state[NameSpace.Cameras].filteredSettings;
 
-export {selectCameras, selectPromoProducts, selectStatusLoading, selectFilteredCameras, selectSortDirection, selectSortOption, selectCurrentCamerasList, selectCurrentPage, selectVisiblePages};
+const selectFilteredCameras = createSelector(
+  [selectCameras, selectFilteredSettings],
+  (cameras, settings) => getFilteredCamerasList(cameras, settings.price, settings.priceUp, settings.category, settings.type, settings.level));
+
+const selectSortCameras = createSelector(
+  [selectSortOption, selectFilteredCameras, selectSortDirection],
+  (sort, filteredCameras, direction) => getSortCamerasList(sort, filteredCameras, direction));
+
+const selectCurrentCamerasList = createSelector(
+  [selectSortCameras, selectCurrentPage],
+  (sortCameras, currentPage) => {
+    const lastIndex = currentPage * PER_PAGE_CAMERAS_COUNT;
+    const firstIndex = lastIndex - PER_PAGE_CAMERAS_COUNT;
+    return sortCameras.slice(firstIndex, lastIndex);
+  }
+);
+
+export {selectCameras, selectPromoProducts, selectStatusLoading, selectSortDirection, selectSortOption, selectCurrentPage, selectFilteredSettings, selectFilteredCameras, selectCurrentCamerasList, selectSortCameras};

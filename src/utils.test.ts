@@ -1,6 +1,7 @@
-import { Types } from './const';
+import { Categories, Levels, SortDirections, SortOption, Types } from './const';
 import { makeFakeCamera, makeFakeReview } from './mocks';
-import { getCurrentReviews, getFormatDate, getIsActiveProducts, getPhoneByPost, getSortByDateReviews, getTypeForPhoto } from './utils';
+import { TCamera } from './types/camera';
+import { getCurrentReviews, getFilteredCameras, getFilteredCamerasList, getFormatDate, getIsActiveProducts, getMinMaxPrice, getPhoneByPost, getQueryObject, getSortByDateReviews, getSortCamerasList, getTypeForPhoto } from './utils';
 
 describe('Function: getFormatDate', () => {
   it('should return result in format DD MMMM', ()=> {
@@ -167,5 +168,310 @@ describe('Function: getIsActiveProducts', () => {
 
     expect(result.length).toBe(3);
     expect(result).toEqual([mockCameras[0].id, mockCameras[1].id, mockCameras[2].id]);
+  });
+});
+
+describe('Function: getFilteredCameras', () => {
+  it('should return filtered array', ()=> {
+    const mockCameras = [{
+      id: 1,
+      name: 'Ретрокамера Dus Auge lV',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Коллекционная',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 65000,
+      rating: 5,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }, {
+      id: 2,
+      name: 'FastShot MR-5',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Фотоаппарат',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Любительский',
+      price: 18970,
+      rating: 2,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }, {
+      id: 3,
+      name: 'Instaprinter P2"',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 6500,
+      rating: 3,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }] as TCamera[];
+    const fakeValue = 'рет';
+    const result = getFilteredCameras(mockCameras, fakeValue);
+
+    expect(result.length).toBe(1);
+    expect(result).toEqual([mockCameras[0]]);
+  });
+});
+
+describe('Function: getSortCamerasList', () => {
+  const mockCameras = [{
+    id: 1,
+    name: 'Ретрокамера Dus Auge lV',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Коллекционная',
+    category: 'Видеокамера',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Нулевой',
+    price: 65000,
+    rating: 5,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }, {
+    id: 2,
+    name: 'FastShot MR-5',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Цифровая',
+    category: 'Фотоаппарат',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Любительский',
+    price: 18970,
+    rating: 2,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }, {
+    id: 3,
+    name: 'Instaprinter P2"',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Цифровая',
+    category: 'Видеокамера',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Нулевой',
+    price: 6500,
+    rating: 3,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }] as TCamera[];
+  it('should return sorted array by price up', ()=> {
+    const fakeSort = SortOption.sortPrice;
+    const fakeDirection = SortDirections.up;
+    const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
+
+    expect(result.length).toBe(3);
+    expect(result).toEqual([mockCameras[2], mockCameras[1], mockCameras[0]]);
+  });
+  it('should return sorted array by price down', ()=> {
+    const fakeSort = SortOption.sortPrice;
+    const fakeDirection = SortDirections.down;
+    const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
+
+    expect(result.length).toBe(3);
+    expect(result).toEqual(mockCameras);
+  });
+  it('should return sorted array by popular up', ()=> {
+    const fakeSort = SortOption.sortPopular;
+    const fakeDirection = SortDirections.up;
+    const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
+
+    expect(result.length).toBe(3);
+    expect(result).toEqual([mockCameras[1], mockCameras[2], mockCameras[0]]);
+  });
+
+  it('should return sorted array by popular down', ()=> {
+    const fakeSort = SortOption.sortPopular;
+    const fakeDirection = SortDirections.down;
+    const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
+
+    expect(result.length).toBe(3);
+    expect(result).toEqual([mockCameras[0], mockCameras[2], mockCameras[1]]);
+  });
+});
+
+describe('Function: getFilteredCamerasList', () => {
+  const mockCameras = [{
+    id: 1,
+    name: 'Ретрокамера Dus Auge lV',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Коллекционная',
+    category: 'Видеокамера',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Нулевой',
+    price: 65000,
+    rating: 5,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }, {
+    id: 2,
+    name: 'FastShot MR-5',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Цифровая',
+    category: 'Фотоаппарат',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Любительский',
+    price: 18970,
+    rating: 2,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }, {
+    id: 3,
+    name: 'Instaprinter P2"',
+    vendorCode: 'DA4IU67AD5',
+    type: 'Цифровая',
+    category: 'Видеокамера',
+    description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+    level: 'Нулевой',
+    price: 6500,
+    rating: 3,
+    reviewCount: 16,
+    previewImg: 'img/content/das-auge.jpg',
+    previewImg2x: 'img/content/das-auge@2x.jpg',
+    previewImgWebp: 'img/content/das-auge.webp',
+    previewImgWebp2x: 'img/content/das-auge@2x.webp'
+  }] as TCamera[];
+  it('should return correctly result when reset filters', ()=> {
+    const fakePrice = null;
+    const fakePriceUp = null;
+    const fakeCategory = null;
+    const fakeType = [] as Types[];
+    const fakeLevel = [] as Levels[];
+    const result = getFilteredCamerasList(mockCameras, fakePrice, fakePriceUp, fakeCategory, fakeType, fakeLevel);
+
+    expect(result.length).toBe(3);
+    expect(result).toEqual(mockCameras);
+  });
+  it('should return correctly result when filters transferred', ()=> {
+    const fakePrice = 18000;
+    const fakePriceUp = 65000;
+    const fakeCategory = Categories.Photocamera;
+    const fakeType = [Types.Digital];
+    const fakeLevel = [Levels.NonProfessional, Levels.Zero];
+    const result = getFilteredCamerasList(mockCameras, fakePrice, fakePriceUp, fakeCategory, fakeType, fakeLevel);
+
+    expect(result.length).toBe(1);
+    expect(result).toEqual([mockCameras[1]]);
+  });
+});
+
+describe('Function: getQueryObject', () => {
+  it('should return correctly result when "settings" = {}', ()=> {
+    const fakeSettings = {};
+    const fakeSort = SortOption.sortPopular;
+    const fakeDirection = SortDirections.up;
+    const fakePage = 1;
+    const result = getQueryObject(fakeSettings, fakeSort, fakeDirection, fakePage);
+
+    expect(Object.keys(result).length).toBe(3);
+    expect(result.sort).toBe(fakeSort);
+    expect(result.direction).toBe(fakeDirection);
+    expect(result.page).toBe(String(fakePage));
+  });
+  it('should return correctly result when "settings" !== {}', ()=> {
+    const fakeSettings = {
+      type: [Types.Collection, Types.Film],
+      category: Categories.Videocamera
+    };
+    const fakeSort = SortOption.sortPrice;
+    const fakeDirection = SortDirections.down;
+    const fakePage = 5;
+    const result = getQueryObject(fakeSettings, fakeSort, fakeDirection, fakePage);
+
+    expect(Object.keys(result).length).toBe(5);
+    expect(result.sort).toBe(fakeSort);
+    expect(result.direction).toBe(fakeDirection);
+    expect(result.page).toBe(String(fakePage));
+    expect(result.category).toBe(fakeSettings.category);
+    expect(result.type).toBe(fakeSettings.type.join('+'));
+  });
+});
+
+describe('Function: getMinMaxPrice', () => {
+  it('should return correctly result when cameras.length = 0', ()=> {
+    const fakeCameras = [] as TCamera[];
+    const result = getMinMaxPrice(fakeCameras);
+
+    expect(Object.keys(result).length).toBe(2);
+    expect(result.min).toBe('от');
+    expect(result.max).toBe('до');
+  });
+  it('should return correctly result when cameras.length !== 0', ()=> {
+    const fakeCameras = [{
+      id: 1,
+      name: 'Ретрокамера Dus Auge lV',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Коллекционная',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 65000,
+      rating: 5,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }, {
+      id: 2,
+      name: 'FastShot MR-5',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Фотоаппарат',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Любительский',
+      price: 18970,
+      rating: 2,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }, {
+      id: 3,
+      name: 'Instaprinter P2"',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 6500,
+      rating: 3,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp'
+    }] as TCamera[];
+    const result = getMinMaxPrice(fakeCameras);
+
+    expect(Object.keys(result).length).toBe(2);
+    expect(result.min).toBe('6500');
+    expect(result.max).toBe('65000');
   });
 });

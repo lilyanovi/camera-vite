@@ -31,7 +31,7 @@ function SearchList ({filteredCameras}: SearchListProps): JSX.Element {
   });*/
 
   return (
-    <ul className="form-search__select-list">
+    <ul className="form-search__select-list" data-testid="search-list-container">
       {filteredCameras.map((camera) => <SearchItem camera={camera} key={camera.id}/>)}
     </ul>
   );

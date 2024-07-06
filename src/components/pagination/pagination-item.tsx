@@ -6,7 +6,7 @@ type PaginationItemProps = {
 
 function PaginationItem ({page, currentPage, onChangePage}: PaginationItemProps): JSX.Element {
   return (
-    <li className="pagination__item">
+    <li className="pagination__item" data-testid="pagination-item-container">
       <a className={`pagination__link${currentPage === page ? ' pagination__link--active' : ''}`} onClick={() => onChangePage(page)}>{page}</a>
     </li>
   );

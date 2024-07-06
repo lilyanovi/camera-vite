@@ -53,7 +53,7 @@ function Pagination (): JSX.Element {
   };
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-container">
       <ul className="pagination__list">
         {!visiblePages?.includes(1) ?
           <li className="pagination__item">
