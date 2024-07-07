@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import Tabs from './tabs';
-import { Categories, Levels, START_PAGE, SortDirections, SortOption, StatusLoading, Types } from '../../const';
+import { Category, Level, START_PAGE, SortDirection, SortOption, StatusLoading, Type } from '../../const';
 import { withHistory, withStore } from '../../mock-component';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 
 describe('Component: Tabs', () => {
   it('should render correctly', () => {
     const fakeVendorCode = 'vendor';
-    const fakeCategory = Categories.Photocamera;
-    const fakeLevel = Levels.NonProfessional;
+    const fakeCategory = Category.Photocamera;
+    const fakeLevel = Level.NonProfessional;
     const fakeDescription = 'description';
-    const fakeType = Types.Snapshot;
+    const fakeType = Type.Snapshot;
     const { withStoreComponent } = withStore(
       <Tabs
         vendorCode={fakeVendorCode}
@@ -30,7 +30,7 @@ describe('Component: Tabs', () => {
           type: [],
         },
         sort: SortOption.sortPrice,
-        direction: SortDirections.up,
+        direction: SortDirection.up,
         currentPage: START_PAGE}});
     const preparedComponent = withHistory(withStoreComponent);
 

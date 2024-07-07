@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { NameSpace, PER_PAGE_CAMERAS_COUNT, SortDirections, SortOption, StatusLoading } from '../../const';
+import { NameSpace, PER_PAGE_CAMERAS_COUNT, SortDirection, SortOption, StatusLoading } from '../../const';
 import { TCamera, TPromoProduct } from '../../types/camera';
 import type { State } from '../../types/state';
 import { getFilteredCamerasList, getSortCamerasList } from '../../utils';
@@ -9,7 +9,7 @@ const selectCameras = (state: Pick<State, NameSpace.Cameras>): TCamera[] => stat
 
 const selectSortOption = (state: Pick<State, NameSpace.Cameras>): SortOption => state[NameSpace.Cameras].sort;
 
-const selectSortDirection = (state: Pick<State, NameSpace.Cameras>): SortDirections => state[NameSpace.Cameras].direction;
+const selectSortDirection = (state: Pick<State, NameSpace.Cameras>): SortDirection => state[NameSpace.Cameras].direction;
 
 const selectPromoProducts = (state: Pick<State, NameSpace.Cameras>): TPromoProduct[] => state[NameSpace.Cameras].promoProducts;
 

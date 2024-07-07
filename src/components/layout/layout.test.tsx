@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mock-component';
 import Layout from './layout';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
-import { START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 
 
 describe('Component: Layout', () => {
@@ -23,7 +23,7 @@ describe('Component: Layout', () => {
           type: [],
         },
         sort: SortOption.sortPrice,
-        direction: SortDirections.up,
+        direction: SortDirection.up,
         currentPage: START_PAGE
       }});
     const preparedComponent = withHistory(withStoreComponent);

@@ -3,7 +3,7 @@ import { withHistory, withStore } from '../mock-component';
 
 import CatalogPage from './catalog-page';
 import { makeFakeCamera, makeFakePromoProduct } from '../mocks';
-import { START_PAGE, SortDirections, SortOption, StatusLoading } from '../const';
+import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../const';
 
 describe('Component: CatalogPage', () => {
   it('should render correctly', () => {
@@ -13,7 +13,7 @@ describe('Component: CatalogPage', () => {
       promoProducts: [makeFakePromoProduct()],
       statusLoading: StatusLoading.Success,
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
       filteredSettings: {
         price: null,

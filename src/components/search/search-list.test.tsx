@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { withHistory, withStore } from '../../mock-component';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import SearchList from './search-list';
@@ -21,7 +21,7 @@ describe('Component: SearchList', () => {
           type: [],
         },
         sort: SortOption.sortPrice,
-        direction: SortDirections.up,
+        direction: SortDirection.up,
         currentPage: START_PAGE}});
     const preparedComponent = withHistory(withStoreComponent);
 

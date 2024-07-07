@@ -1,12 +1,12 @@
-import { Categories, Levels, SortDirections, SortOption, StatusLoading, Types } from '../const';
+import { Category, Level, SortDirection, SortOption, StatusLoading, Type } from '../const';
 import { TCamera, TPromoProduct } from './camera';
 
 export type FilteredSettingsType = {
   price: number | null;
   priceUp: number | null;
-  level: Levels[];
-  category: Categories | null;
-  type: Types[];
+  level: Level[];
+  category: Category | null;
+  type: Type[];
 };
 
 export type CamerasProcess = {
@@ -14,7 +14,7 @@ export type CamerasProcess = {
   promoProducts: TPromoProduct[];
   statusLoading: StatusLoading;
   sort: SortOption;
-  direction: SortDirections;
+  direction: SortDirection;
   currentPage: number;
   filteredSettings: FilteredSettingsType;
 };

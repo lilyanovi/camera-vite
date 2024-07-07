@@ -1,4 +1,4 @@
-import { Levels, NameSpace, START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { Level, NameSpace, START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { makeFakePromoProduct } from '../../mocks';
 import { TCamera } from '../../types/camera';
 import { selectCameras, selectCurrentCamerasList, selectCurrentPage, selectFilteredCameras, selectFilteredSettings, selectPromoProducts, selectSortCameras, selectSortDirection, selectSortOption, selectStatusLoading } from './cameras-process.selectors';
@@ -55,12 +55,12 @@ describe('CamerasProcess selectors', () => {
       promoProducts: new Array(4).fill(null).map(() => makeFakePromoProduct()),
       statusLoading: StatusLoading.Success,
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
       filteredSettings: {
         price: 700,
         priceUp: null,
-        level: Levels.Zero,
+        level: [Level.Zero],
         category: null,
         type: [],
       }

@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Categories, Levels, START_PAGE, SortDirections, SortOption, Types } from '../../const';
+import { Category, Level, START_PAGE, SortDirection, SortOption, Type } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCurrentPage, changeFilteredSettings, changeSortDirection, changeSortOption } from '../../store/cameras-process/cameras-process.slice';
 import { useSearchParams } from 'react-router-dom';
@@ -75,19 +75,19 @@ function Filters (): JSX.Element {
     }
   };
 
-  const handleCategoryChange = (category: Categories) => {
+  const handleCategoryChange = (category: Category) => {
     dispatch(changeFilteredSettings({
       price: checkedPrice,
       priceUp: checkedPriceUp,
       category: category,
-      type: category === Categories.Videocamera ? checkedTypes.filter((type) => type !== Types.Snapshot && type !== Types.Film) : checkedTypes,
+      type: category === Category.Videocamera ? checkedTypes.filter((type) => type !== Type.Snapshot && type !== Type.Film) : checkedTypes,
       level: checkedLevels,
     }));
     setMinMaxPrice(getMinMaxPrice(filteredCameras));
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
-  const handleTypeChange = (type: Types) => {
+  const handleTypeChange = (type: Type) => {
     dispatch(changeFilteredSettings({
       price: checkedPrice,
       priceUp: checkedPriceUp,
@@ -99,7 +99,7 @@ function Filters (): JSX.Element {
     dispatch(changeCurrentPage({currentPage: START_PAGE}));
   };
 
-  const handleLevelChange = (level: Levels) => {
+  const handleLevelChange = (level: Level) => {
     dispatch(changeFilteredSettings({
       price: checkedPrice,
       priceUp: checkedPriceUp,
@@ -112,38 +112,53 @@ function Filters (): JSX.Element {
   };
 
   useEffect(() => {
-    const settings = {
-      price: checkedPrice,
-      priceUp: checkedPriceUp,
-      category: checkedCategory,
-      type: checkedTypes,
-      level: checkedLevels,
-    };
+    let isMounted = true;
 
-    const queryObject = getQueryObject(settings, sort, direction, page);
-    setSearchParams(queryObject);
+    if (isMounted) {
+      const settings = {
+        price: checkedPrice,
+        priceUp: checkedPriceUp,
+        category: checkedCategory,
+        type: checkedTypes,
+        level: checkedLevels,
+      };
+
+      const queryObject = getQueryObject(settings, sort, direction, page);
+      setSearchParams(queryObject);
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, setSearchParams, checkedLevels, checkedCategory, checkedPrice, checkedPriceUp, checkedTypes, sort, direction, page]);
 
   useEffect(() => {
-    dispatch(changeFilteredSettings({
-      price: searchParams.has('price') ? Number(searchParams.get('price')) : checkedPrice,
-      priceUp: searchParams.has('priceUp') ? Number(searchParams.get('priceUp')) : checkedPriceUp,
-      category: searchParams.has('category') ? searchParams.get('category') as Categories : checkedCategory,
-      type: searchParams.has('type') ? searchParams.get('type')?.split('+') as Types[] : checkedTypes,
-      level: searchParams.has('level') ? searchParams.get('level')?.split('+') as Levels[] : checkedLevels,
-    }));
+    let isMounted = true;
 
-    if(searchParams.has('sort')){
-      dispatch(changeSortOption({sort: searchParams.get('sort') as SortOption}));
-    }
-    if(searchParams.has('direction')){
-      dispatch(changeSortDirection({direction: searchParams.get('direction') as SortDirections}));
-    }
-    if(searchParams.has('page')){
-      dispatch(changeCurrentPage({currentPage: Number(searchParams.get('page'))}));
+    if (isMounted) {
+      dispatch(changeFilteredSettings({
+        price: searchParams.has('price') ? Number(searchParams.get('price')) : null,
+        priceUp: searchParams.has('priceUp') ? Number(searchParams.get('priceUp')) : null,
+        category: searchParams.has('category') ? searchParams.get('category') as Category : null,
+        type: searchParams.has('type') ? searchParams.get('type')?.split('+') as Type[] : [],
+        level: searchParams.has('level') ? searchParams.get('level')?.split('+') as Level[] : [],
+      }));
 
+      if(searchParams.has('sort')){
+        dispatch(changeSortOption({sort: searchParams.get('sort') as SortOption}));
+      }
+      if(searchParams.has('direction')){
+        dispatch(changeSortDirection({direction: searchParams.get('direction') as SortDirection}));
+      }
+      if(searchParams.has('page')){
+        dispatch(changeCurrentPage({currentPage: Number(searchParams.get('page'))}));
+      }
     }
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, searchParams]);
 
   const handleButtonClick = () => {
     dispatch(changeFilteredSettings({
@@ -192,50 +207,50 @@ function Filters (): JSX.Element {
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title&#45;&#45;h5">Категория</legend>
-          {(Object.keys(Categories) as Array<keyof typeof Categories>).map((category) => (
+          {(Object.keys(Category) as Array<keyof typeof Category>).map((category) => (
             <div className="custom-radio catalog-filter__item" key={category}>
               <label>
                 <input
                   type="radio"
                   name="category"
                   value={category.toLowerCase()}
-                  checked={checkedCategory === Categories[category]}
-                  onChange={() => handleCategoryChange(Categories[category])}
+                  checked={checkedCategory === Category[category]}
+                  onChange={() => handleCategoryChange(Category[category])}
                   tabIndex={0}
-                /><span className="custom-radio__icon"></span><span className="custom-radio__label">{Categories[category]}</span>
+                /><span className="custom-radio__icon"></span><span className="custom-radio__label">{Category[category]}</span>
               </label>
             </div>
           ))}
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title&#45;&#45;h5">Тип камеры</legend>
-          {(Object.keys(Types) as Array<keyof typeof Types>).map((type) => (
+          {(Object.keys(Type) as Array<keyof typeof Type>).map((type) => (
             <div className="custom-checkbox catalog-filter__item" key={type}>
               <label>
                 <input
                   type="checkbox"
                   name={type}
-                  checked={checkedTypes.includes(Types[type])}
-                  onChange={() => handleTypeChange(Types[type])}
-                  disabled={checkedCategory === Categories.Videocamera && (Types[type] === Types.Snapshot || Types[type] === Types.Film)}
+                  checked={checkedTypes.includes(Type[type])}
+                  onChange={() => handleTypeChange(Type[type])}
+                  disabled={checkedCategory === Category.Videocamera && (Type[type] === Type.Snapshot || Type[type] === Type.Film)}
                   tabIndex={0}
-                /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Types[type]}</span>
+                /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Type[type]}</span>
               </label>
             </div>
           ))}
         </fieldset>
         <fieldset className="catalog-filter__block">
           <legend className="title title&#45;&#45;h5">Уровень</legend>
-          {(Object.keys(Levels) as Array<keyof typeof Levels>).map((level) => (
+          {(Object.keys(Level) as Array<keyof typeof Level>).map((level) => (
             <div className="custom-checkbox catalog-filter__item" key={level}>
               <label>
                 <input
                   type="checkbox"
-                  checked={checkedLevels.includes(Levels[level])}
-                  onChange={() => handleLevelChange(Levels[level])}
+                  checked={checkedLevels.includes(Level[level])}
+                  onChange={() => handleLevelChange(Level[level])}
                   name={`${level === 'NonProfessional' ? 'non-professional' : level}`}
                   tabIndex={0}
-                /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Levels[level]}</span>
+                /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">{Level[level]}</span>
               </label>
             </div>
           ))}

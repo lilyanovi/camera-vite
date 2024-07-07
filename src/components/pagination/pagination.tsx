@@ -14,12 +14,18 @@ function Pagination (): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if(pageCount >= PAGINATION_PAGE_COUNT){
-      setVisiblePages(Array.from({length: PAGINATION_PAGE_COUNT }, (_, i) => i + 1));
-    } else {
-      setVisiblePages(Array.from({length: pageCount }, (_, i) => i + 1));
-    }
+    let isMounted = true;
 
+    if (isMounted) {
+      if(pageCount >= PAGINATION_PAGE_COUNT){
+        setVisiblePages(Array.from({length: PAGINATION_PAGE_COUNT }, (_, i) => i + 1));
+      } else {
+        setVisiblePages(Array.from({length: pageCount }, (_, i) => i + 1));
+      }
+    }
+    return () => {
+      isMounted = false;
+    };
   }, [pageCount, dispatch]);
 
   const handleNextPageClick = () => {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, SortDirections, SortOption, START_PAGE, StatusLoading } from '../../const';
+import { NameSpace, SortDirection, SortOption, START_PAGE, StatusLoading } from '../../const';
 import { CamerasProcess, FilteredSettingsType } from '../../types/cameras-process';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
 
@@ -8,7 +8,7 @@ const initialState: CamerasProcess = {
   promoProducts: [],
   statusLoading: StatusLoading.Loading,
   sort: SortOption.sortPrice,
-  direction: SortDirections.up,
+  direction: SortDirection.up,
   currentPage: START_PAGE,
   filteredSettings: {
     price: null,
@@ -26,7 +26,7 @@ export const camerasProcess = createSlice({
     changeSortOption: (state, action: PayloadAction<{sort: SortOption}>) => {
       state.sort = action.payload.sort;
     },
-    changeSortDirection: (state, action: PayloadAction<{direction: SortDirections}>) => {
+    changeSortDirection: (state, action: PayloadAction<{direction: SortDirection}>) => {
       state.direction = action.payload.direction;
     },
     changeCurrentPage: (state, action: PayloadAction<{currentPage: number}>) => {

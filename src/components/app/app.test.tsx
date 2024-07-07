@@ -1,6 +1,6 @@
 import { render, screen} from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { AppRoute, START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import App from './app';
 import { withHistory, withStore } from '../../mock-component';
 import { makeFakeCamera, makeFakePromoProduct, makeFakeReview, makeFakeStore } from '../../mocks';
@@ -27,7 +27,7 @@ describe('Application Routing', () => {
             promoProducts: [makeFakePromoProduct()],
             statusLoading: StatusLoading.Loading,
             sort: SortOption.sortPrice,
-            direction: SortDirections.up,
+            direction: SortDirection.up,
             currentPage: START_PAGE,
             filteredSettings: {
               price: null,
@@ -50,7 +50,7 @@ describe('Application Routing', () => {
       const {withStoreComponent} = withStore(
         withHistoryApp,
         makeFakeStore(
-          {CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirections.up, currentPage: START_PAGE, filteredSettings: {
+          {CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
             level: [],
@@ -74,7 +74,7 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirections.up, currentPage: START_PAGE, filteredSettings: {
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
             level: [],
@@ -97,7 +97,7 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirections.up, currentPage: START_PAGE, filteredSettings: {
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
             level: [],
@@ -123,7 +123,7 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirections.up, currentPage: START_PAGE, filteredSettings: {
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
             level: [],

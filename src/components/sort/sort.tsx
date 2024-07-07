@@ -1,4 +1,4 @@
-import { START_PAGE, SortDirections, SortOption } from '../../const';
+import { START_PAGE, SortDirection, SortOption } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCurrentPage, changeSortDirection, changeSortOption } from '../../store/cameras-process/cameras-process.slice';
 import { selectCurrentPage, selectSortDirection, selectSortOption } from '../../store/cameras-process/cameras-process.selectors';
@@ -17,7 +17,7 @@ function Sort (): JSX.Element {
     }
   };
 
-  const handleDirectionChange = (sortDirection: SortDirections) => {
+  const handleDirectionChange = (sortDirection: SortDirection) => {
     dispatch(changeSortDirection({direction: sortDirection}));
     if(currentPage !== START_PAGE){
       dispatch(changeCurrentPage({currentPage: START_PAGE}));
@@ -44,15 +44,15 @@ function Sort (): JSX.Element {
             ))}
           </div>
           <div className="catalog-sort__order">
-            {(Object.keys(SortDirections) as Array<keyof typeof SortDirections>).map((direction) => (
+            {(Object.keys(SortDirection) as Array<keyof typeof SortDirection>).map((direction) => (
               <div className={`catalog-sort__btn catalog-sort__btn--${direction}`} key={direction}>
                 <input
                   type="radio"
                   id={direction}
                   name="sort-icon"
-                  checked={checkedDirection === SortDirections[direction]}
-                  onChange={() => handleDirectionChange(SortDirections[direction])}
-                  aria-label={SortDirections[direction]}
+                  checked={checkedDirection === SortDirection[direction]}
+                  onChange={() => handleDirectionChange(SortDirection[direction])}
+                  aria-label={SortDirection[direction]}
                 />
                 <label htmlFor={direction}>
                   <svg width="16" height="14" aria-hidden="true">

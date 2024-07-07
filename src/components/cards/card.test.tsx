@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mock-component';
-import { START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import Cards from './cards';
 
@@ -15,7 +15,7 @@ describe('Component: Cards', () => {
       promoProducts: [makeFakePromoProduct()],
       statusLoading: StatusLoading.Success,
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       filteredSettings: {
         price: null,
         priceUp: null,

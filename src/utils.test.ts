@@ -1,4 +1,4 @@
-import { Categories, Levels, SortDirections, SortOption, Types } from './const';
+import { Category, Level, SortDirection, SortOption, Type } from './const';
 import { makeFakeCamera, makeFakeReview } from './mocks';
 import { TCamera } from './types/camera';
 import { getCurrentReviews, getFilteredCameras, getFilteredCamerasList, getFormatDate, getIsActiveProducts, getMinMaxPrice, getPhoneByPost, getQueryObject, getSortByDateReviews, getSortCamerasList, getTypeForPhoto } from './utils';
@@ -102,25 +102,25 @@ describe('Function: getCurrentReviews', () => {
 });
 
 describe('Function: getTypeForPhoto', () => {
-  it('should return "Цифровой" when type="Types.Digital"', ()=> {
+  it('should return "Цифровой" when type="Type.Digital"', ()=> {
     const expectedResult = 'Цифровой';
-    const result = getTypeForPhoto(Types.Digital);
+    const result = getTypeForPhoto(Type.Digital);
     expect(result).toBe(expectedResult);
-    expect(result).not.toBe(Types.Digital);
+    expect(result).not.toBe(Type.Digital);
   });
 
-  it('should return "Коллекционный" when type="Types.Collectible"', ()=> {
+  it('should return "Коллекционный" when type="Type.Collectible"', ()=> {
     const expectedResult = 'Коллекционный';
-    const result = getTypeForPhoto(Types.Collection);
+    const result = getTypeForPhoto(Type.Collection);
     expect(result).toBe(expectedResult);
-    expect(result).not.toBe(Types.Collection);
+    expect(result).not.toBe(Type.Collection);
   });
 
-  it('should return "Моментальный" when type="Types.Snapshot"', ()=> {
+  it('should return "Моментальный" when type="Type.Snapshot"', ()=> {
     const expectedResult = 'Моментальный';
-    const result = getTypeForPhoto(Types.Snapshot);
+    const result = getTypeForPhoto(Type.Snapshot);
     expect(result).toBe(expectedResult);
-    expect(result).not.toBe(Types.Snapshot);
+    expect(result).not.toBe(Type.Snapshot);
   });
 });
 
@@ -276,7 +276,7 @@ describe('Function: getSortCamerasList', () => {
   }] as TCamera[];
   it('should return sorted array by price up', ()=> {
     const fakeSort = SortOption.sortPrice;
-    const fakeDirection = SortDirections.up;
+    const fakeDirection = SortDirection.up;
     const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
 
     expect(result.length).toBe(3);
@@ -284,7 +284,7 @@ describe('Function: getSortCamerasList', () => {
   });
   it('should return sorted array by price down', ()=> {
     const fakeSort = SortOption.sortPrice;
-    const fakeDirection = SortDirections.down;
+    const fakeDirection = SortDirection.down;
     const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
 
     expect(result.length).toBe(3);
@@ -292,7 +292,7 @@ describe('Function: getSortCamerasList', () => {
   });
   it('should return sorted array by popular up', ()=> {
     const fakeSort = SortOption.sortPopular;
-    const fakeDirection = SortDirections.up;
+    const fakeDirection = SortDirection.up;
     const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
 
     expect(result.length).toBe(3);
@@ -301,7 +301,7 @@ describe('Function: getSortCamerasList', () => {
 
   it('should return sorted array by popular down', ()=> {
     const fakeSort = SortOption.sortPopular;
-    const fakeDirection = SortDirections.down;
+    const fakeDirection = SortDirection.down;
     const result = getSortCamerasList(fakeSort, mockCameras, fakeDirection);
 
     expect(result.length).toBe(3);
@@ -360,8 +360,8 @@ describe('Function: getFilteredCamerasList', () => {
     const fakePrice = null;
     const fakePriceUp = null;
     const fakeCategory = null;
-    const fakeType = [] as Types[];
-    const fakeLevel = [] as Levels[];
+    const fakeType = [] as Type[];
+    const fakeLevel = [] as Level[];
     const result = getFilteredCamerasList(mockCameras, fakePrice, fakePriceUp, fakeCategory, fakeType, fakeLevel);
 
     expect(result.length).toBe(3);
@@ -370,9 +370,9 @@ describe('Function: getFilteredCamerasList', () => {
   it('should return correctly result when filters transferred', ()=> {
     const fakePrice = 18000;
     const fakePriceUp = 65000;
-    const fakeCategory = Categories.Photocamera;
-    const fakeType = [Types.Digital];
-    const fakeLevel = [Levels.NonProfessional, Levels.Zero];
+    const fakeCategory = Category.Photocamera;
+    const fakeType = [Type.Digital];
+    const fakeLevel = [Level.NonProfessional, Level.Zero];
     const result = getFilteredCamerasList(mockCameras, fakePrice, fakePriceUp, fakeCategory, fakeType, fakeLevel);
 
     expect(result.length).toBe(1);
@@ -384,7 +384,7 @@ describe('Function: getQueryObject', () => {
   it('should return correctly result when "settings" = {}', ()=> {
     const fakeSettings = {};
     const fakeSort = SortOption.sortPopular;
-    const fakeDirection = SortDirections.up;
+    const fakeDirection = SortDirection.up;
     const fakePage = 1;
     const result = getQueryObject(fakeSettings, fakeSort, fakeDirection, fakePage);
 
@@ -395,11 +395,11 @@ describe('Function: getQueryObject', () => {
   });
   it('should return correctly result when "settings" !== {}', ()=> {
     const fakeSettings = {
-      type: [Types.Collection, Types.Film],
-      category: Categories.Videocamera
+      type: [Type.Collection, Type.Film],
+      category: Category.Videocamera
     };
     const fakeSort = SortOption.sortPrice;
-    const fakeDirection = SortDirections.down;
+    const fakeDirection = SortDirection.down;
     const fakePage = 5;
     const result = getQueryObject(fakeSettings, fakeSort, fakeDirection, fakePage);
 

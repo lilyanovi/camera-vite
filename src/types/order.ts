@@ -1,7 +1,7 @@
-import { CouponTypes } from '../const';
+import { CouponType } from '../const';
 
 export type TOrder = {
   camerasIds: number[];
-  coupon: CouponTypes | null;
+  coupon: CouponType | null;
   tel: string;
 };

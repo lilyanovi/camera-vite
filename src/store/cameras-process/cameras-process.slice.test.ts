@@ -1,4 +1,4 @@
-import { Categories, Levels, START_PAGE, SortDirections, SortOption, StatusLoading } from '../../const';
+import { Category, Level, START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
 import { camerasProcess, changeCurrentPage, changeFilteredSettings, changeSortDirection, changeSortOption } from './cameras-process.slice';
@@ -18,7 +18,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(expectedState, emptyAction);
@@ -38,7 +38,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(undefined, emptyAction);
@@ -57,7 +57,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(undefined, fetchCamerasListAction.pending);
@@ -77,7 +77,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(undefined, fetchCamerasListAction.fulfilled(
@@ -98,7 +98,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(undefined, fetchCamerasListAction.rejected);
@@ -118,7 +118,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const result = camerasProcess.reducer(undefined, fetchPromoProductsListAction.fulfilled(
@@ -140,7 +140,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const expectedSort = SortOption.sortPopular;
@@ -163,10 +163,10 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
-    const expectedDirection = SortDirections.down;
+    const expectedDirection = SortDirection.down;
     const result = camerasProcess.reducer(initialState, changeSortDirection({
       direction: expectedDirection
     }));
@@ -186,7 +186,7 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const expectedCurrentPage = 5;
@@ -209,14 +209,14 @@ describe('CamerasProcess Slice', () => {
         type: [],
       },
       sort: SortOption.sortPrice,
-      direction: SortDirections.up,
+      direction: SortDirection.up,
       currentPage: START_PAGE,
     };
     const expectedSettings = {
       price: 1990,
       priceUp: null,
-      level: [Levels.Professional],
-      category: Categories.Videocamera,
+      level: [Level.Professional],
+      category: Category.Videocamera,
       type: [],
     };
     const result = camerasProcess.reducer(initialState, changeFilteredSettings(expectedSettings));
