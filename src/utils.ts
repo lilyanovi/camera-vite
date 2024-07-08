@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { TReview, TReviews } from './types/review';
-import { Categories, Levels, SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirections, SortOption, Types } from './const';
+import { Category, Level, SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirection, SortOption, Type } from './const';
 import { TCamera } from './types/camera';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
@@ -19,13 +19,13 @@ export const getCurrentReviews = (sortReviews: TReviews, currentReviews?: TRevie
   return sortReviews.slice(0, currentReviews.length + STEP_REVIEWS_SHOWN);
 };
 
-export const getTypeForPhoto = (type: Types) => {
+export const getTypeForPhoto = (type: Type) => {
   switch(type){
-    case Types.Collection:
-    case Types.Film:
-    case Types.Snapshot:
+    case Type.Collection:
+    case Type.Film:
+    case Type.Snapshot:
       return `${type.slice(0, -2)}ый`;
-    case Types.Digital:
+    case Type.Digital:
       return `${type.slice(0, -2)}ой`;
   }
 };
@@ -50,15 +50,15 @@ export const getIsActiveProducts = (products: TCamera[], isActiveProducts?: numb
 
 export const getFilteredCameras = (cameras: TCamera[], value: string) => cameras.filter((camera) => camera.name.toLowerCase().includes(value.toLowerCase()));
 
-export const getSortCamerasList = (sort: SortOption, cameras: TCamera[], direction: SortDirections) => {
+export const getSortCamerasList = (sort: SortOption, cameras: TCamera[], direction: SortDirection) => {
   switch(sort) {
     case SortOption.sortPrice:
-      if(direction === SortDirections.up){
+      if(direction === SortDirection.up){
         return cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price);
       }
       return cameras.slice().sort((cameraA, cameraB) => cameraB.price - cameraA.price);
     case SortOption.sortPopular:
-      if(direction === SortDirections.up){
+      if(direction === SortDirection.up){
         return cameras.slice().sort((cameraA, cameraB) => cameraA.rating - cameraB.rating);
       }
       return cameras.slice().sort((cameraA, cameraB) => cameraB.rating - cameraA.rating);
@@ -71,14 +71,14 @@ const getFilteredCamerasListByPrice = (cameras: TCamera[], price: number) => cam
 
 const getFilteredCamerasListByPriceUp = (cameras: TCamera[], priceUp: number) => cameras.filter((camera) => camera.price <= priceUp);
 
-const getFilteredCamerasListByLevel = (cameras: TCamera[], levels: Levels[]) => cameras.filter((camera) => levels.includes(camera.level));
+const getFilteredCamerasListByLevel = (cameras: TCamera[], levels: Level[]) => cameras.filter((camera) => levels.includes(camera.level));
 
-const getFilteredCamerasListByType = (cameras: TCamera[], types: Types[]) => cameras.filter((camera) => types.includes(camera.type));
+const getFilteredCamerasListByType = (cameras: TCamera[], types: Type[]) => cameras.filter((camera) => types.includes(camera.type));
 
-const getFilteredCamerasListByCategory = (cameras: TCamera[], category: Categories) => cameras.filter((camera) => camera.category === category);
+const getFilteredCamerasListByCategory = (cameras: TCamera[], category: Category) => cameras.filter((camera) => camera.category === category);
 
 
-export const getFilteredCamerasList = (cameras: TCamera[], price: number | null, priceUp: number | null, category: Categories | null, type: Types[], level: Levels[]) => {
+export const getFilteredCamerasList = (cameras: TCamera[], price: number | null, priceUp: number | null, category: Category | null, type: Type[], level: Level[]) => {
   let result = cameras.slice();
   if(price){
     result = getFilteredCamerasListByPrice(result, price);
@@ -101,20 +101,21 @@ export const getFilteredCamerasList = (cameras: TCamera[], price: number | null,
 type settingsType = {
   price?: number | null;
   priceUp?: number | null;
-  category?: Categories | null;
-  type?: Types[];
-  level?: Levels[];
+  category?: Category | null;
+  type?: Type[];
+  level?: Level[];
 };
 
-export const getQueryObject = (settings: settingsType, sort: SortOption, direction: SortDirections) => {
+export const getQueryObject = (settings: settingsType, sort: SortOption, direction: SortDirection, page: number) => {
   const result: {
     price?: string;
     priceUp?: string;
-    category?: Categories;
+    category?: Category;
     type?: string;
     level?: string;
     sort?: string;
     direction?: string;
+    page?: string;
   } = {};
   if(settings.price){
     result.price = String(settings.price);
@@ -137,12 +138,15 @@ export const getQueryObject = (settings: settingsType, sort: SortOption, directi
   if(direction){
     result.direction = direction;
   }
+  if(page){
+    result.page = String(page);
+  }
   return result;
 };
 
 export const getMinMaxPrice = (cameras: TCamera[]) => {
   if(cameras.length !== 0) {
-    const sortCameras = getSortCamerasList(SortOption.sortPrice, cameras, SortDirections.up);
+    const sortCameras = getSortCamerasList(SortOption.sortPrice, cameras, SortDirection.up);
     const lastIndex = sortCameras.length - 1;
     return {
       min: String(sortCameras[0].price),

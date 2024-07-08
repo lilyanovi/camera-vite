@@ -1,12 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import Cards from '../components/cards/cards';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute, PER_PAGE_CAMERAS_COUNT } from '../const';
 import Banner from '../components/banner/banner';
 import Sort from '../components/sort/sort';
 import Filters from '../components/filters/filters';
+import Pagination from '../components/pagination/pagination';
+import { useAppSelector } from '../hooks';
+import { selectFilteredCameras } from '../store/cameras-process/cameras-process.selectors';
 
 function CatalogPage () {
+  const filteredCameras = useAppSelector(selectFilteredCameras);
   return (
     <main>
       <Helmet>
@@ -40,6 +44,7 @@ function CatalogPage () {
               <div className="catalog__content">
                 <Sort />
                 <Cards />
+                {filteredCameras.length >= PER_PAGE_CAMERAS_COUNT ? <Pagination/> : ''}
               </div>
             </div>
           </div>

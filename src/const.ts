@@ -17,7 +17,7 @@ export enum NameSpace {
   Order = 'ORDER'
 }
 
-export enum ActiveTabs {
+export enum ActiveTab {
   Characteristics = 'characteristics',
   Description = 'description',
 }
@@ -92,18 +92,18 @@ export const Links = {
 
 export const STEP_REVIEWS_SHOWN = 3;
 
-export enum Levels {
+export enum Level {
   Zero = 'Нулевой',
   NonProfessional = 'Любительский',
   Professional = 'Профессиональный',
 }
 
-export enum Categories {
+export enum Category {
   Photocamera = 'Фотоаппарат',
   Videocamera = 'Видеокамера',
 }
 
-export enum Types {
+export enum Type {
   Digital = 'Цифровая',
   Film = 'Плёночная',
   Snapshot = 'Моментальная',
@@ -126,7 +126,7 @@ export const BANNER_CHANGE_TIME = 3000;
 
 export const SLIDER_PRODUCTS_COUNT = 3;
 
-export enum CouponTypes {
+export enum CouponType {
   Camera333 = 'camera-333',
   Camera444 = 'camera-444',
   Camera555 = 'camera-555',
@@ -137,7 +137,13 @@ export enum SortOption {
   sortPopular = 'по популярности',
 }
 
-export enum SortDirections {
+export enum SortDirection {
   up = 'По возрастанию',
   down = 'По убыванию',
 }
+
+export const PER_PAGE_CAMERAS_COUNT = 9;
+
+export const PAGINATION_PAGE_COUNT = 3;
+
+export const START_PAGE = 1;

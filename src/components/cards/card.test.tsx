@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mock-component';
-import { StatusLoading } from '../../const';
+import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import Cards from './cards';
 
@@ -9,7 +9,20 @@ describe('Component: Cards', () => {
     const expectedCardsContainerTestId = 'cards-container';
     const expectedCardItemContainerTestId = 'product-card-container';
     const expectedCount = 5;
-    const { withStoreComponent } = withStore(<Cards/>, {CAMERAS: {cameras: new Array(expectedCount).fill(null).map(() => makeFakeCamera()), promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success}});
+    const { withStoreComponent } = withStore(<Cards/>, {CAMERAS: {
+      cameras: new Array(expectedCount).fill(null).map(() => makeFakeCamera()),
+      currentPage: START_PAGE,
+      promoProducts: [makeFakePromoProduct()],
+      statusLoading: StatusLoading.Success,
+      sort: SortOption.sortPrice,
+      direction: SortDirection.up,
+      filteredSettings: {
+        price: null,
+        priceUp: null,
+        level: [],
+        category: null,
+        type: [],
+      }}});
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

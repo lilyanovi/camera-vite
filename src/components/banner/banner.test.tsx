@@ -1,7 +1,7 @@
 import { render, renderHook, screen } from '@testing-library/react';
 import Banner from './banner';
 import { withHistory, withStore } from '../../mock-component';
-import { StatusLoading } from '../../const';
+import { SortDirection, SortOption, START_PAGE, StatusLoading } from '../../const';
 import { makeFakeCamera, makeFakePromoProduct } from '../../mocks';
 import { useState } from 'react';
 import { act } from 'react-dom/test-utils';
@@ -10,7 +10,13 @@ describe('Component: Banner', () => {
   it('should render correctly', () => {
     const expectedBannerContainerTestId = 'banner-container';
     const { withStoreComponent } = withStore(<Banner />, {
-      CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success}
+      CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+        price: null,
+        priceUp: null,
+        level: [],
+        category: null,
+        type: [],
+      }}
     });
     const preparedComponent = withHistory(withStoreComponent);
 
@@ -22,7 +28,13 @@ describe('Component: Banner', () => {
   it('should be correctly change state', () => {
     const fakePromoProducts = [makeFakePromoProduct(), makeFakePromoProduct(), makeFakePromoProduct()];
     const { withStoreComponent } = withStore(<Banner />, {
-      CAMERAS: {cameras: [makeFakeCamera()], promoProducts: fakePromoProducts, statusLoading: StatusLoading.Success}
+      CAMERAS: {cameras: [makeFakeCamera()], promoProducts: fakePromoProducts, statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+        price: null,
+        priceUp: null,
+        level: [],
+        category: null,
+        type: [],
+      }}
     });
     const preparedComponent = withHistory(withStoreComponent);
     const expectedCurrentPromo = 2;

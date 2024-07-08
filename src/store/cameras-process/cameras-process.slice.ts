@@ -1,16 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Categories, Levels, NameSpace, SortDirections, SortOption, StatusLoading, Types } from '../../const';
-import { CamerasProcess } from '../../types/cameras-process';
+import { NameSpace, SortDirection, SortOption, START_PAGE, StatusLoading } from '../../const';
+import { CamerasProcess, FilteredSettingsType } from '../../types/cameras-process';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
-import { getFilteredCamerasList, getSortCamerasList } from '../../utils';
 
 const initialState: CamerasProcess = {
   cameras: [],
   promoProducts: [],
   statusLoading: StatusLoading.Loading,
-  filteredCameras: [],
   sort: SortOption.sortPrice,
-  direction: SortDirections.up
+  direction: SortDirection.up,
+  currentPage: START_PAGE,
+  filteredSettings: {
+    price: null,
+    priceUp: null,
+    level: [],
+    category: null,
+    type: [],
+  }
 };
 
 export const camerasProcess = createSlice({
@@ -20,14 +26,14 @@ export const camerasProcess = createSlice({
     changeSortOption: (state, action: PayloadAction<{sort: SortOption}>) => {
       state.sort = action.payload.sort;
     },
-    changeSortDirection: (state, action: PayloadAction<{direction: SortDirections}>) => {
+    changeSortDirection: (state, action: PayloadAction<{direction: SortDirection}>) => {
       state.direction = action.payload.direction;
     },
-    sortCameras: (state) => {
-      state.filteredCameras = getSortCamerasList(state.sort, state.filteredCameras, state.direction);
+    changeCurrentPage: (state, action: PayloadAction<{currentPage: number}>) => {
+      state.currentPage = action.payload.currentPage;
     },
-    filterCameras: (state, action: PayloadAction<{price: number | null; priceUp: number | null; level: Levels[]; category: Categories | null; type: Types[]}>) => {
-      state.filteredCameras = getFilteredCamerasList(state.cameras, action.payload.price, action.payload.priceUp, action.payload.category, action.payload.type, action.payload.level);
+    changeFilteredSettings: (state, action: PayloadAction<FilteredSettingsType>) => {
+      state.filteredSettings = action.payload;
     },
   },
   extraReducers(builder) {
@@ -48,4 +54,4 @@ export const camerasProcess = createSlice({
   }
 });
 
-export const {sortCameras, filterCameras, changeSortDirection, changeSortOption} = camerasProcess.actions;
+export const {changeSortDirection, changeSortOption, changeCurrentPage, changeFilteredSettings} = camerasProcess.actions;

@@ -1,35 +1,38 @@
 import { useEffect, useState } from 'react';
 import { TCamera } from '../../types/camera';
-import { ActiveTabs } from '../../const';
+import { ActiveTab } from '../../const';
 import { useSearchParams } from 'react-router-dom';
 
 type TabsProps = Pick<TCamera, 'vendorCode' | 'category' | 'type' | 'level' | 'description'>;
 
 function Tabs ({vendorCode, category, type, level, description}: TabsProps): JSX.Element {
-  const [isActive, setIsActive] = useState<ActiveTabs>(ActiveTabs.Description);
+  const [isActive, setIsActive] = useState<ActiveTab>(ActiveTab.Description);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isCharacteristics = isActive === ActiveTabs.Characteristics;
+  const isCharacteristics = isActive === ActiveTab.Characteristics;
 
   const handleCharacteristicsClick = () => {
-    setIsActive(ActiveTabs.Characteristics);
+    setIsActive(ActiveTab.Characteristics);
+    setSearchParams({tab: ActiveTab.Characteristics});
   };
 
   const handleDescriptionClick = () => {
-    setIsActive(ActiveTabs.Description);
+    setIsActive(ActiveTab.Description);
+    setSearchParams({tab: ActiveTab.Description});
   };
 
   useEffect(() => {
-    const settings = {
-      tab: isActive,
-    };
-    setSearchParams(settings);
-  }, [setSearchParams, isActive]);
+    let isMounted = true;
 
-  useEffect(() => {
-    if(searchParams.has('tab')){
-      setIsActive(searchParams.get('tab') as ActiveTabs);
+    if (isMounted) {
+      if(searchParams.has('tab')){
+        setIsActive(searchParams.get('tab') as ActiveTab);
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [searchParams]);
 
   return (

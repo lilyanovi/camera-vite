@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Categories, ErrorMessages, PatternsForCheck, StatusLoading } from '../../const';
+import { Category, ErrorMessages, PatternsForCheck, StatusLoading } from '../../const';
 import { TCamera } from '../../types/camera';
 import { getPhoneByPost, getTypeForPhoto } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -64,7 +64,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
           <ul className="basket-item__list">
             <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
             </li>
-            <li className="basket-item__list-item">{category === Categories.Videocamera ? type : getTypeForPhoto(type)} {category.toLowerCase()}</li>
+            <li className="basket-item__list-item">{category === Category.Videocamera ? type : getTypeForPhoto(type)} {category.toLowerCase()}</li>
             <li className="basket-item__list-item">{level} уровень</li>
           </ul>
           <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>

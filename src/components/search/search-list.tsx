@@ -1,4 +1,4 @@
-//import { useRef } from 'react';
+import { KeyboardEvent, useRef, useState } from 'react';
 import { TCamera } from '../../types/camera';
 import SearchItem from './search-item';
 
@@ -7,31 +7,36 @@ type SearchListProps = {
 }
 
 function SearchList ({filteredCameras}: SearchListProps): JSX.Element {
-  /*const searchRef = useRef(null);
+  const containerRef = useRef<HTMLUListElement | null>(null);
+  const [focusedCamera, setFocusedCamera] = useState<number>(0);
 
-  document.addEventListener('keydown', (evt) => {
-  console.log(searchRef.current !== null ? searchRef.current.children : "null")
-  console.log(document.activeElement)
-  console.log(Array.from(searchRef.current.childNodes))
-  console.log(Array.from(searchRef.current.childNodes).findIndex((child) => child.outerHTML === document.activeElement))
+  const handleKeyDown = (evt: KeyboardEvent<HTMLUListElement>) => {
     switch(evt.key) {
       case 'ArrowUp':
-        // Путешествие на север! (⬆️)
-        break;
-      case 'ArrowDown':
-        // Движение на юг! (⬇️)
-        break;
       case 'ArrowLeft':
-        // Поворот на запад! (⬅️)
+        if(containerRef.current){
+          const newFocusedIndex = focusedCamera - 1;
+          if(newFocusedIndex >= 0){
+            (containerRef.current.children.item(newFocusedIndex) as HTMLElement).focus();
+            setFocusedCamera(newFocusedIndex);
+          }
+        }
         break;
       case 'ArrowRight':
-        // Путешествие на восток! (➡️)
+      case 'ArrowDown':
+        if(containerRef.current){
+          const newFocusedIndex = focusedCamera + 1;
+          if(newFocusedIndex < containerRef.current.children.length){
+            (containerRef.current.children.item(newFocusedIndex) as HTMLElement).focus();
+            setFocusedCamera(newFocusedIndex);
+          }
+        }
         break;
     }
-  });*/
+  };
 
   return (
-    <ul className="form-search__select-list">
+    <ul className="form-search__select-list" data-testid="search-list-container" ref={containerRef} onKeyDown={handleKeyDown}>
       {filteredCameras.map((camera) => <SearchItem camera={camera} key={camera.id}/>)}
     </ul>
   );

@@ -1,6 +1,6 @@
 import { render, screen} from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, StatusLoading } from '../../const';
+import { AppRoute, START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import App from './app';
 import { withHistory, withStore } from '../../mock-component';
 import { makeFakeCamera, makeFakePromoProduct, makeFakeReview, makeFakeStore } from '../../mocks';
@@ -22,7 +22,20 @@ describe('Application Routing', () => {
       const {withStoreComponent} = withStore(
         withHistoryApp,
         makeFakeStore(
-          {CAMERAS: {cameras: [], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Loading}}
+          {CAMERAS: {
+            cameras: [],
+            promoProducts: [makeFakePromoProduct()],
+            statusLoading: StatusLoading.Loading,
+            sort: SortOption.sortPrice,
+            direction: SortDirection.up,
+            currentPage: START_PAGE,
+            filteredSettings: {
+              price: null,
+              priceUp: null,
+              level: [],
+              category: null,
+              type: [],
+            }}}
         )
       );
       const expectedLoaderContainerTestId = 'loader-container';
@@ -37,7 +50,13 @@ describe('Application Routing', () => {
       const {withStoreComponent} = withStore(
         withHistoryApp,
         makeFakeStore(
-          {CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success}}
+          {CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+            price: null,
+            priceUp: null,
+            level: [],
+            category: null,
+            type: [],
+          }}}
         )
       );
       mockHistory.push(AppRoute.Main);
@@ -55,7 +74,13 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success}
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+            price: null,
+            priceUp: null,
+            level: [],
+            category: null,
+            type: [],
+          }}
         })
       );
       const expectedLoaderContainerTestId = 'loader-container';
@@ -72,7 +97,13 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success},
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+            price: null,
+            priceUp: null,
+            level: [],
+            category: null,
+            type: [],
+          }},
           PRODUCT: {currentProduct: makeFakeCamera(), similarProducts: [makeFakeCamera()], statusLoading: StatusLoading.Success}
         })
       );
@@ -92,7 +123,13 @@ describe('Application Routing', () => {
         withHistoryComponent,
         makeFakeStore({
           REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success},
+          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
+            price: null,
+            priceUp: null,
+            level: [],
+            category: null,
+            type: [],
+          }},
           PRODUCT: {currentProduct: makeFakeCamera(), similarProducts: [makeFakeCamera()], statusLoading: StatusLoading.Success}
         }));
       const unknownRoute = '/unknown-route';

@@ -1,13 +1,13 @@
-import { Categories, Levels, Types } from '../const';
+import { Category, Level, Type } from '../const';
 
 export type TCamera = {
   id: number;
   name: string;
   vendorCode: string;
-  type: Types;
-  category: Categories;
+  type: Type;
+  category: Category;
   description: string;
-  level: Levels;
+  level: Level;
   price: number;
   rating: number;
   reviewCount: number;
