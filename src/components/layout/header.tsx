@@ -1,4 +1,5 @@
 import { Links } from '../../const';
+import Cart from '../cart/cart';
 import Logo from '../logo/logo';
 import Navigation from '../navigation/navigation';
 import Search from '../search/search';
@@ -13,6 +14,7 @@ function Header(): JSX.Element {
           <Navigation links={Links.Navigation}/>
         </nav>
         <Search />
+        <Cart />
       </div>
     </header>
   );

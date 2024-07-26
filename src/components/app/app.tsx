@@ -8,6 +8,7 @@ import NotFoundPage from '../../pages/not-found-page';
 import { useAppSelector } from '../../hooks';
 import { selectStatusLoading } from '../../store/cameras-process/cameras-process.selectors';
 import Loader from '../loader/loader';
+import CartPage from '../../pages/cart-page';
 
 function App(): JSX.Element {
   const statusLoading = useAppSelector(selectStatusLoading);
@@ -32,6 +33,10 @@ function App(): JSX.Element {
               element={<ProductPage/>}
             />
           </Route>
+          <Route
+            path={AppRoute.Cart}
+            element={<CartPage/>}
+          />
           <Route
             path='*'
             element={<NotFoundPage/>}
