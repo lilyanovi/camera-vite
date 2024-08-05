@@ -5,7 +5,7 @@ import { getPhoneByPost, getTypeForPhoto } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postOrderPhoneAction } from '../../store/api-actions';
 import { StatusCodes } from 'http-status-codes';
-import { selectStatusLoading } from '../../store/order-process/order-process.selectors';
+import { selectStatusLoadingPost } from '../../store/order-process/order-process.selectors';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
@@ -25,7 +25,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const statusLoading = useAppSelector(selectStatusLoading);
+  const statusLoading = useAppSelector(selectStatusLoadingPost);
 
   const onSubmit: SubmitHandler<TFormInput> = (data) => {
     const phoneByPost = getPhoneByPost(data.phone);
@@ -33,7 +33,7 @@ function CallModal ({camera, handleButtonClick}: CallModalProps): JSX.Element {
       camerasIds: [
         id
       ],
-      coupon: null,
+      coupon: '',
       tel: phoneByPost
     })).then((response) => {
       if (response.payload === StatusCodes.CREATED){

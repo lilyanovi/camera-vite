@@ -4,15 +4,28 @@ import { AppRoute, StatusLoading } from '../const';
 import Rating from '../components/rating/rating';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectCurrentProduct, selectSimilarProducts, selectStatusLoading } from '../store/product-process/product-process.selectors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchProductByIdAction, fetchReviewsListAction, fetchSimilarProductsByIdAction } from '../store/api-actions';
 import Tabs from '../components/tabs/tabs';
 import Reviews from '../components/reviews/reviews';
 import Arrow from '../components/arrow/arrow';
 import Loader from '../components/loader/loader';
 import ProductSimilar from '../components/product-similar/product-similar';
+import CartModal from '../components/modal/cart-modal';
+import SuccessMessageModal from '../components/modal/success-message-modal';
+import Modal from '../components/modal/modal';
 
 function ProductPage () {
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [isSuccessModalActive, setIsSuccessModalActive] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsModalActive(!isModalActive);
+  };
+
+  const handleSuccessModalChange = () => {
+    setIsSuccessModalActive(!isSuccessModalActive);
+  };
 
   const {id} = useParams();
 
@@ -93,7 +106,7 @@ function ProductPage () {
                       <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                     </div>
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
-                    <button className="btn btn--purple" type="button">
+                    <button className="btn btn--purple" type="button" onClick={handleButtonClick}>
                       <svg width="24" height="16" aria-hidden="true">
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
@@ -116,6 +129,16 @@ function ProductPage () {
           </div>
         </main>
         <Arrow />
+        {isModalActive ?
+          <Modal
+            content={<CartModal camera={currentProduct} handleButtonClick={handleButtonClick} handleSuccessModalChange={handleSuccessModalChange}/>}
+            handleButtonClick={handleButtonClick}
+          /> : ''}
+        {isSuccessModalActive ?
+          <Modal
+            content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange} isProduct/>}
+            handleButtonClick={handleSuccessModalChange}
+          /> : ''}
       </>
     );
   }

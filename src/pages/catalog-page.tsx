@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import Cards from '../components/cards/cards';
 import { Link } from 'react-router-dom';
 import { AppRoute, PER_PAGE_CAMERAS_COUNT } from '../const';
-import Banner from '../components/banner/banner';
 import Sort from '../components/sort/sort';
 import Filters from '../components/filters/filters';
 import Pagination from '../components/pagination/pagination';
@@ -16,7 +15,6 @@ function CatalogPage () {
       <Helmet>
         <title>Каталог - Фотошоп</title>
       </Helmet>
-      <Banner />
       <div className="page-content">
         <div className="breadcrumbs">
           <div className="container">

@@ -1,6 +1,6 @@
 import faker, {name, date, image, lorem, datatype, commerce, random, phone} from 'faker';
 import { TCamera, TPromoProduct } from './types/camera';
-import { Category, CouponType, Level, SortDirection, SortOption, START_PAGE, StatusLoading, Type } from './const';
+import { Category, Level, SortDirection, SortOption, START_PAGE, StatusLoading, Type } from './const';
 import { TReview } from './types/review';
 import { createAPI } from './services/api';
 import { ThunkDispatch } from 'redux-thunk';
@@ -57,7 +57,7 @@ export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({
 
 export const makeFakeOrder = (): TOrder => ({
   camerasIds: [datatype.number()],
-  coupon: random.objectElement(CouponType) as CouponType,
+  coupon: 'fgfg',
   tel: `+7${phone.phoneNumber()}`,
 }) as TOrder;
 
@@ -78,6 +78,11 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     currentPage: START_PAGE},
   PRODUCT: { currentProduct: null, similarProducts: [], statusLoading: StatusLoading.Loading },
   REVIEWS: { sortReviews: [], statusLoading: StatusLoading.Loading },
-  ORDER: { statusLoading: StatusLoading.Success },
+  ORDER: { statusLoading: StatusLoading.Success, error: '' },
+  CART: {cart: [],
+    promoCode: '',
+    statusLoadingCheck: StatusLoading.None,
+    discountByCoupon: 0,
+    error: ''},
   ...initialState ?? {},
 });

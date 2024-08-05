@@ -1,6 +1,7 @@
 export enum AppRoute {
   Main = '/',
-  Product = '/product'
+  Product = '/product',
+  Cart = '/card',
 }
 
 export enum StatusLoading {
@@ -14,7 +15,8 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Product = 'PRODUCT',
   Reviews = 'REVIEWS',
-  Order = 'ORDER'
+  Order = 'ORDER',
+  Cart = 'CART'
 }
 
 export enum ActiveTab {
@@ -26,6 +28,7 @@ export enum APIRoute {
   Camera = '/cameras',
   Order = '/orders',
   Promo = '/promo',
+  Coupons = '/coupons'
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
@@ -115,22 +118,18 @@ export const ErrorMessages = {
     Required: 'Нужно указать номер',
     Pattern: 'Укажите номер в формате +7(9XX)XXX-XX-XX'
   },
+  Promo: 'Промокод неверный',
   Post: 'Failed to send data',
 };
 
 export const PatternsForCheck = {
   Phone: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
+  Promo: /^\S+$/,
 };
 
 export const BANNER_CHANGE_TIME = 3000;
 
 export const SLIDER_PRODUCTS_COUNT = 3;
-
-export enum CouponType {
-  Camera333 = 'camera-333',
-  Camera444 = 'camera-444',
-  Camera555 = 'camera-555',
-}
 
 export enum SortOption {
   sortPrice = 'по цене',
@@ -147,3 +146,8 @@ export const PER_PAGE_CAMERAS_COUNT = 9;
 export const PAGINATION_PAGE_COUNT = 3;
 
 export const START_PAGE = 1;
+
+export enum QuantityCount {
+  Min = 1,
+  Max = 9
+}

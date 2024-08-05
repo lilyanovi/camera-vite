@@ -25,3 +25,9 @@ export type TPromoProduct = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
+
+export type TCount = {
+  count: number;
+}
+
+export type TCartCamera = TCamera & TCount;

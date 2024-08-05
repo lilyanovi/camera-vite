@@ -1,0 +1,36 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectCart } from '../../store/cart-process/cart-process.selectors';
+import { getCartCount } from '../../utils';
+import { useEffect } from 'react';
+import { getCart } from '../../services/cart';
+import { loadCart } from '../../store/cart-process/cart-process.slice';
+
+function CartIcon (): JSX.Element {
+
+  const cart = useAppSelector(selectCart);
+
+  const cartCount = getCartCount(cart);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const localCart = getCart();
+    if (localCart.length > 0){
+      dispatch(loadCart({
+        cart: localCart
+      }));
+    }
+  }, [dispatch]);
+
+  return (
+    <Link className="header__basket-link" to={AppRoute.Cart}>
+      <svg width="16" height="16" aria-hidden="true">
+        <use xlinkHref="#icon-basket"></use>
+      </svg>
+      {cartCount ? <span className="header__basket-count">{cartCount}</span> : ''}
+    </Link>
+  );
+}
+
+export default CartIcon;
