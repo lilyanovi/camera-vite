@@ -1,23 +1,13 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, StatusLoading } from '../../const';
+import { AppRoute, } from '../../const';
 import Layout from '../layout/layout';
 import CatalogPage from '../../pages/catalog-page';
 import ProductPage from '../../pages/product-page';
 import NotFoundPage from '../../pages/not-found-page';
-import { useAppSelector } from '../../hooks';
-import { selectStatusLoading } from '../../store/cameras-process/cameras-process.selectors';
-import Loader from '../loader/loader';
 import CartPage from '../../pages/cart-page';
 
 function App(): JSX.Element {
-  const statusLoading = useAppSelector(selectStatusLoading);
-
-  if(statusLoading === StatusLoading.Loading) {
-    return (
-      <Loader />
-    );
-  }
 
   return (
     <HelmetProvider>

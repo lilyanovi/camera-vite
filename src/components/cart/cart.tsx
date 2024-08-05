@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import CartList from './cart-list';
+import CartSummary from './cart-summary';
 
 function Cart (): JSX.Element {
   return (
-    <Link className="header__basket-link" to={AppRoute.Cart}>
-      <svg width="16" height="16" aria-hidden="true">
-        <use xlinkHref="#icon-basket"></use>
-      </svg>
-    </Link>
+    <section className="basket">
+      <div className="container">
+        <h1 className="title title--h2">Корзина</h1>
+        <CartList />
+        <CartSummary />
+      </div>
+    </section>
   );
 }
 

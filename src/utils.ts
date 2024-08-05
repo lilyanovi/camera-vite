@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { TReview, TReviews } from './types/review';
 import { Category, Level, SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirection, SortOption, Type } from './const';
-import { TCamera } from './types/camera';
+import { TCamera, TCartCamera, TPromoProduct } from './types/camera';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
 
@@ -158,3 +158,59 @@ export const getMinMaxPrice = (cameras: TCamera[]) => {
     max: 'до'
   };
 };
+
+export const getCartCount = (cart: TCartCamera[]) => cart.reduce(((acc, cur) => acc + cur.count), 0);
+
+export const getProductPrice = (price: number, count: number) => price * count;
+
+export const getTotalPrice = (cart: TCartCamera[]) => cart.reduce(((acc, cur) => acc + getProductPrice(cur.price, cur.count)), 0);
+
+const getBonus = (cart: TCartCamera[], promo: TPromoProduct[]) => {
+  let bonus = 0;
+  const promoIds = promo.map((camera) => camera.id);
+  const cartWithoutPromo = cart.filter((camera) => !promoIds.includes(camera.id));
+  const cartCount = getCartCount(cartWithoutPromo);
+
+  if(cartCount < 2){
+    return bonus;
+  } else if(cartCount === 2){
+    bonus = 3;
+  } else if (cartCount > 2 && cartCount < 6){
+    bonus = 5;
+  } else if (cartCount >= 6 && cartCount <= 10){
+    bonus = 10;
+  } else if (cartCount > 10){
+    bonus = 15;
+  }
+
+  const totalPrice = getTotalPrice(cartWithoutPromo);
+  if(totalPrice < 10000){
+    return bonus;
+  } else if(totalPrice >= 10000 && totalPrice < 20000){
+    bonus = bonus - 1;
+  } else if(totalPrice >= 20000 && totalPrice < 30000){
+    bonus = bonus - 2;
+  } else if(totalPrice >= 30000){
+    bonus = bonus - 3;
+  }
+  return bonus;
+};
+
+export const getBonusPrice = (cart: TCartCamera[], promo: TPromoProduct[]): number => {
+  const bonus = getBonus(cart, promo);
+  if(bonus > 0){
+    const promoIds = promo.map((camera) => camera.id);
+    return Number(cart.reduce(((acc, camera) => !promoIds.includes(camera.id) ? (acc + getProductPrice(camera.price, camera.count) * (bonus / 100)) : acc), 0).toFixed(1));
+  } else {
+    return 0;
+  }
+};
+
+export const getTotalPriceWithDiscount = (totalPrice: number, bonus: number, discount: number) => {
+  let result = totalPrice - Number(bonus);
+  if(discount){
+    result = Number(((result * (100 - discount)) / 100).toFixed(1));
+  }
+  return result;
+};
+

@@ -3,8 +3,11 @@ import { TCamera } from '../../types/camera';
 import Rating from '../rating/rating';
 import { AppRoute } from '../../const';
 import Modal from '../modal/modal';
-import CallModal from '../modal/call-modal';
 import { useEffect, useState } from 'react';
+import CartModal from '../modal/cart-modal';
+import { useAppSelector } from '../../hooks';
+import { selectCart } from '../../store/cart-process/cart-process.selectors';
+import SuccessMessageModal from '../modal/success-message-modal';
 
 type CardItemProps = {
   camera: TCamera;
@@ -14,9 +17,14 @@ type CardItemProps = {
 function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
   const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, rating, reviewCount} = camera;
   const [isModalActive, setIsModalActive] = useState(false);
+  const [isSuccessModalActive, setIsSuccessModalActive] = useState(false);
 
   const handleButtonClick = () => {
     setIsModalActive(!isModalActive);
+  };
+
+  const handleSuccessModalChange = () => {
+    setIsSuccessModalActive(!isSuccessModalActive);
   };
 
   useEffect(() => {
@@ -26,6 +34,10 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
       document.body.classList.remove('scroll-lock');
     }
   }, [isModalActive]);
+
+  const cart = useAppSelector(selectCart);
+
+  const isCartCamera = cart.find((cameraItem) => cameraItem.id === id);
 
   return (
     <div className={`product-card ${isActive ? 'is-active' : ''}`} data-testid="product-card-container">
@@ -45,19 +57,30 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button
-          className="btn btn--purple product-card__btn"
-          type="button"
-          onClick={handleButtonClick}
-        >Купить
-        </button>
+        {isCartCamera ?
+          <Link className="btn btn--purple-border" to={AppRoute.Cart}>
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>В корзине
+          </Link> :
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={handleButtonClick}
+          >Купить
+          </button>}
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее
         </Link>
       </div>
       {isModalActive ?
         <Modal
-          content={<CallModal camera={camera} handleButtonClick={handleButtonClick}/>}
+          content={<CartModal camera={camera} handleButtonClick={handleButtonClick} handleSuccessModalChange={handleSuccessModalChange}/>}
           handleButtonClick={handleButtonClick}
+        /> : ''}
+      {isSuccessModalActive ?
+        <Modal
+          content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange}/>}
+          handleButtonClick={handleSuccessModalChange}
         /> : ''}
     </div>
   );

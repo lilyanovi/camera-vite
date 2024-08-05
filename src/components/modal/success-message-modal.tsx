@@ -1,9 +1,14 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 type SuccessMessageProps = {
   isBasket?: boolean;
   isReview?: boolean;
+  isProduct?: boolean;
+  handleButtonClick: () => void;
 }
 
-function SuccessMessageModal ({isBasket, isReview}: SuccessMessageProps): JSX.Element {
+function SuccessMessageModal ({isBasket, isReview, isProduct, handleButtonClick}: SuccessMessageProps): JSX.Element {
 
   const getTitleText = () => {
     if(isBasket){
@@ -23,11 +28,13 @@ function SuccessMessageModal ({isBasket, isReview}: SuccessMessageProps): JSX.El
       </svg>
       <div className="modal__buttons">
         {isReview || isBasket ?
-          <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">Вернуться к покупкам
+          <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button"><Link to={AppRoute.Main}>Вернуться к покупкам</Link>
           </button> :
           <>
-            <a className="btn btn--transparent modal__btn" href="#">Продолжить покупки</a>
-            <button className="btn btn--purple modal__btn modal__btn--fit-width">Перейти в корзину</button>
+            {isProduct ?
+              <Link className="btn btn--transparent modal__btn" to={AppRoute.Main} >Продолжить покупки</Link> :
+              <a className="btn btn--transparent modal__btn" href="#" onClick={handleButtonClick}>Продолжить покупки</a>}
+            <button className="btn btn--purple modal__btn modal__btn--fit-width"><Link to={AppRoute.Cart}>Перейти в корзину</Link></button>
           </>}
       </div>
     </>
