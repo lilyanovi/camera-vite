@@ -79,7 +79,7 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
         /> : ''}
       {isSuccessModalActive ?
         <Modal
-          content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange}/>}
+          content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange} isCard/>}
           handleButtonClick={handleSuccessModalChange}
         /> : ''}
     </div>

@@ -1,13 +1,27 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import { selectSortReviews } from '../../store/review-process/review-process.selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectError, selectSortReviews } from '../../store/review-process/review-process.selectors';
 import { getCurrentReviews } from '../../utils';
 import ReviewItem from './review-item';
 import { TReviews } from '../../types/review';
 import EmptyReviews from './empty-reviews';
+import Modal from '../modal/modal';
+import AddReviewModal from '../modal/add-review-modal';
+import SuccessMessageModal from '../modal/success-message-modal';
+import { clearError } from '../../store/review-process/review-process.slice';
+import { toast } from 'react-toastify';
 
-function Reviews (): JSX.Element {
+type ReviewsProps = {
+  id: number;
+}
+
+function Reviews ({id}: ReviewsProps): JSX.Element {
+  const [isReviewModalActive, setIsReviewModalActive] = useState(false);
+  const [isSuccessReviewModalActive, setIsSuccessReviewModalActive] = useState(false);
+
   const sortReviews = useAppSelector(selectSortReviews);
+  const error = useAppSelector(selectError);
+  const dispatch = useAppDispatch();
 
   const [currentReviews, setCurrentReviews] = useState<TReviews>([]);
 
@@ -33,6 +47,23 @@ function Reviews (): JSX.Element {
     }
   }, [currentReviews, sortReviews]);
 
+  const handleSuccessReviewModalChange = () => {
+    setIsSuccessReviewModalActive(!isSuccessReviewModalActive);
+  };
+
+  const handleReviewModalChange = () => {
+    setIsReviewModalActive(!isReviewModalActive);
+  };
+
+  useEffect(() => {
+    if(error){
+      toast.warn(error, {
+        position: 'bottom-right'
+      });
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   useEffect(() => {
     document.addEventListener('scroll', handleButtonClick);
 
@@ -46,7 +77,12 @@ function Reviews (): JSX.Element {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button">Оставить свой отзыв</button>
+          <button
+            className="btn"
+            type="button"
+            onClick={handleReviewModalChange}
+          >Оставить свой отзыв
+          </button>
         </div>
         <ul className="review-block__list">
           {currentReviews.length > 0 ? currentReviews.map((review) => <ReviewItem key={review.id} review={review}/>) : <EmptyReviews />}
@@ -61,6 +97,16 @@ function Reviews (): JSX.Element {
             </button> : ''}
         </div>
       </div>
+      {isReviewModalActive ?
+        <Modal
+          content={<AddReviewModal cameraId={id} handleButtonClick={handleReviewModalChange} handleSuccessModalChange={handleSuccessReviewModalChange}/>}
+          handleButtonClick={handleReviewModalChange}
+        /> : ''}
+      {isSuccessReviewModalActive ?
+        <Modal
+          content={<SuccessMessageModal handleButtonClick={handleSuccessReviewModalChange} isReview/>}
+          handleButtonClick={handleSuccessReviewModalChange}
+        /> : ''}
     </section>
   );
 }

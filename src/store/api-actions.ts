@@ -3,7 +3,7 @@ import { TCamera, TPromoProduct } from '../types/camera';
 import { APIRoute } from '../const';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { TReviews } from '../types/review';
+import { TReview, TReviewByPost, TReviews } from '../types/review';
 import { TOrder } from '../types/order';
 
 export const fetchCamerasListAction = createAsyncThunk<TCamera[], undefined, {
@@ -93,6 +93,19 @@ export const checkCouponAction = createAsyncThunk<unknown, string, {
   'data/checkCoupon',
   async (coupon, {extra: api}) => {
     const response = await api.post(APIRoute.Coupons, {coupon: coupon});
+    return response.data;
+  }
+);
+
+export const postReviewAction = createAsyncThunk<TReview, TReviewByPost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(
+  'data/postReview',
+  async (review, {extra: api}) => {
+    const response = await api.post<TReview>(APIRoute.Reviews, review);
     return response.data;
   }
 );

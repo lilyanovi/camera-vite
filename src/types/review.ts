@@ -1,6 +1,4 @@
-export type TReview = {
-  id: string;
-  createAt: string;
+export type TReviewByPost = {
   cameraId: number;
   userName: string;
   advantage: string;
@@ -8,5 +6,12 @@ export type TReview = {
   review: string;
   rating: number;
 }
+
+type TReviewByServer = {
+  id: string;
+  createAt: string;
+}
+
+export type TReview = TReviewByPost & TReviewByServer;
 
 export type TReviews = TReview[];

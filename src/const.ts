@@ -28,7 +28,8 @@ export enum APIRoute {
   Camera = '/cameras',
   Order = '/orders',
   Promo = '/promo',
-  Coupons = '/coupons'
+  Coupons = '/coupons',
+  Reviews = '/reviews'
 }
 
 export const RatingItems = [1, 2, 3, 4, 5];
@@ -120,12 +121,44 @@ export const ErrorMessages = {
   },
   Promo: 'Промокод неверный',
   Post: 'Failed to send data',
-};
+  Rate: 'Нужно оценить товар',
+  Name: {
+    Required: 'Нужно указать имя',
+    MinLength: 'Введите не менее 2 символов',
+    MaxLength: 'Введите  не более 15 символов'
+  },
+  Plus: {
+    Required: 'Нужно указать достоинства',
+    MinLength: 'Введите не менее 10 символов',
+    MaxLength: 'Введите не более 160 символов'
+  },
+  Minus: {
+    Required: 'Нужно указать недостатки',
+    MinLength: 'Введите не менее 10 символов',
+    MaxLength: 'Введите не более 160 символов'
+  },
+  Comment: {
+    Required: 'Нужно добавить комментарий',
+    MinLength: 'Введите не менее 10 символов',
+    MaxLength: 'Введите не более 160 символов'
+  }
+} as const;
+
+export const Length = {
+  UserName: {
+    Max: 15,
+    Min: 2
+  },
+  Text: {
+    Max: 160,
+    Min: 10,
+  }
+} as const;
 
 export const PatternsForCheck = {
   Phone: /^\+?[78][ /(]?[0-9]{3}[ /)]?[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{2}$/,
   Promo: /^\S+$/,
-};
+} as const;
 
 export const BANNER_CHANGE_TIME = 3000;
 

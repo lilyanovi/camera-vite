@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { selectStatusLoading } from '../../store/cameras-process/cameras-process.selectors';
 import { selectStatusLoadingCheck } from '../../store/cart-process/cart-process.selectors';
 import { selectStatusLoadingPost } from '../../store/order-process/order-process.selectors';
+import { selectStatusLoadingReview } from '../../store/review-process/review-process.selectors';
 import CartIcon from '../cart/cart-icon';
 import Loader from '../loader/loader';
 import Logo from '../logo/logo';
@@ -14,7 +15,9 @@ function Header(): JSX.Element {
   const statusLoadingPost = useAppSelector(selectStatusLoadingPost);
   const statusLoadingCatalog = useAppSelector(selectStatusLoading);
   const statusLoadingCheck = useAppSelector(selectStatusLoadingCheck);
-  const isLoading = statusLoadingPost === StatusLoading.Loading || statusLoadingCatalog === StatusLoading.Loading || statusLoadingCheck === StatusLoading.Loading;
+  const statusLoadingReview = useAppSelector(selectStatusLoadingReview);
+
+  const isLoading = (statusLoadingPost || statusLoadingCatalog || statusLoadingCheck || statusLoadingReview) === StatusLoading.Loading;
 
   return (
     <header className="header" id="header" data-testid="header-container">
