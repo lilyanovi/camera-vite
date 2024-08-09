@@ -9,7 +9,6 @@ import { fetchProductByIdAction, fetchReviewsListAction, fetchSimilarProductsByI
 import Tabs from '../components/tabs/tabs';
 import Reviews from '../components/reviews/reviews';
 import Arrow from '../components/arrow/arrow';
-import Loader from '../components/loader/loader';
 import ProductSimilar from '../components/product-similar/product-similar';
 import CartModal from '../components/modal/cart-modal';
 import SuccessMessageModal from '../components/modal/success-message-modal';
@@ -50,11 +49,7 @@ function ProductPage () {
     };
   }, [dispatch, id, currentProduct]);
 
-  if(statusLoading === StatusLoading.Loading) {
-    return (
-      <Loader />
-    );
-  } else if(!currentProduct) {
+  if(statusLoading !== StatusLoading.Loading && !currentProduct) {
     return <Navigate to='404'/>;
   }
 
@@ -124,7 +119,7 @@ function ProductPage () {
             </div>
             {similarProducts.length !== 0 ? <ProductSimilar /> : ''}
             <div className="page-content__section">
-              <Reviews />
+              <Reviews id={currentProduct.id}/>
             </div>
           </div>
         </main>

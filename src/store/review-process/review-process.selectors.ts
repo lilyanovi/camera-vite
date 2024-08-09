@@ -4,6 +4,8 @@ import type { State } from '../../types/state';
 
 const selectSortReviews = (state: Pick<State, NameSpace.Reviews>): TReviews => state[NameSpace.Reviews].sortReviews;
 
-const selectStatusLoading = (state: Pick<State, NameSpace.Reviews>): StatusLoading => state[NameSpace.Reviews].statusLoading;
+const selectStatusLoadingReview = (state: Pick<State, NameSpace.Reviews>): StatusLoading => state[NameSpace.Reviews].statusLoading;
 
-export {selectSortReviews, selectStatusLoading};
+const selectError = (state: Pick<State, NameSpace.Reviews>): string => state[NameSpace.Reviews].error;
+
+export {selectSortReviews, selectStatusLoadingReview, selectError};
