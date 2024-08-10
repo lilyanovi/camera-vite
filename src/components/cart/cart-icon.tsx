@@ -15,12 +15,20 @@ function CartIcon (): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const localCart = getCart();
-    if (localCart.length > 0){
-      dispatch(loadCart({
-        cart: localCart
-      }));
+    let isMounted = true;
+
+    if (isMounted) {
+      const localCart = getCart();
+      if (localCart.length > 0){
+        dispatch(loadCart({
+          cart: localCart
+        }));
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch]);
 
   return (

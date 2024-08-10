@@ -126,13 +126,13 @@ function ProductPage () {
         <Arrow />
         {isModalActive ?
           <Modal
-            content={<CartModal camera={currentProduct} handleButtonClick={handleButtonClick} handleSuccessModalChange={handleSuccessModalChange}/>}
-            handleButtonClick={handleButtonClick}
+            content={<CartModal camera={currentProduct} onButtonClick={handleButtonClick} onSuccessModalChange={handleSuccessModalChange}/>}
+            onButtonClick={handleButtonClick}
           /> : ''}
         {isSuccessModalActive ?
           <Modal
-            content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange} isProduct/>}
-            handleButtonClick={handleSuccessModalChange}
+            content={<SuccessMessageModal onButtonClick={handleSuccessModalChange} isProduct/>}
+            onButtonClick={handleSuccessModalChange}
           /> : ''}
       </>
     );

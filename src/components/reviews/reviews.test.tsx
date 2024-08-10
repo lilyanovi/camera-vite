@@ -1,13 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mock-component';
-import { makeFakeReview } from '../../mocks';
+import { makeFakeIdNumber, makeFakeReview } from '../../mocks';
 import { StatusLoading } from '../../const';
 import Reviews from './reviews';
 
 describe('Component: Reviews', () => {
   it('should render correctly', () => {
     const expectedText = 'Отзывы';
-    const { withStoreComponent } = withStore(<Reviews />, { REVIEWS: {sortReviews: new Array(5).fill(null).map(() => makeFakeReview()), statusLoading: StatusLoading.Success} });
+    const fakeId = makeFakeIdNumber();
+    const { withStoreComponent } = withStore(<Reviews id={fakeId}/>, {
+      REVIEWS: {
+        sortReviews: new Array(5).fill(null).map(() => makeFakeReview()),
+        statusLoading: StatusLoading.Success,
+        error: ''
+      }});
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

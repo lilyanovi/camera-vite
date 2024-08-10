@@ -7,11 +7,11 @@ import { getTypeForPhoto } from '../../utils';
 type CartModalProps = {
   isRemove?: boolean;
   camera: TCamera;
-  handleButtonClick: () => void;
-  handleSuccessModalChange?: () => void;
+  onButtonClick: () => void;
+  onSuccessModalChange?: () => void;
 }
 
-function CartModal ({isRemove, camera, handleButtonClick, handleSuccessModalChange}: CartModalProps): JSX.Element {
+function CartModal ({isRemove, camera, onButtonClick, onSuccessModalChange}: CartModalProps): JSX.Element {
   const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, type, category, level} = camera;
   const dispatch = useAppDispatch();
 
@@ -19,9 +19,9 @@ function CartModal ({isRemove, camera, handleButtonClick, handleSuccessModalChan
     dispatch(addToCart({
       cartItem: {...camera, count: 1}
     }));
-    handleButtonClick();
-    if (handleSuccessModalChange){
-      handleSuccessModalChange();
+    onButtonClick();
+    if (onSuccessModalChange){
+      onSuccessModalChange();
     }
   };
 
@@ -29,7 +29,7 @@ function CartModal ({isRemove, camera, handleButtonClick, handleSuccessModalChan
     dispatch(removeToCart({
       id: id
     }));
-    handleButtonClick();
+    onButtonClick();
   };
 
   return (
@@ -57,7 +57,7 @@ function CartModal ({isRemove, camera, handleButtonClick, handleSuccessModalChan
           <>
             <button className="btn btn--purple modal__btn modal__btn--half-width" type="button" onClick={handleRemoveToCartButtonClick}>Удалить
             </button>
-            <a className="btn btn--transparent modal__btn modal__btn--half-width" href="#" onClick={handleButtonClick}>Продолжить покупки
+            <a className="btn btn--transparent modal__btn modal__btn--half-width" href="#" onClick={onButtonClick}>Продолжить покупки
             </a>
           </> :
           <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleAddToCartButtonClick}>

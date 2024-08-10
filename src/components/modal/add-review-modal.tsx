@@ -5,8 +5,8 @@ import { postReviewAction } from '../../store/api-actions';
 
 type AddReviewModalProps = {
   cameraId: number;
-  handleButtonClick: () => void;
-  handleSuccessModalChange: () => void;
+  onButtonClick: () => void;
+  onSuccessModalChange: () => void;
 };
 
 type TFormInput = {
@@ -17,7 +17,7 @@ type TFormInput = {
   rate: number | null;
 }
 
-function AddReviewModal ({cameraId, handleButtonClick, handleSuccessModalChange}: AddReviewModalProps): JSX.Element {
+function AddReviewModal ({cameraId, onButtonClick, onSuccessModalChange}: AddReviewModalProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const {register, handleSubmit, formState: { errors }} = useForm<TFormInput>({defaultValues: {
@@ -37,8 +37,8 @@ function AddReviewModal ({cameraId, handleButtonClick, handleSuccessModalChange}
       review: data.comment,
       rating: Number(data.rate),
     })).then(() => {
-      handleButtonClick();
-      handleSuccessModalChange();
+      onButtonClick();
+      onSuccessModalChange();
     });
   };
 

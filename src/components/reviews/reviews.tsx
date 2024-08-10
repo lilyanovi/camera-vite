@@ -99,13 +99,13 @@ function Reviews ({id}: ReviewsProps): JSX.Element {
       </div>
       {isReviewModalActive ?
         <Modal
-          content={<AddReviewModal cameraId={id} handleButtonClick={handleReviewModalChange} handleSuccessModalChange={handleSuccessReviewModalChange}/>}
-          handleButtonClick={handleReviewModalChange}
+          content={<AddReviewModal cameraId={id} onButtonClick={handleReviewModalChange} onSuccessModalChange={handleSuccessReviewModalChange}/>}
+          onButtonClick={handleReviewModalChange}
         /> : ''}
       {isSuccessReviewModalActive ?
         <Modal
-          content={<SuccessMessageModal handleButtonClick={handleSuccessReviewModalChange} isReview/>}
-          handleButtonClick={handleSuccessReviewModalChange}
+          content={<SuccessMessageModal onButtonClick={handleSuccessReviewModalChange} isReview/>}
+          onButtonClick={handleSuccessReviewModalChange}
         /> : ''}
     </section>
   );

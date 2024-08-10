@@ -49,7 +49,9 @@ export const makeFakeReview = (): TReview => ({
   rating: datatype.number(5),
 }) as TReview;
 
-export const makeFakeId = (): string => String(datatype.number());
+export const makeFakeIdNumber = (): number => Number(datatype.number());
+
+export const makeFakeId = (): string => String(makeFakeIdNumber());
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>
 
@@ -77,7 +79,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     direction: SortDirection.up,
     currentPage: START_PAGE},
   PRODUCT: { currentProduct: null, similarProducts: [], statusLoading: StatusLoading.Loading },
-  REVIEWS: { sortReviews: [], statusLoading: StatusLoading.Loading },
+  REVIEWS: { sortReviews: [], statusLoading: StatusLoading.Loading, error: '' },
   ORDER: { statusLoading: StatusLoading.Success, error: '' },
   CART: {cart: [],
     promoCode: '',
