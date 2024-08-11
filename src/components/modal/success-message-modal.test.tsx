@@ -49,7 +49,7 @@ describe('Component: SuccessMessageModal', () => {
     render(preparedComponent);
 
     expect(screen.getByText(expectedText)).toBeInTheDocument();
-    expect(screen.getByRole('link', {name: 'Продолжить покупки'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Продолжить покупки'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Перейти в корзину'})).toBeInTheDocument();
   });
   it('should render correctly when "isCard"  and user enter link', async () => {
@@ -59,7 +59,7 @@ describe('Component: SuccessMessageModal', () => {
 
     render(preparedComponent);
     await userEvent.click(
-      screen.getByRole('link', {name: 'Продолжить покупки'})
+      screen.getByRole('button', {name: 'Продолжить покупки'})
     );
 
     expect(mockOnButtonClick).toBeCalledTimes(1);
