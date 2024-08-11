@@ -49,6 +49,7 @@ function PromoCode (): JSX.Element {
         dispatch(changePromo({
           promo: localPromo
         }));
+        dispatch(checkCouponAction(localPromo));
         setValue('promo', localPromo);
       }
     }

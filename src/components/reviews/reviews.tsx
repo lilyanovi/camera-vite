@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectError, selectSortReviews } from '../../store/review-process/review-process.selectors';
 import { getCurrentReviews } from '../../utils';
 import ReviewItem from './review-item';
-import { TReviews } from '../../types/review';
+import type { TReviews } from '../../types/review';
 import EmptyReviews from './empty-reviews';
 import Modal from '../modal/modal';
 import AddReviewModal from '../modal/add-review-modal';

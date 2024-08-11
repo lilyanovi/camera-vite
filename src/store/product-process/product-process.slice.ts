@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
 import { fetchProductByIdAction, fetchSimilarProductsByIdAction } from '../api-actions';
-import { ProductProcess } from '../../types/product-process';
+import type { ProductProcess } from '../../types/product-process';
 
 const initialState: ProductProcess = {
   currentProduct: null,

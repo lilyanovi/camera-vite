@@ -1,6 +1,6 @@
 import { Level, NameSpace, START_PAGE, SortDirection, SortOption, StatusLoading } from '../../const';
 import { makeFakePromoProduct } from '../../mocks';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import { selectCameras, selectCurrentCamerasList, selectCurrentPage, selectFilteredCameras, selectFilteredSettings, selectPromoProducts, selectSortCameras, selectSortDirection, selectSortOption, selectStatusLoading } from './cameras-process.selectors';
 
 describe('CamerasProcess selectors', () => {

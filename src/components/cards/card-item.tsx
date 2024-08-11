@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import Rating from '../rating/rating';
 import { AppRoute } from '../../const';
 import Modal from '../modal/modal';

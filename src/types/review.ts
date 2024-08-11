@@ -7,7 +7,7 @@ export type TReviewByPost = {
   rating: number;
 }
 
-type TReviewByServer = {
+export type TReviewByServer = {
   id: string;
   createAt: string;
 }

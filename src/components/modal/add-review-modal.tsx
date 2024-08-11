@@ -103,6 +103,7 @@ function AddReviewModal ({cameraId, onButtonClick, onSuccessModalChange}: AddRev
                   type="text"
                   placeholder="Введите ваше имя"
                   required
+                  autoFocus
                   {...register('name',
                     {
                       required: ErrorMessages.Name.Required,

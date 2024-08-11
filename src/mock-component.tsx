@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { Action } from 'redux';
 import { AppThunkDispatch } from './mocks';
 import { Provider } from 'react-redux';
-import { State } from './types/state';
+import type { State } from './types/state';
 import { createAPI } from './services/api';
 import { MemoryHistory, createMemoryHistory } from 'history';
 import HistoryRouter from './components/history-route/history-route';

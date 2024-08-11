@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { TReview, TReviews } from './types/review';
+import type { TReview, TReviews } from './types/review';
 import { Category, Level, SLIDER_PRODUCTS_COUNT, STEP_REVIEWS_SHOWN, SortDirection, SortOption, Type } from './const';
-import { TCamera, TCartCamera, TPromoProduct } from './types/camera';
+import type { TCamera, TCartCamera, TPromoProduct } from './types/camera';
 
 export const getFormatDate = (date: string) => dayjs(date).locale('ru').format('DD MMMM');
 

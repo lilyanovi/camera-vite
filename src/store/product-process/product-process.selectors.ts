@@ -1,5 +1,5 @@
 import { NameSpace, StatusLoading } from '../../const';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import type { State } from '../../types/state';
 
 const selectCurrentProduct = (state: Pick<State, NameSpace.Product>): TCamera | null => state[NameSpace.Product].currentProduct;

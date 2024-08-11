@@ -1,5 +1,5 @@
 import { KeyboardEvent, useRef, useState } from 'react';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import SearchItem from './search-item';
 
 type SearchListProps = {

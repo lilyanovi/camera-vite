@@ -1,7 +1,7 @@
 import { Category, Level, SortDirection, SortOption, Type } from './const';
-import { makeFakeCamera, makeFakeReview } from './mocks';
-import { TCamera } from './types/camera';
-import { getCurrentReviews, getFilteredCameras, getFilteredCamerasList, getFormatDate, getIsActiveProducts, getMinMaxPrice, getPhoneByPost, getQueryObject, getSortByDateReviews, getSortCamerasList, getTypeForPhoto } from './utils';
+import { makeFakeCamera, makeFakeCartCamera, makeFakeReview } from './mocks';
+import type { TCamera, TCartCamera, TPromoProduct } from './types/camera';
+import { getBonusPrice, getCartCount, getCurrentReviews, getFilteredCameras, getFilteredCamerasList, getFormatDate, getIsActiveProducts, getMinMaxPrice, getPhoneByPost, getProductPrice, getQueryObject, getSortByDateReviews, getSortCamerasList, getTotalPrice, getTotalPriceWithDiscount, getTypeForPhoto } from './utils';
 
 describe('Function: getFormatDate', () => {
   it('should return result in format DD MMMM', ()=> {
@@ -473,5 +473,174 @@ describe('Function: getMinMaxPrice', () => {
     expect(Object.keys(result).length).toBe(2);
     expect(result.min).toBe('6500');
     expect(result.max).toBe('65000');
+  });
+});
+
+describe('Function: getCartCount', () => {
+  it('should return correctly result when cart.length = 0', ()=> {
+    const fakeCart = [] as TCartCamera[];
+    const result = getCartCount(fakeCart);
+
+    expect(result).toBe(0);
+
+  });
+  it('should return correctly result when cart.length !== 0', ()=> {
+    const fakeFirstCamera = makeFakeCartCamera();
+    const fakeSecondCamera = makeFakeCartCamera();
+    const fakeCameras = [fakeFirstCamera, fakeSecondCamera] as TCartCamera[];
+    const result = getCartCount(fakeCameras);
+    const expectedResult = fakeFirstCamera.count + fakeSecondCamera.count;
+
+    expect(result).toBe(expectedResult);
+  });
+});
+
+describe('Function: getProductPrice', () => {
+  it('should return correctly result', ()=> {
+    const fakePrice = 5;
+    const fakeCount = 10;
+    const result = getProductPrice(fakePrice, fakeCount);
+
+    expect(result).toBe(50);
+
+  });
+});
+
+describe('Function: getTotalPrice', () => {
+  it('should return correctly result when cart.length = 0', ()=> {
+    const fakeCart = [] as TCartCamera[];
+    const result = getTotalPrice(fakeCart);
+
+    expect(result).toBe(0);
+
+  });
+  it('should return correctly result when cart.length !== 0', ()=> {
+    const fakeCameras = [{
+      id: 1,
+      name: 'Ретрокамера Dus Auge lV',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Коллекционная',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 60,
+      rating: 5,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+      count: 2,
+    }, {
+      id: 2,
+      name: 'FastShot MR-5',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Фотоаппарат',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Любительский',
+      price: 10,
+      rating: 2,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+      count: 10,
+    },] as TCartCamera[];
+    const result = getTotalPrice(fakeCameras);
+
+    expect(result).toBe(220);
+  });
+});
+
+describe('Function: getBonusPrice', () => {
+  it('should return correctly result when cart.length = 0', ()=> {
+    const fakeCart = [] as TCartCamera[];
+    const fakePromo = [] as TPromoProduct[];
+    const result = getBonusPrice(fakeCart, fakePromo);
+
+    expect(result).toBe(0);
+  });
+  it('should return correctly result when cart.length !== 0', ()=> {
+    const fakeCameras = [{
+      id: 1,
+      name: 'Ретрокамера Dus Auge lV',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Коллекционная',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 60,
+      rating: 5,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+      count: 2,
+    }, {
+      id: 2,
+      name: 'FastShot MR-5',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Фотоаппарат',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Любительский',
+      price: 10,
+      rating: 2,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+      count: 10,
+    }, {
+      id: 3,
+      name: 'Instaprinter P2"',
+      vendorCode: 'DA4IU67AD5',
+      type: 'Цифровая',
+      category: 'Видеокамера',
+      description: 'Немецкий концерн BRW разработал видеокамеру Das Auge IV в начале 80-х годов, однако она до сих пор пользуется популярностью среди коллекционеров и яростных почитателей старинной техники.',
+      level: 'Нулевой',
+      price: 50,
+      rating: 3,
+      reviewCount: 16,
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+      count: 1,
+    }] as TCartCamera[];
+    const fakePromo = [{
+      id: 3,
+      name: 'Instaprinter P2"',
+      previewImg: 'img/content/das-auge.jpg',
+      previewImg2x: 'img/content/das-auge@2x.jpg',
+      previewImgWebp: 'img/content/das-auge.webp',
+      previewImgWebp2x: 'img/content/das-auge@2x.webp',
+    }] as TPromoProduct[];
+    const result = getBonusPrice(fakeCameras, fakePromo);
+
+    expect(result).toBe(33);
+  });
+});
+
+describe('Function: getTotalPriceWithDiscount', () => {
+  it('should return correctly result when discount === 0', ()=> {
+    const fakeBonus = 50;
+    const fakeTotalPrice = 200;
+    const fakeDiscount = 0;
+    const result = getTotalPriceWithDiscount(fakeTotalPrice, fakeBonus, fakeDiscount);
+
+    expect(result).toBe(150);
+  });
+  it('should return correctly result when discount !== 0', ()=> {
+    const fakeBonus = 50;
+    const fakeTotalPrice = 200;
+    const fakeDiscount = 15;
+    const result = getTotalPriceWithDiscount(fakeTotalPrice, fakeBonus, fakeDiscount);
+
+    expect(result).toBe(127.5);
   });
 });

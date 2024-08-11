@@ -1,14 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../mock-component';
-
-import CatalogPage from './catalog-page';
 import { makeFakeCamera, makeFakeCartCamera, makeFakePromoProduct } from '../mocks';
 import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../const';
+import CartPage from './cart-page';
 
-describe('Component: CatalogPage', () => {
+describe('Component: CartPage', () => {
   it('should render correctly', () => {
-    const expectedText = 'Каталог фото- и видеотехники';
-    const { withStoreComponent } = withStore(<CatalogPage/>, {
+    const expectedContainerTestId = 'cart-container';
+    const { withStoreComponent } = withStore(<CartPage/>, {
       CAMERAS: {
         cameras: [makeFakeCamera()],
         promoProducts: [makeFakePromoProduct()],
@@ -27,11 +26,17 @@ describe('Component: CatalogPage', () => {
         promoCode: '',
         statusLoadingCheck: StatusLoading.None,
         discountByCoupon: 0,
-        error: ''}});
+        error: ''},
+      ORDER: {
+        statusLoading: StatusLoading.None,
+        error: ''
+      }});
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
+    expect(screen.getByTestId(expectedContainerTestId)).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Главная'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Каталог'})).toBeInTheDocument();
   });
 });

@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 import { NameSpace, PER_PAGE_CAMERAS_COUNT, SortDirection, SortOption, StatusLoading } from '../../const';
-import { TCamera, TPromoProduct } from '../../types/camera';
+import type { TCamera, TPromoProduct } from '../../types/camera';
 import type { State } from '../../types/state';
 import { getFilteredCamerasList, getSortCamerasList } from '../../utils';
-import { FilteredSettingsType } from '../../types/cameras-process';
+import type { FilteredSettingsType } from '../../types/cameras-process';
 
 const selectCameras = (state: Pick<State, NameSpace.Cameras>): TCamera[] => state[NameSpace.Cameras].cameras;
 

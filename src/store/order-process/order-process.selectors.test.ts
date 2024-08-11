@@ -4,7 +4,7 @@ import { selectError, selectStatusLoadingPost } from './order-process.selectors'
 describe('OrderProcess selectors', () => {
   const state = {
     [NameSpace.Order]: {
-      statusLoading: StatusLoading.Success,
+      statusLoading: StatusLoading.None,
       error: ''
     }
   };

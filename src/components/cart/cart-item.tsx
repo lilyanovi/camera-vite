@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { Category, QuantityCount, StatusLoading } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeQuantity, decreaseQuantity, increaseQuantity } from '../../store/cart-process/cart-process.slice';
-import { TCartCamera } from '../../types/camera';
+import type { TCartCamera } from '../../types/camera';
 import { getProductPrice, getTypeForPhoto } from '../../utils';
 import CartModal from '../modal/cart-modal';
 import Modal from '../modal/modal';
@@ -82,8 +82,8 @@ function CartItem ({camera}: CartItemProps): JSX.Element {
       </button>
       {isModalActive ?
         <Modal
-          content={<CartModal camera={camera} handleButtonClick={handleButtonClick} isRemove/>}
-          handleButtonClick={handleButtonClick}
+          content={<CartModal camera={camera} onButtonClick={handleButtonClick} isRemove/>}
+          onButtonClick={handleButtonClick}
         /> : ''}
 
     </li>

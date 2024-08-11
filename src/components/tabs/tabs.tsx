@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import { ActiveTab } from '../../const';
 import { useSearchParams } from 'react-router-dom';
 

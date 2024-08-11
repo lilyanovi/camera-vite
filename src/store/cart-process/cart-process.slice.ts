@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
-import { CartProcess } from '../../types/cart-process';
-import { TCartCamera } from '../../types/camera';
+import type { CartProcess } from '../../types/cart-process';
+import type { TCartCamera } from '../../types/camera';
 import { dropCart, saveCart, savePromo } from '../../services/cart';
 import { checkCouponAction } from '../api-actions';
 

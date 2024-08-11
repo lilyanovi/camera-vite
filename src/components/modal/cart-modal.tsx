@@ -1,7 +1,9 @@
-import { Category } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { addToCart, removeToCart } from '../../store/cart-process/cart-process.slice';
-import { TCamera } from '../../types/camera';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute, Category } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectCart } from '../../store/cart-process/cart-process.selectors';
+import { addToCart, increaseQuantity, removeToCart } from '../../store/cart-process/cart-process.slice';
+import type { TCamera } from '../../types/camera';
 import { getTypeForPhoto } from '../../utils';
 
 type CartModalProps = {
@@ -13,12 +15,19 @@ type CartModalProps = {
 
 function CartModal ({isRemove, camera, onButtonClick, onSuccessModalChange}: CartModalProps): JSX.Element {
   const {id, name, previewImg, price, previewImgWebp, previewImgWebp2x, previewImg2x, vendorCode, type, category, level} = camera;
+  const cart = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCartButtonClick = () => {
-    dispatch(addToCart({
-      cartItem: {...camera, count: 1}
-    }));
+    const isExist = cart.find((cameraItem) => cameraItem.id === id);
+    if(isExist){
+      dispatch(increaseQuantity({id: id}));
+    } else {
+      dispatch(addToCart({
+        cartItem: {...camera, count: 1}
+      }));
+    }
     onButtonClick();
     if (onSuccessModalChange){
       onSuccessModalChange();
@@ -29,6 +38,9 @@ function CartModal ({isRemove, camera, onButtonClick, onSuccessModalChange}: Car
     dispatch(removeToCart({
       id: id
     }));
+    if(cart.length === 1){
+      navigate(AppRoute.Main);
+    }
     onButtonClick();
   };
 

@@ -30,6 +30,7 @@ function CartSummary (): JSX.Element {
   const bonus = getBonusPrice(cart, promoCameras);
   const totalPrice = getTotalPrice(cart);
   const totalPriceWithDiscount = getTotalPriceWithDiscount(totalPrice, bonus, discount);
+  const totalDiscount = (totalPriceWithDiscount - totalPrice).toFixed(1);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -69,20 +70,20 @@ function CartSummary (): JSX.Element {
       <PromoCode />
       <div className="basket__summary-order">
         <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{totalPrice} ₽</span></p>
-        <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value${bonus ? ' basket__summary-value--bonus' : ''}`}>{bonus} ₽</span></p>
+        <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value${totalDiscount ? ' basket__summary-value--bonus' : ''}`}>{cart.length !== 0 ? totalDiscount : 0} ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{totalPriceWithDiscount} ₽</span></p>
         <button className="btn btn--purple" type="submit" disabled={cart.length === 0 || isLoading} onClick={handleButtonClick}>{ isLoading ? 'Оформление заказа...' : 'Оформить заказ'}
         </button>
       </div>
       {isSuccessModalActive ?
         <Modal
-          content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange} isBasket/>}
-          handleButtonClick={handleSuccessModalChange}
+          content={<SuccessMessageModal onButtonClick={handleSuccessModalChange} isBasket/>}
+          onButtonClick={handleSuccessModalChange}
         /> : ''}
       {isErrorModalActive ?
         <Modal
           content={<FailMessageModal />}
-          handleButtonClick={handleFailModalChange}
+          onButtonClick={handleFailModalChange}
         /> : ''}
     </div>
   );

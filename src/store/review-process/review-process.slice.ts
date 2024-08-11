@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
-import { ReviewProcess } from '../../types/review-process';
+import type { ReviewProcess } from '../../types/review-process';
 import { fetchReviewsListAction, postReviewAction } from '../api-actions';
 import { getSortByDateReviews } from '../../utils';
 
@@ -14,9 +14,6 @@ export const reviewProcess = createSlice({
   name: NameSpace.Reviews,
   initialState,
   reducers: {
-    changeStatusLoading: (state, action: PayloadAction<{status: StatusLoading} >) => {
-      state.statusLoading = action.payload.status;
-    },
     clearError: (state) => {
       state.error = '';
     },
@@ -48,5 +45,5 @@ export const reviewProcess = createSlice({
   }
 });
 
-export const {changeStatusLoading, clearError} = reviewProcess.actions;
+export const {clearError} = reviewProcess.actions;
 
