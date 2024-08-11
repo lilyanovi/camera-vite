@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, StatusLoading } from '../../const';
 import { postOrderPhoneAction } from '../api-actions';
-import { OrderProcess } from '../../types/order-process';
+import type { OrderProcess } from '../../types/order-process';
 
 const initialState: OrderProcess = {
   statusLoading: StatusLoading.None,

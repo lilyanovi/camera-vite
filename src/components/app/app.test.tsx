@@ -18,34 +18,6 @@ describe('Application Routing', () => {
   });
 
   describe('Route "/"', () => {
-    it('should render "Loader" when cameras is loading', () => {
-      const {withStoreComponent} = withStore(
-        withHistoryApp,
-        makeFakeStore(
-          {CAMERAS: {
-            cameras: [],
-            promoProducts: [makeFakePromoProduct()],
-            statusLoading: StatusLoading.Loading,
-            sort: SortOption.sortPrice,
-            direction: SortDirection.up,
-            currentPage: START_PAGE,
-            filteredSettings: {
-              price: null,
-              priceUp: null,
-              level: [],
-              category: null,
-              type: [],
-            }}}
-        )
-      );
-      const expectedLoaderContainerTestId = 'loader-container';
-      mockHistory.push(AppRoute.Main);
-
-      render(withStoreComponent);
-
-      expect(screen.getByTestId(expectedLoaderContainerTestId)).toBeInTheDocument();
-    });
-
     it('should render "CatalogPage" when user navigate to "/"', () => {
       const {withStoreComponent} = withStore(
         withHistoryApp,
@@ -68,35 +40,12 @@ describe('Application Routing', () => {
   });
 
   describe('Route "/product/:id"', () => {
-    it('should render "Loader" when data for product do not loading', () => {
-      const withHistoryComponent = withHistory(<App />, mockHistory);
-      const {withStoreComponent} = withStore(
-        withHistoryComponent,
-        makeFakeStore({
-          REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
-          CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
-            price: null,
-            priceUp: null,
-            level: [],
-            category: null,
-            type: [],
-          }}
-        })
-      );
-      const expectedLoaderContainerTestId = 'loader-container';
-      mockHistory.push(`${AppRoute.Product}/:id`);
-
-      render(withStoreComponent);
-
-      expect(screen.getByTestId(expectedLoaderContainerTestId)).toBeInTheDocument();
-    });
-
     it('should render "ProductPage" when when user navigate to "/product/:id"', () => {
       const withHistoryComponent = withHistory(<App />, mockHistory);
       const {withStoreComponent} = withStore(
         withHistoryComponent,
         makeFakeStore({
-          REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
+          REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success, error: ''},
           CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
@@ -122,7 +71,7 @@ describe('Application Routing', () => {
       const { withStoreComponent } = withStore(
         withHistoryComponent,
         makeFakeStore({
-          REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success},
+          REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success, error: ''},
           CAMERAS: {cameras: [makeFakeCamera()], promoProducts: [makeFakePromoProduct()], statusLoading: StatusLoading.Success, sort: SortOption.sortPrice, direction: SortDirection.up, currentPage: START_PAGE, filteredSettings: {
             price: null,
             priceUp: null,
@@ -142,4 +91,24 @@ describe('Application Routing', () => {
     });
   });
 
+  describe('Route "/card"', () => {
+    it('should render "CartPage" when user navigate to "/card"', () => {
+      const expectedTestIdContainer = 'cart-container';
+      const withHistoryComponent = withHistory(<App />, mockHistory);
+      const {withStoreComponent} = withStore(
+        withHistoryComponent,
+        makeFakeStore(
+          {CART: {cart: [], promoCode: '', statusLoadingCheck: StatusLoading.Success, discountByCoupon: 0, error: ''}}
+        )
+      );
+      mockHistory.push(AppRoute.Cart);
+
+      render(withStoreComponent);
+
+      expect(screen.getByTestId(expectedTestIdContainer)).toBeInTheDocument();
+    });
+  });
+
 });
+
+

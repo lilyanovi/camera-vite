@@ -1,5 +1,5 @@
 import { NameSpace, StatusLoading } from '../../const';
-import { TCartCamera } from '../../types/camera';
+import type { TCartCamera } from '../../types/camera';
 import type { State } from '../../types/state';
 
 const selectCart = (state: Pick<State, NameSpace.Cart>): TCartCamera[]=> state[NameSpace.Cart].cart;

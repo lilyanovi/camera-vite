@@ -1,4 +1,4 @@
-import { TCartCamera } from '../types/camera';
+import type { TCartCamera } from '../types/camera';
 
 const CART_KEY_NAME = 'cart';
 const PROMO_CODE = 'promo';

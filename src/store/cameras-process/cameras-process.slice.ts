@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, SortDirection, SortOption, START_PAGE, StatusLoading } from '../../const';
-import { CamerasProcess, FilteredSettingsType } from '../../types/cameras-process';
+import type { CamerasProcess, FilteredSettingsType } from '../../types/cameras-process';
 import { fetchCamerasListAction, fetchPromoProductsListAction } from '../api-actions';
 
 const initialState: CamerasProcess = {

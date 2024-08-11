@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TCamera, TPromoProduct } from '../types/camera';
+import type { TCamera, TPromoProduct } from '../types/camera';
 import { APIRoute } from '../const';
-import { AppDispatch, State } from '../types/state';
+import type { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { TReview, TReviewByPost, TReviews } from '../types/review';
-import { TOrder } from '../types/order';
+import type { TReview, TReviewByPost, TReviews } from '../types/review';
+import type { TOrder } from '../types/order';
 
 export const fetchCamerasListAction = createAsyncThunk<TCamera[], undefined, {
   dispatch: AppDispatch;

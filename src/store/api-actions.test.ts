@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action } from 'redux';
 import { AppThunkDispatch, extractActionsTypes, makeFakeCamera, makeFakeId, makeFakeOrder, makeFakePromoProduct, makeFakeReview } from '../mocks';
-import { State } from '../types/state';
+import type { State } from '../types/state';
 import { beforeEach } from 'vitest';
 import { APIRoute } from '../const';
 import { fetchCamerasListAction, fetchProductByIdAction, fetchPromoProductsListAction, fetchReviewsListAction, fetchSimilarProductsByIdAction, postOrderPhoneAction } from './api-actions';

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import Rating from '../rating/rating';
 import { AppRoute } from '../../const';
 import Modal from '../modal/modal';
@@ -74,13 +74,13 @@ function CardItem ({camera, isActive}: CardItemProps): JSX.Element {
       </div>
       {isModalActive ?
         <Modal
-          content={<CartModal camera={camera} handleButtonClick={handleButtonClick} handleSuccessModalChange={handleSuccessModalChange}/>}
-          handleButtonClick={handleButtonClick}
+          content={<CartModal camera={camera} onButtonClick={handleButtonClick} onSuccessModalChange={handleSuccessModalChange}/>}
+          onButtonClick={handleButtonClick}
         /> : ''}
       {isSuccessModalActive ?
         <Modal
-          content={<SuccessMessageModal handleButtonClick={handleSuccessModalChange} isCard/>}
-          handleButtonClick={handleSuccessModalChange}
+          content={<SuccessMessageModal onButtonClick={handleSuccessModalChange} isCard/>}
+          onButtonClick={handleSuccessModalChange}
         /> : ''}
     </div>
   );

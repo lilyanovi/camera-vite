@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectError, selectSortReviews } from '../../store/review-process/review-process.selectors';
 import { getCurrentReviews } from '../../utils';
 import ReviewItem from './review-item';
-import { TReviews } from '../../types/review';
+import type { TReviews } from '../../types/review';
 import EmptyReviews from './empty-reviews';
 import Modal from '../modal/modal';
 import AddReviewModal from '../modal/add-review-modal';
@@ -99,13 +99,13 @@ function Reviews ({id}: ReviewsProps): JSX.Element {
       </div>
       {isReviewModalActive ?
         <Modal
-          content={<AddReviewModal cameraId={id} handleButtonClick={handleReviewModalChange} handleSuccessModalChange={handleSuccessReviewModalChange}/>}
-          handleButtonClick={handleReviewModalChange}
+          content={<AddReviewModal cameraId={id} onButtonClick={handleReviewModalChange} onSuccessModalChange={handleSuccessReviewModalChange}/>}
+          onButtonClick={handleReviewModalChange}
         /> : ''}
       {isSuccessReviewModalActive ?
         <Modal
-          content={<SuccessMessageModal handleButtonClick={handleSuccessReviewModalChange} isReview/>}
-          handleButtonClick={handleSuccessReviewModalChange}
+          content={<SuccessMessageModal onButtonClick={handleSuccessReviewModalChange} isReview/>}
+          onButtonClick={handleSuccessReviewModalChange}
         /> : ''}
     </section>
   );

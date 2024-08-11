@@ -15,16 +15,24 @@ function CartIcon (): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const localCart = getCart();
-    if (localCart.length > 0){
-      dispatch(loadCart({
-        cart: localCart
-      }));
+    let isMounted = true;
+
+    if (isMounted) {
+      const localCart = getCart();
+      if (localCart.length > 0){
+        dispatch(loadCart({
+          cart: localCart
+        }));
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch]);
 
   return (
-    <Link className="header__basket-link" to={AppRoute.Cart}>
+    <Link className="header__basket-link" to={AppRoute.Cart} data-testid="cart-icon-container">
       <svg width="16" height="16" aria-hidden="true">
         <use xlinkHref="#icon-basket"></use>
       </svg>

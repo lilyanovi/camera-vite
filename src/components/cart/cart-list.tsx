@@ -5,7 +5,7 @@ import CartItem from './cart-item';
 function CartList (): JSX.Element {
   const cart = useAppSelector(selectCart);
   return (
-    <ul className="basket__list">
+    <ul className="basket__list" data-testid="cart-item-container">
       {cart.map((camera) => <CartItem key={camera.id} camera={camera}/>)}
     </ul>
   );

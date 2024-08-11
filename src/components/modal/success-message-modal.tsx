@@ -6,10 +6,10 @@ type SuccessMessageProps = {
   isReview?: boolean;
   isProduct?: boolean;
   isCard?: boolean;
-  handleButtonClick: () => void;
+  onButtonClick: () => void;
 }
 
-function SuccessMessageModal ({isBasket, isReview, isProduct, isCard, handleButtonClick}: SuccessMessageProps): JSX.Element {
+function SuccessMessageModal ({isBasket, isReview, isProduct, isCard, onButtonClick}: SuccessMessageProps): JSX.Element {
 
   const getTitleText = () => {
     if(isBasket){
@@ -28,10 +28,10 @@ function SuccessMessageModal ({isBasket, isReview, isProduct, isCard, handleButt
         <use xlinkHref="#icon-review-success"></use>
       </svg>
       <div className="modal__buttons">
-        {isReview && <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleButtonClick}>Вернуться к покупкам</button>}
+        {isReview && <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={onButtonClick}>Вернуться к покупкам</button>}
         {isBasket && <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button"><Link to={AppRoute.Main}>Вернуться к покупкам</Link></button>}
         {isProduct && <Link className="btn btn--transparent modal__btn" to={AppRoute.Main} >Продолжить покупки</Link>}
-        {isCard && <a className="btn btn--transparent modal__btn" href="#" onClick={handleButtonClick}>Продолжить покупки</a>}
+        {isCard && <button className="btn btn--transparent modal__btn" type="button" onClick={onButtonClick}>Продолжить покупки</button>}
         {isProduct || isCard ? <button className="btn btn--purple modal__btn modal__btn--fit-width"><Link to={AppRoute.Cart}>Перейти в корзину</Link></button> : ''}
       </div>
     </>

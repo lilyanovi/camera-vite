@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import { AppRoute } from '../../const';
 
 type SearchItemProps = {

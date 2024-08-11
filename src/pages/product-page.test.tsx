@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../mock-component';
-import { makeFakeCamera, makeFakeReview } from '../mocks';
+import { makeFakeCamera, makeFakeCartCamera, makeFakeReview } from '../mocks';
 import { StatusLoading } from '../const';
 import ProductPage from './product-page';
 
@@ -13,7 +13,16 @@ describe('Component: ProductPage', () => {
     const expectedArrowContainerTestId = 'arrow-container';
     const { withStoreComponent } = withStore(<ProductPage/>, {
       PRODUCT: {similarProducts: fakeSimilarProducts, currentProduct: fakeCamera, statusLoading: StatusLoading.Success},
-      REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success}
+      REVIEWS: {sortReviews: [makeFakeReview()], statusLoading: StatusLoading.Success, error: ''},
+      ORDER: {
+        statusLoading: StatusLoading.None,
+        error: ''
+      },
+      CART: {cart: [makeFakeCartCamera()],
+        promoCode: '',
+        statusLoadingCheck: StatusLoading.Success,
+        discountByCoupon: 0,
+        error: ''}
     });
     const preparedComponent = withHistory(withStoreComponent);
 

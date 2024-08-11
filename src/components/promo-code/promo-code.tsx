@@ -41,13 +41,22 @@ function PromoCode (): JSX.Element {
   }, [error, dispatch]);
 
   useEffect(() => {
-    const localPromo = getPromo();
-    if (localPromo !== ''){
-      dispatch(changePromo({
-        promo: localPromo
-      }));
-      setValue('promo', localPromo);
+    let isMounted = true;
+
+    if (isMounted) {
+      const localPromo = getPromo();
+      if (localPromo !== ''){
+        dispatch(changePromo({
+          promo: localPromo
+        }));
+        dispatch(checkCouponAction(localPromo));
+        setValue('promo', localPromo);
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, setValue]);
 
   setTimeout(() => {

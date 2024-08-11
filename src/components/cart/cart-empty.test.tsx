@@ -1,14 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory, withStore } from '../mock-component';
+import { SortDirection, SortOption, START_PAGE, StatusLoading } from '../../const';
+import { withHistory, withStore } from '../../mock-component';
+import { makeFakeCamera, makeFakeCartCamera, makeFakePromoProduct } from '../../mocks';
+import CartEmpty from './cart-empty';
 
-import CatalogPage from './catalog-page';
-import { makeFakeCamera, makeFakeCartCamera, makeFakePromoProduct } from '../mocks';
-import { START_PAGE, SortDirection, SortOption, StatusLoading } from '../const';
-
-describe('Component: CatalogPage', () => {
+describe('Component: CartEmpty', () => {
   it('should render correctly', () => {
-    const expectedText = 'Каталог фото- и видеотехники';
-    const { withStoreComponent } = withStore(<CatalogPage/>, {
+    const expectedText = 'Вы ещё ничего не добавляли ...';
+    const { withStoreComponent } = withStore(<CartEmpty />, {
       CAMERAS: {
         cameras: [makeFakeCamera()],
         promoProducts: [makeFakePromoProduct()],
@@ -23,15 +22,21 @@ describe('Component: CatalogPage', () => {
           category: null,
           type: [],
         }},
-      CART: {cart: [makeFakeCartCamera()],
+      CART: {
+        cart: [makeFakeCartCamera()],
         promoCode: '',
         statusLoadingCheck: StatusLoading.None,
         discountByCoupon: 0,
-        error: ''}});
+        error: ''},
+      ORDER: {
+        statusLoading: StatusLoading.None,
+        error: ''
+      }});
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
+    expect(screen.getByRole('link', {name: 'Вернуться к покупкам'})).toBeInTheDocument();
     expect(screen.getByText(expectedText)).toBeInTheDocument();
   });
 });

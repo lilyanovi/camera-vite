@@ -9,7 +9,7 @@ describe('Component: Modal', () => {
     const expectedText = 'Fake content';
     const fakeContent = <span>Fake content</span>;
     const fakeHandleClick = vi.fn();
-    const { withStoreComponent } = withStore(<Modal content={fakeContent} handleButtonClick={fakeHandleClick}/>);
+    const { withStoreComponent } = withStore(<Modal content={fakeContent} onButtonClick={fakeHandleClick}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
@@ -21,7 +21,7 @@ describe('Component: Modal', () => {
   it('should working "handleClick" when pressing Escape', async() => {
     const fakeContent = <span>Fake content</span>;
     const fakeHandleClick = vi.fn();
-    const { withStoreComponent } = withStore(<Modal content={fakeContent} handleButtonClick={fakeHandleClick}/>);
+    const { withStoreComponent } = withStore(<Modal content={fakeContent} onButtonClick={fakeHandleClick}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
@@ -33,7 +33,7 @@ describe('Component: Modal', () => {
   it('should working "handleClick" when user click on button', async() => {
     const fakeContent = <span>Fake content</span>;
     const fakeHandleClick = vi.fn();
-    const { withStoreComponent } = withStore(<Modal content={fakeContent} handleButtonClick={fakeHandleClick}/>);
+    const { withStoreComponent } = withStore(<Modal content={fakeContent} onButtonClick={fakeHandleClick}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

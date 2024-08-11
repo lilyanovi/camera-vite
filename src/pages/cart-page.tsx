@@ -6,7 +6,7 @@ import Cart from '../components/cart/cart';
 function CartPage (): JSX.Element {
 
   return (
-    <main>
+    <main data-testid="cart-container">
       <Helmet>
         <title>Корзина</title>
       </Helmet>

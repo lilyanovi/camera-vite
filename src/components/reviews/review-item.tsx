@@ -1,4 +1,4 @@
-import { TReview } from '../../types/review';
+import type { TReview } from '../../types/review';
 import { getFormatDate } from '../../utils';
 import Rating from '../rating/rating';
 

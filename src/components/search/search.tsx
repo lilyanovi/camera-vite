@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../hooks';
 import { selectCameras } from '../../store/cameras-process/cameras-process.selectors';
-import { TCamera } from '../../types/camera';
+import type { TCamera } from '../../types/camera';
 import { getFilteredCameras } from '../../utils';
 import SearchList from './search-list';
 import { ChangeEvent, useState } from 'react';
